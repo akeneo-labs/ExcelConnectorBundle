@@ -1,0 +1,21 @@
+{
+    "name": "akeneo/excel-connector-bundle",
+    "description": "Akeneo PIM Excel connector bundle",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Antoine Guigan",
+            "email": "antoine@akeneo.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/akeneo/pim-community-dev.git",
+            "branch": "master"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    }
+}

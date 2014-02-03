@@ -2,9 +2,11 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Oro\Bundle\BatchBundle\Item\UploadedFileAwareInterface;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\FileIteratorFactory;
-use Symfony\Component\HttpFoundation\File\File;
+use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
 
 /**
  * File iterator reader
@@ -32,11 +34,17 @@ abstract class AbstractFileIteratorReader extends AbstractIteratorReader impleme
 
     /**
      * @var string
+     * 
+     * @Assert\NotBlank(groups={"Execution"})
+     * @AssertFile(groups={"Execution"})
      */
     protected $filePath;
 
     /**
      * @var string
+     * 
+     * @Assert\Type(type="bool")
+     * @Assert\True(groups={"UploadExecution"})
      */
     protected $uploadAllowed;
 
@@ -73,6 +81,17 @@ abstract class AbstractFileIteratorReader extends AbstractIteratorReader impleme
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getUploadedFileConstraints()
+    {
+        return array(
+            new Assert\NotBlank(),
+            new AssertFile()
+        );
+    }
+    
     /**
      * Set uploaded file
      *
