@@ -6,7 +6,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * XSLX file iterator
- * 
+ *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -17,17 +17,16 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
      * @var array
      */
     protected $labels;
-    
 
     /**
      * {@inheritdoc}
      */
     public function current()
     {
-        $data = array_slice($this->getRowData($this->valuesIterator->current()), 0, count($this->labels));
-        $data = $data + array_fill(0, count($this->labels) - count($data), '');
-        
-        return array_combine($this->labels, $data);
+        return array_combine(
+            $this->labels,
+            $this->resizeArray($this->getRowData($this->valuesIterator->current()), count($this->labels))
+        );
     }
 
     /**
@@ -40,7 +39,7 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
 
         return $worksheet->getRowIterator($this->options['data_row']);
     }
-    
+
     /**
      * {@inheritdoc}
      */

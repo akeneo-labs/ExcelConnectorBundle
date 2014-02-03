@@ -34,7 +34,7 @@ abstract class AbstractFileIteratorReader extends AbstractIteratorReader impleme
 
     /**
      * @var string
-     * 
+     *
      * @Assert\NotBlank(groups={"Execution"})
      * @AssertFile(groups={"Execution"})
      */
@@ -42,7 +42,7 @@ abstract class AbstractFileIteratorReader extends AbstractIteratorReader impleme
 
     /**
      * @var string
-     * 
+     *
      * @Assert\Type(type="bool")
      * @Assert\True(groups={"UploadExecution"})
      */
@@ -91,7 +91,7 @@ abstract class AbstractFileIteratorReader extends AbstractIteratorReader impleme
             new AssertFile()
         );
     }
-    
+
     /**
      * Set uploaded file
      *

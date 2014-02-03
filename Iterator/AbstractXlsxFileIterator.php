@@ -6,7 +6,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * XLSX File iterator
- * 
+ *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -92,7 +92,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
 
     /**
      * Initializes the current record
-     * 
+     *
      * @return type
      */
     protected function initializeValuesIterator()
@@ -109,9 +109,9 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
 
     /**
      * Returns true if the worksheet should be included
-     * 
+     *
      * @param \PHPExcel_Worksheet $worksheet
-     * 
+     *
      * @return boolean
      */
     protected function isIncludedWorksheet(\PHPExcel_Worksheet $worksheet)
@@ -120,23 +120,24 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
 
         if (isset($this->options['include_tabs'])) {
             $included = false;
-            foreach($this->options['include_tabs'] as $regexp) {
+            foreach ($this->options['include_tabs'] as $regexp) {
                 if (preg_match($regexp, $title)) {
                     $included = true;
                     break;
                 }
             }
-            
+
             if (!$included) {
                 return false;
             }
         }
 
-        foreach($this->options['exclude_tabs'] as $regexp) {
+        foreach ($this->options['exclude_tabs'] as $regexp) {
             if (preg_match($regexp, $title)) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -155,17 +156,17 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
 
     /**
      * Returns an array of values for a row
-     * 
+     *
      * @param \PHPExcel_Worksheet_Row $row
-     * @param int $startColumn
-     * 
+     * @param int                     $startColumn
+     *
      * @return array
      */
     protected function getRowData(\PHPExcel_Worksheet_Row $row, $startColumn = 0)
     {
         $cellIterator = $row->getCellIterator($startColumn);
         $cellIterator->setIterateOnlyExistingCells(false);
-        
+
         return array_map(
             function ($cell) {
                 return $cell->getValue();
@@ -175,8 +176,25 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     }
 
     /**
+     * Resizes an array to the specified data count
+     *
+     * @param array $data
+     * @param int   $count
+     *
+     * @return array
+     */
+    protected function resizeArray(array $data, $count)
+    {
+        return array_slice(
+            array_merge($data, array_fill(0, max(0, $count - count($data)), '')),
+            0,
+            $count
+        );
+    }
+
+    /**
      * @param \PHPExcel_Worksheet $worksheet
-     * 
+     *
      * @return \Iterator
      */
     abstract protected function createValuesIterator(\PHPExcel_Worksheet $worksheet);
