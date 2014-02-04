@@ -15,6 +15,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AttributeXlsxFileIterator extends \FilterIterator implements InitializableIteratorInterface, ContainerAwareInterface
 {
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @var array
      */
     protected $attributeTypes;
@@ -55,6 +60,13 @@ class AttributeXlsxFileIterator extends \FilterIterator implements Initializable
         $item = parent::current();
         unset($item['use_as_label']);
 
+        if (isset($item['type'])) {
+            if (isset($this->attributeTypes[$item['type']])) {
+                $item['attribute_type'] = $this->attributeTypes[$item['type']];
+            }
+            unset($item['type']);
+        }
+
         return $item;
     }
 
@@ -65,6 +77,24 @@ class AttributeXlsxFileIterator extends \FilterIterator implements Initializable
     {
         $this->getInnerIterator()->initialize();
         $this->rewind();
+
+        $xls = $this->getInnerIterator()->getExcelObject();
+        $attributeWorksheet = null;
+        $helper = $this->getExcelHelper();
+        foreach ($xls->getWorksheetIterator() as $worksheet) {
+            if ($worksheet->getTitle() == 'attribute_types') {
+                $attributeWorksheet = $worksheet;
+                break;
+            }
+        }
+        if (!$attributeWorksheet) {
+            throw new \Exception('No attribute_types worksheet in the excel file');
+        }
+        $this->attributeTypes = array();
+        foreach ($attributeWorksheet->getRowIterator(2) as $row) {
+            $data = $helper->getRowData($row);
+            $this->attributeTypes[$data[1]] = $data[0];
+        }
     }
 
     /**
@@ -72,6 +102,17 @@ class AttributeXlsxFileIterator extends \FilterIterator implements Initializable
      */
     public function setContainer(ContainerInterface $container = null)
     {
+        $this->container = $container;
         $this->getInnerIterator()->setContainer($container);
+    }
+
+    /**
+     * Returns the Excel Helper service
+     *
+     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\ExcelHelper
+     */
+    protected function getExcelHelper()
+    {
+        return $this->container->get('pim_excel_connector.excel.helper');
     }
 }
