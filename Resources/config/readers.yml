@@ -1,0 +1,17 @@
+parameters:
+    pim_excel_connector.reader.xls_file.class: Pim\Bundle\ExcelConnectorBundle\Reader\XlsxFileReader
+
+services:
+    pim_excel_connector.reader.xls_file:
+        class: %pim_excel_connector.reader.xls_file.class%
+        abstract: true
+        arguments:
+            - '@pim_excel_connector.iterator.file.factory'
+
+    pim_excel_connector.reader.xls_file.attribute_group:
+        parent: pim_excel_connector.reader.xls_file
+        arguments:
+            - %pim_excel_connector.iterator.file.xlsx.class%
+            - label_row: 3
+              data_row: 4
+              include_worksheets: [ '/^attribute_groups/' ]

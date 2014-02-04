@@ -29,6 +29,32 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     protected $valuesIterator;
 
     /**
+     * Constructor
+     *
+     * @param string $filePath
+     * @param array  $options
+     */
+    public function __construct($filePath, array $options = array())
+    {
+        parent::__construct($filePath, $options);
+
+        $reader = new \PHPExcel_Reader_Excel2007();
+        $this->xls = $reader->load($filePath);
+        $this->worksheetIterator = new \CallbackFilterIterator(
+            $this->xls->getWorksheetIterator(),
+            function ($worksheet) {
+                return $this->isIncludedWorksheet($worksheet);
+            }
+        );
+        $this->worksheetIterator->rewind();
+        if ($this->worksheetIterator->valid()) {
+            $this->initializeValuesIterator();
+        } else {
+            $this->valuesIterator = null;
+        }
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function current()
@@ -50,7 +76,12 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     public function next()
     {
         $this->valuesIterator->next();
-        $this->initializeRecord();
+        if (!$this->valuesIterator->valid()) {
+            $this->worksheetIterator->next();
+            if ($this->worksheetIterator->valid()) {
+                $this->initializeValuesIterator();
+            }
+        }
     }
 
     /**
@@ -59,27 +90,6 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     public function rewind()
     {
         throw new \Exception('UNIMPLEMENTED');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setFilePath($filePath)
-    {
-        parent::setFilePath($filePath);
-        $reader = new \PHPExcel_Reader_Excel2007();
-        $this->xls = $reader->load($filePath);
-        $this->worksheetIterator = new \CallbackFilterIterator(
-            $this->xls->getWorksheetIterator(),
-            function ($worksheet) {
-                return $this->isIncludedWorksheet($worksheet);
-            }
-        );
-        if ($this->worksheetIterator->valid()) {
-            $this->initializeValuesIterator();
-        } else {
-            $this->valuesIterator = null;
-        }
     }
 
     /**
@@ -118,9 +128,9 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     {
         $title = $worksheet->getTitle();
 
-        if (isset($this->options['include_tabs'])) {
+        if (isset($this->options['include_worksheets'])) {
             $included = false;
-            foreach ($this->options['include_tabs'] as $regexp) {
+            foreach ($this->options['include_worksheets'] as $regexp) {
                 if (preg_match($regexp, $title)) {
                     $included = true;
                     break;
@@ -132,7 +142,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
             }
         }
 
-        foreach ($this->options['exclude_tabs'] as $regexp) {
+        foreach ($this->options['exclude_worksheets'] as $regexp) {
             if (preg_match($regexp, $title)) {
                 return false;
             }
@@ -148,10 +158,10 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     {
         $resolver->setDefaults(
             array(
-                'exclude_tabs'  => array()
+                'exclude_worksheets'  => array()
             )
         );
-        $resolver->setOptional(array('include_tabs'));
+        $resolver->setOptional(array('include_worksheets'));
     }
 
     /**
@@ -181,12 +191,18 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
         $cellIterator = $row->getCellIterator($startColumn);
         $cellIterator->setIterateOnlyExistingCells(false);
 
-        return array_map(
+        $values = array_map(
             function ($cell) {
                 return $cell->getValue();
             },
             iterator_to_array($cellIterator)
         );
+
+        while (count($values) && !$values[count($values) - 1]) {
+            unset($values[count($values) - 1]);
+        }
+
+        return $values;
     }
 
     /**
@@ -199,11 +215,11 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
      */
     protected function resizeArray(array $data, $count)
     {
-        return array_slice(
-            array_merge($data, array_fill(0, max(0, $count - count($data)), '')),
-            0,
-            $count
-        );
+        if (count($data) < $count) {
+            $data = array_merge($data, array_fill(0, $count - count($data), ''));
+        }
+
+        return array_slice($data, 0, $count);
     }
 
     /**
