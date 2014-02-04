@@ -155,6 +155,20 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     }
 
     /**
+     * Returns an array of values for a row number
+     * 
+     * @param \PHPExcel_Worksheet $worksheet
+     * @param int $row
+     * @param int $startColumn
+     * 
+     * @return array
+     */
+    protected function getRowDataForRowNumber(\PHPExcel_Worksheet $worksheet, $row, $startColumn = 0)
+    {
+        return $this->getRowData($worksheet->getRowIterator($row)->current(), $startColumn);
+    }
+
+    /**
      * Returns an array of values for a row
      *
      * @param \PHPExcel_Worksheet_Row $row

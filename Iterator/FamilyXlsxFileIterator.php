@@ -14,6 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
 {
     /**
+     * @var string[]
+     */
+    protected $attributeLabels;
+
+    /**
      *  {@inheritdoc}
      */
     protected function createValuesIterator(\PHPExcel_Worksheet $worksheet)
@@ -26,6 +31,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
      */
     protected function getFamilyData(\PHPExcel_Worksheet $worksheet)
     {
+        $this->attributeLabels;
         return array(
             'code'         => $worksheet->getCellByColumnAndRow($this->options['code_column'], $this->options['code_row']),
             'labels'       => $this->getLabels($worksheet),
@@ -41,10 +47,13 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     {
         $resolver->setRequired(
             array(
+                'attribute_label_row',
+                'attribute_data_row',
                 'code_column',
                 'code_row',
                 'labels_column',
-                'labels_row',
+                'labels_label_row',
+                'labels_data_row'
             )
         );
     }
