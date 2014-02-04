@@ -32,6 +32,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     protected function getFamilyData(\PHPExcel_Worksheet $worksheet)
     {
         $this->attributeLabels;
+
         return array(
             'code'         => $worksheet->getCellByColumnAndRow($this->options['code_column'], $this->options['code_row']),
             'labels'       => $this->getLabels($worksheet),

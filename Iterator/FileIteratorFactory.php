@@ -18,13 +18,11 @@ class FileIteratorFactory
      * @param string $filePath The file which should be read
      * @param array  $options  The options of the iterator
      *
-     * @return FileIteratorInterface
+     * @return \Iterator
      */
     public function create($class, $filePath, array $options = array())
     {
-        $iterator = new $class;
-        $iterator->setOptions($options);
-        $iterator->setFilePath($filePath);
+        $iterator = new $class($filePath, $options);
 
         return $iterator;
     }

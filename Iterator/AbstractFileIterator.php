@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-abstract class AbstractFileIterator implements FileIteratorInterface
+abstract class AbstractFileIterator implements \Iterator
 {
     /**
      * @var string
@@ -25,19 +25,16 @@ abstract class AbstractFileIterator implements FileIteratorInterface
     protected $options;
 
     /**
-     * {@inheritdoc}
+     * Constructor
+     *
+     * @param type  $filePath
+     * @param array $options
      */
-    public function setFilePath($filePath)
+    public function __construct($filePath, array $options = array())
     {
         $this->filePath = $filePath;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setOptions(array $options)
-    {
         $resolver = new OptionsResolver;
+        $this->setDefaultOptions($resolver);
         $this->options = $resolver->resolve($options);
     }
 

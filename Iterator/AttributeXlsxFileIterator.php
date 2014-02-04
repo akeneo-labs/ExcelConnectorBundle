@@ -13,10 +13,13 @@ class AttributeXlsxFileIterator extends \FilterIterator implements FileIteratorI
 {
     /**
      * Constructor
+     *
+     * @param string $filePath
+     * @param array  $options
      */
-    public function __construct()
+    public function __construct($filePath, array $options = array())
     {
-        parent::__construct(new XlsxFileIterator());
+        parent::__construct(new XlsxFileIterator($filePath, $options));
     }
 
     /**
@@ -34,21 +37,5 @@ class AttributeXlsxFileIterator extends \FilterIterator implements FileIteratorI
         }
 
         return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setFilePath($filePath)
-    {
-        $this->getInnerIterator()->setFilePath($filePath);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setOptions(array $options)
-    {
-        $this->getInnerIterator()->setOptions($options);
     }
 }
