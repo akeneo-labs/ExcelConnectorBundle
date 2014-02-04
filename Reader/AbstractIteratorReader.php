@@ -27,6 +27,21 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
      */
     protected $stepExecution;
 
+    /**
+     * @var boolean
+     */
+    protected $batchMode;
+
+    /**
+     * Constructor
+     *
+     * @param boolean $batchMode
+     */
+    public function __construct($batchMode)
+    {
+        $this->batchMode = $batchMode;
+    }
+
     public function setStepExecution(StepExecution $stepExecution)
     {
         $this->stepExecution = $stepExecution;
@@ -36,6 +51,9 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
     {
         if (!isset($this->iterator)) {
             $this->iterator = $this->createIterator();
+            if ($this->batchMode) {
+                $this->iterator = new \ArrayIterator(array(iterator_to_array($this->iterator)));
+            }
         }
 
         if (!$this->iterator->valid()) {

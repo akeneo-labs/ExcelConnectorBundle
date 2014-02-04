@@ -55,8 +55,14 @@ abstract class AbstractFileIteratorReader extends AbstractIteratorReader impleme
      * @param string              $iteratorClass
      * @param array               $iteratorOptions
      */
-    public function __construct(FileIteratorFactory $iteratorFactory, $iteratorClass, array $iteratorOptions = array())
-    {
+    public function __construct(
+        FileIteratorFactory $iteratorFactory,
+        $iteratorClass,
+        array $iteratorOptions = array(),
+        $batchMode = false
+    ) {
+        parent::__construct($batchMode);
+
         $this->iteratorFactory = $iteratorFactory;
         $this->iteratorClass = $iteratorClass;
         $this->iteratorOptions = $iteratorOptions;

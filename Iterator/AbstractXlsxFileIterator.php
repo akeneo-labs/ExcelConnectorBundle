@@ -46,12 +46,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
                 return $this->isIncludedWorksheet($worksheet);
             }
         );
-        $this->worksheetIterator->rewind();
-        if ($this->worksheetIterator->valid()) {
-            $this->initializeValuesIterator();
-        } else {
-            $this->valuesIterator = null;
-        }
+        $this->rewind();
     }
 
     /**
@@ -89,7 +84,12 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
      */
     public function rewind()
     {
-        throw new \Exception('UNIMPLEMENTED');
+        $this->worksheetIterator->rewind();
+        if ($this->worksheetIterator->valid()) {
+            $this->initializeValuesIterator();
+        } else {
+            $this->valuesIterator = null;
+        }
     }
 
     /**

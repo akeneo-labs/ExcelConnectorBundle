@@ -20,3 +20,18 @@ xlsx_attribute_groups:
     xlsx:
         reader:         pim_excel_connector.reader.xls_file.attribute_group
         processor:      pim_base_connector.processor.attribute_group
+
+xslx_categories:
+    order: 30
+    multiple: true
+    file_name: init
+    xlsx:
+        reader:         pim_excel_connector.reader.xls_file.category
+        processor:      pim_base_connector.processor.category
+
+xlsx_channels:
+    order: 30
+    file_name: init
+    xlsx:
+        reader:         pim_excel_connector.reader.xls_file.channel
+        processor:      pim_base_connector.processor.channel

@@ -15,3 +15,20 @@ services:
             - label_row: 3
               data_row: 4
               include_worksheets: [ '/^attribute_groups/' ]
+
+    pim_excel_connector.reader.xls_file.channel:
+        parent: pim_excel_connector.reader.xls_file
+        arguments:
+            - %pim_excel_connector.iterator.file.xlsx.class%
+            - label_row: 3
+              data_row: 4
+              include_worksheets: [ '/^channels/' ]
+
+    pim_excel_connector.reader.xls_file.category:
+        parent: pim_excel_connector.reader.xls_file
+        arguments:
+            - %pim_excel_connector.iterator.file.xlsx.class%
+            - label_row: 3
+              data_row: 4
+              include_worksheets: [ '/^categories/' ]
+            - true

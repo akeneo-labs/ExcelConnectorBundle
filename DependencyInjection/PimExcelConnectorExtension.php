@@ -22,5 +22,7 @@ class PimExcelConnectorExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('iterators.yml');
         $loader->load('readers.yml');
+        $loader->load('transformers.yml');
+        $loader->load('guessers.yml');
     }
 }

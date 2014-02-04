@@ -1,0 +1,6 @@
+parameters:
+    pim_excel_connector.transformer.property.conversion_units.class: Pim\Bundle\ExcelConnectorBundle\Transformer\Property\ConversionUnitsTransformer
+
+services:
+    pim_excel_connector.transformer.property.conversion_units:
+        class: %pim_excel_connector.transformer.property.conversion_units.class%
