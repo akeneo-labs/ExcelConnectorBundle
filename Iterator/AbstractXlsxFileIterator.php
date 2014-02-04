@@ -188,21 +188,37 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
      */
     protected function getRowData(\PHPExcel_Worksheet_Row $row, $startColumn = 0)
     {
-        $cellIterator = $row->getCellIterator($startColumn);
+        $cellIterator = $row->getCellIterator();
         $cellIterator->setIterateOnlyExistingCells(false);
+        
+        $values = array();
+        foreach ($cellIterator as $cell) {
+            if ($startColumn) {
+                $startColumn--;
+            } else {
+                $values[] = $cell->getValue();
+            }
+        }
 
-        $values = array_map(
-            function ($cell) {
-                return $cell->getValue();
-            },
-            iterator_to_array($cellIterator)
-        );
 
         while (count($values) && !$values[count($values) - 1]) {
             unset($values[count($values) - 1]);
         }
 
         return $values;
+    }
+
+    /**
+     * Combines array of different sizes
+     * 
+     * @param array $keys
+     * @param array $values
+     * 
+     * @return array
+     */
+    protected function combineArrays(array $keys, array $values)
+    {
+        return array_combine($keys, $this->resizeArray($values, count($keys)));
     }
 
     /**

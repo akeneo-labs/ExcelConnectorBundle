@@ -35,3 +35,17 @@ xlsx_channels:
     xlsx:
         reader:         pim_excel_connector.reader.xls_file.channel
         processor:      pim_base_connector.processor.channel
+
+xlsx_attributes:
+    order: 40
+    file_name: init
+    xlsx:
+        reader:         pim_excel_connector.reader.xls_file.attribute
+        processor:      pim_base_connector.processor.attribute
+
+xlsx_families:
+    order: 60
+    file_name: init
+    xlsx:
+        reader:         pim_excel_connector.reader.xls_file.family
+        processor:      pim_base_connector.processor.family

@@ -23,10 +23,17 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
      */
     public function current()
     {
-        return array_combine(
-            $this->labels,
-            $this->resizeArray($this->getRowData($this->valuesIterator->current()), count($this->labels))
-        );
+        $values = $this->combineArrays($this->labels, $this->getRowData($this->valuesIterator->current()));
+
+        if ($this->options['skip_empty']) {
+            foreach(array_keys($values) as $key) {
+                if (!$values[$key]) {
+                    unset($values[$key]);
+                }
+            }
+        }
+
+        return $values;
     }
 
     /**
@@ -47,8 +54,9 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(
             array(
-                'label_row' => 1,
-                'data_row'  => 1
+                'skip_empty' => false,
+                'label_row'  => 1,
+                'data_row'   => 1
             )
         );
     }
