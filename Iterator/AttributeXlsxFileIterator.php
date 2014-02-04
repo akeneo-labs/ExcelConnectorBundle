@@ -2,6 +2,9 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * Attribute XLSX file iterator
  *
@@ -9,8 +12,13 @@ namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class AttributeXlsxFileIterator extends \FilterIterator
+class AttributeXlsxFileIterator extends \FilterIterator implements InitializableIteratorInterface, ContainerAwareInterface
 {
+    /**
+     * @var array
+     */
+    protected $attributeTypes;
+
     /**
      * Constructor
      *
@@ -20,7 +28,6 @@ class AttributeXlsxFileIterator extends \FilterIterator
     public function __construct($filePath, array $options = array())
     {
         parent::__construct(new XlsxFileIterator($filePath, $options));
-        $this->rewind();
     }
 
     /**
@@ -49,5 +56,22 @@ class AttributeXlsxFileIterator extends \FilterIterator
         unset($item['use_as_label']);
 
         return $item;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function initialize()
+    {
+        $this->getInnerIterator()->initialize();
+        $this->rewind();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->getInnerIterator()->setContainer($container);
     }
 }

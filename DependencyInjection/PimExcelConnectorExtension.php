@@ -24,5 +24,6 @@ class PimExcelConnectorExtension extends Extension
         $loader->load('readers.yml');
         $loader->load('transformers.yml');
         $loader->load('guessers.yml');
+        $loader->load('services.yml');
     }
 }

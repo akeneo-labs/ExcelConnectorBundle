@@ -2,6 +2,10 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use CallbackFilterIterator;
+use Iterator;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
@@ -11,15 +15,21 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-abstract class AbstractXlsxFileIterator extends AbstractFileIterator
+abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements ContainerAwareInterface,
+    InitializableIteratorInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
     /**
      * @var XlsxFileIterator
      */
     protected $xls;
 
     /**
-     * @var \Iterator
+     * @var Iterator
      */
     protected $worksheetIterator;
 
@@ -40,7 +50,11 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
 
         $reader = new \PHPExcel_Reader_Excel2007();
         $this->xls = $reader->load($filePath);
-        $this->worksheetIterator = new \CallbackFilterIterator(
+    }
+
+    public function initialize()
+    {
+        $this->worksheetIterator = new CallbackFilterIterator(
             $this->xls->getWorksheetIterator(),
             function ($worksheet) {
                 return $this->isIncludedWorksheet($worksheet);
@@ -93,6 +107,16 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     }
 
     /**
+     * Returns the associate PHPExcel object
+     *
+     * @return \PHPExcel
+     */
+    public function getExcelObject()
+    {
+        return $this->xls;
+    }
+
+    /**
      * @inheritdoc
      */
     public function valid()
@@ -115,6 +139,14 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
                 $this->initializeValuesIterator();
             }
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 
     /**
@@ -165,83 +197,19 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator
     }
 
     /**
-     * Returns an array of values for a row number
+     * Returns the Excel Helper service
      *
-     * @param \PHPExcel_Worksheet $worksheet
-     * @param int                 $row
-     * @param int                 $startColumn
-     *
-     * @return array
+     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\ExcelHelper
      */
-    protected function getRowDataForRowNumber(\PHPExcel_Worksheet $worksheet, $row, $startColumn = 0)
+    protected function getExcelHelper()
     {
-        return $this->getRowData($worksheet->getRowIterator($row)->current(), $startColumn);
-    }
-
-    /**
-     * Returns an array of values for a row
-     *
-     * @param \PHPExcel_Worksheet_Row $row
-     * @param int                     $startColumn
-     *
-     * @return array
-     */
-    protected function getRowData(\PHPExcel_Worksheet_Row $row, $startColumn = 0)
-    {
-        $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(false);
-        
-        $values = array();
-        foreach ($cellIterator as $cell) {
-            if ($startColumn) {
-                $startColumn--;
-            } else {
-                $values[] = $cell->getValue();
-            }
-        }
-
-
-        while (count($values) && !$values[count($values) - 1]) {
-            unset($values[count($values) - 1]);
-        }
-
-        return $values;
-    }
-
-    /**
-     * Combines array of different sizes
-     * 
-     * @param array $keys
-     * @param array $values
-     * 
-     * @return array
-     */
-    protected function combineArrays(array $keys, array $values)
-    {
-        return array_combine($keys, $this->resizeArray($values, count($keys)));
-    }
-
-    /**
-     * Resizes an array to the specified data count
-     *
-     * @param array $data
-     * @param int   $count
-     *
-     * @return array
-     */
-    protected function resizeArray(array $data, $count)
-    {
-        if (count($data) < $count) {
-            $data = array_merge($data, array_fill(0, $count - count($data), ''));
-        }
-
-        return array_slice($data, 0, $count);
+        return $this->container->get('pim_excel_connector.excel.helper');
     }
 
     /**
      * @param \PHPExcel_Worksheet $worksheet
      *
-     * @return \Iterator
+     * @return Iterator
      */
     abstract protected function createValuesIterator(\PHPExcel_Worksheet $worksheet);
 }

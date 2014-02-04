@@ -2,6 +2,9 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * Factory for file iterators
  *
@@ -11,6 +14,21 @@ namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
  */
 class FileIteratorFactory
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * Constructor
+     *
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Creates an iterator for the given arguments
      *
@@ -23,6 +41,14 @@ class FileIteratorFactory
     public function create($class, $filePath, array $options = array())
     {
         $iterator = new $class($filePath, $options);
+
+        if ($iterator instanceof ContainerAwareInterface) {
+            $iterator->setContainer($this->container);
+        }
+
+        if ($iterator instanceof InitializableIteratorInterface) {
+            $iterator->initialize();
+        }
 
         return $iterator;
     }

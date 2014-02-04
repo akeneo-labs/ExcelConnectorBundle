@@ -7,3 +7,5 @@ parameters:
 services:
     pim_excel_connector.iterator.file.factory:
         class: %pim_excel_connector.iterator.file.factory.class%
+        arguments:
+            - '@service_container'

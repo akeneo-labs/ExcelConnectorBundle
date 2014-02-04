@@ -31,7 +31,8 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
      */
     protected function getFamilyData(\PHPExcel_Worksheet $worksheet)
     {
-        $this->attributeLabels = $this->getRowDataForRowNumber($worksheet, $this->options['attribute_label_row']);
+        $this->attributeLabels = $this->getExcelHelper()
+            ->getRowDataForRowNumber($worksheet, $this->options['attribute_label_row']);
 
         return array(
             'code'               => $worksheet->getCellByColumnAndRow(
@@ -75,18 +76,19 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
      */
     protected function getLabels(\PHPExcel_Worksheet $worksheet)
     {
-        $labels = $this->getRowDataForRowNumber(
+        $helper = $this->getExcelHelper();
+        $labels = $helper->getRowDataForRowNumber(
             $worksheet,
             $this->options['labels_label_row'],
             $this->options['labels_column']
         );
-        $values = $this->getRowDataForRowNumber(
+        $values = $helper->getRowDataForRowNumber(
             $worksheet,
             $this->options['labels_data_row'],
             $this->options['labels_column']
         );
 
-        return $this->combineArrays($labels, $values);
+        return $helper->combineArrays($labels, $values);
     }
 
     /**
@@ -103,7 +105,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
         foreach ($this->getAttributeRowIterator($worksheet) as $row) {
             $attributes[] = trim($worksheet->getCellByColumnAndRow($codeColumn, $row->getRowIndex())->getValue());
         }
-        
+
         return $attributes;
     }
 
@@ -117,10 +119,11 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     protected function getRequirements(\PHPExcel_Worksheet $worksheet)
     {
         $startColumn = count($this->attributeLabels);
-        $families = $this->getRowDataForRowNumber($worksheet, $this->options['family_label_row'], $startColumn);
+        $families = $this->getExcelHelper()
+            ->getRowDataForRowNumber($worksheet, $this->options['family_label_row'], $startColumn);
         $requirements = array_fill_keys($families, array());
         $codeColumn = array_search('code', $this->attributeLabels);
-        
+
         $rowIterator = $worksheet->getRowIterator($this->options['attribute_data_row']);
         foreach ($rowIterator as $row) {
             $code = trim($worksheet->getCellByColumnAndRow($codeColumn, $row->getRowIndex())->getValue());
@@ -131,15 +134,15 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                 }
             }
         }
-        
+
         return $requirements;
     }
 
     /**
      * Returns the code of the attribute used as label for the family
-     * 
+     *
      * @param \PHPExcel_Worksheet $worsheet
-     * 
+     *
      * @return string
      */
     protected function getAttributeAsLabel(\PHPExcel_Worksheet $worksheet)
@@ -158,8 +161,8 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
 
     /**
      * Returns a row iterator for attributes
-     * 
-     * @param \PHPExcel_Worksheet $worksheet
+     *
+     * @param  \PHPExcel_Worksheet     $worksheet
      * @return \CallbackFilterIterator
      */
     protected function getAttributeRowIterator(\PHPExcel_Worksheet $worksheet)
@@ -167,13 +170,14 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
         $codeColumn = array_search('code', $this->attributeLabels);
         $rowIterator = new \CallbackFilterIterator(
             $worksheet->getRowIterator($this->options['attribute_data_row']),
-            function($row) use ($worksheet, $codeColumn) {
+            function ($row) use ($worksheet, $codeColumn) {
                 $code = trim($worksheet->getCellByColumnAndRow($codeColumn, $row->getRowIndex())->getValue());
+
                 return !empty($code);
             }
         );
         $rowIterator->rewind();
-        
+
         return $rowIterator;
     }
 }
