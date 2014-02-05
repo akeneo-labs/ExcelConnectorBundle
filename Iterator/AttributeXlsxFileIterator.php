@@ -25,6 +25,11 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     protected $attributeTypes;
 
     /**
+     * @var XlsxFileIterator
+     */
+    private $innerIterator;
+
+    /**
      * Constructor
      *
      * @param string $filePath
@@ -32,7 +37,8 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
      */
     public function __construct($filePath, array $options = array())
     {
-        parent::__construct(new XlsxFileIterator($filePath, $options));
+        $this->innerIterator = new XlsxFileIterator($filePath, $options);
+        parent::__construct($this->innerIterator);
     }
 
     /**
@@ -75,7 +81,6 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
      */
     public function rewind()
     {
-        $this->getInnerIterator()->initialize();
         parent::rewind();
 
         $xls = $this->getInnerIterator()->getExcelObject();
@@ -103,7 +108,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->getInnerIterator()->setContainer($container);
+        $this->innerIterator->setContainer($container);
     }
 
     /**
