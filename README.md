@@ -4,6 +4,7 @@ Akeneo Excel Connector Bundle
 This bundle contains utility classes used to create Excel connectors.
 It also provides a method to initiate the PIM with a single Excel file.
 
+[![Code Coverage](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/badges/coverage.png?s=73b8f65eb4719873b7ad1f0233db369804d3ab81)](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/)[![Code Coverage](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/badges/coverage.png?s=73b8f65eb4719873b7ad1f0233db369804d3ab81)](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/)
 
 Installing the bundle
 ---------------------
