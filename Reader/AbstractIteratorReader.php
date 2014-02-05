@@ -50,10 +50,7 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
     public function read()
     {
         if (!isset($this->iterator)) {
-            $this->iterator = $this->createIterator();
-            if ($this->batchMode) {
-                $this->iterator = new \ArrayIterator(array(iterator_to_array($this->iterator)));
-            }
+            $this->initializeIterator();
         }
 
         if (!$this->iterator->valid()) {
@@ -67,6 +64,18 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
         $this->iterator->next();
 
         return $current;
+    }
+
+    /**
+     * Initializes the iterator
+     */
+    protected function initializeIterator()
+    {
+        $this->iterator = $this->createIterator();
+        if ($this->batchMode) {
+            $this->iterator = new \ArrayIterator(array(iterator_to_array($this->iterator)));
+        }
+        $this->iterator->rewind();
     }
 
     /**

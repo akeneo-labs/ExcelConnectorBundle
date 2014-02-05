@@ -2,8 +2,6 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
-use CallbackFilterIterator;
-use Iterator;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -15,8 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements ContainerAwareInterface,
-    InitializableIteratorInterface
+abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -29,12 +26,12 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     protected $xls;
 
     /**
-     * @var Iterator
+     * @var \Iterator
      */
     protected $worksheetIterator;
 
     /**
-     * @var Iterator
+     * @var \Iterator
      */
     protected $valuesIterator;
 
@@ -50,20 +47,6 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
 
         $reader = new \PHPExcel_Reader_Excel2007();
         $this->xls = $reader->load($filePath);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize()
-    {
-        $this->worksheetIterator = new CallbackFilterIterator(
-            $this->xls->getWorksheetIterator(),
-            function ($worksheet) {
-                return $this->isIncludedWorksheet($worksheet);
-            }
-        );
-        $this->rewind();
     }
 
     /**
@@ -101,6 +84,12 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      */
     public function rewind()
     {
+        $this->worksheetIterator = new \CallbackFilterIterator(
+            $this->xls->getWorksheetIterator(),
+            function ($worksheet) {
+                return $this->isIncludedWorksheet($worksheet);
+            }
+        );
         $this->worksheetIterator->rewind();
         if ($this->worksheetIterator->valid()) {
             $this->initializeValuesIterator();
@@ -210,7 +199,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * @param \PHPExcel_Worksheet $worksheet
      *
-     * @return Iterator
+     * @return \Iterator
      */
     abstract protected function createValuesIterator(\PHPExcel_Worksheet $worksheet);
 }

@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Oro\Bundle\BatchBundle\Item\UploadedFileAwareInterface;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\FileIteratorFactory;
 use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
-use Pim\Bundle\ExcelConnectorBundle\Iterator\InitializableIteratorInterface;
 
 /**
  * File iterator reader
@@ -171,12 +170,6 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      */
     protected function createIterator()
     {
-        $iterator = $this->iteratorFactory->create($this->iteratorClass, $this->filePath, $this->iteratorOptions);
-
-        if ($iterator instanceof InitializableIteratorInterface) {
-            $iterator->initialize();
-        }
-
-        return $iterator;
+        return $this->iteratorFactory->create($this->iteratorClass, $this->filePath, $this->iteratorOptions);
     }
 }

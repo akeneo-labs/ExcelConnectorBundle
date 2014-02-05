@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class AttributeXlsxFileIterator extends \FilterIterator implements InitializableIteratorInterface, ContainerAwareInterface
+class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -73,10 +73,10 @@ class AttributeXlsxFileIterator extends \FilterIterator implements Initializable
     /**
      * {@inheritdoc}
      */
-    public function initialize()
+    public function rewind()
     {
         $this->getInnerIterator()->initialize();
-        $this->rewind();
+        parent::rewind();
 
         $xls = $this->getInnerIterator()->getExcelObject();
         $attributeWorksheet = null;
