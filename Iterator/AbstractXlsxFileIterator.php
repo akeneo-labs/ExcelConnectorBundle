@@ -52,6 +52,9 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
         $this->xls = $reader->load($filePath);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function initialize()
     {
         $this->worksheetIterator = new CallbackFilterIterator(
@@ -126,8 +129,6 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
 
     /**
      * Initializes the current record
-     *
-     * @return type
      */
     protected function initializeValuesIterator()
     {
