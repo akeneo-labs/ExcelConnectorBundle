@@ -23,7 +23,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Iterator\XlsxFileIterator');
     }
 
-    public function it_should_read_multiple_tabs()
+    public function it_can_read_multiple_tabs()
     {
         $this->beConstructedWith(__DIR__ . '/../fixtures/lists.xlsx', array());
         $this->setContainer($this->container);
@@ -107,6 +107,28 @@ class XlsxFileIteratorSpec extends ObjectBehavior
             array('tab1_column1' => 'tab1_value2', 'tab1_column2' => 'tab1_value4'),
             array('tab2_column1' => 'tab2_value1', 'tab2_column2' => 'tab2_value3'),
             array('tab2_column1' => 'tab2_value2', 'tab2_column2' => 'tab2_value4'),
+        );
+        foreach ($values as $row) {
+            $this->current()->shouldReturn($row);
+            $this->next();
+        }
+        $this->valid()->shouldReturn(false);
+    }
+
+    public function it_can_use_a_different_data_range()
+    {
+        $this->beConstructedWith(
+            __DIR__ . '/../fixtures/with_header.xlsx',
+            array(
+                'label_row' => 2,
+                'data_row'  => 4
+            )
+        );
+        $this->setContainer($this->container);
+        $this->initialize();
+        $values = array(
+            array('column1' => 'value1', 'column2' => 'value2'),
+            array('column1' => 'value3', 'column2' => 'value4'),
         );
         foreach ($values as $row) {
             $this->current()->shouldReturn($row);
