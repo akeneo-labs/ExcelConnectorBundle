@@ -60,7 +60,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
         $this->worksheetIterator = new CallbackFilterIterator(
             $this->xls->getWorksheetIterator(),
             function ($worksheet) {
-                return $this->isIncludedWorksheet($worksheet);
+                return $this->isReadableWorksheet($worksheet);
             }
         );
         $this->rewind();
@@ -151,37 +151,58 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     }
 
     /**
-     * Returns true if the worksheet should be included
+     * Returns true if the worksheet should be read
      *
      * @param \PHPExcel_Worksheet $worksheet
      *
      * @return boolean
      */
-    protected function isIncludedWorksheet(\PHPExcel_Worksheet $worksheet)
+    protected function isReadableWorksheet(\PHPExcel_Worksheet $worksheet)
     {
         $title = $worksheet->getTitle();
 
-        if (isset($this->options['include_worksheets'])) {
-            $included = false;
-            foreach ($this->options['include_worksheets'] as $regexp) {
-                if (preg_match($regexp, $title)) {
-                    $included = true;
-                    break;
-                }
-            }
+        return $this->isIncludedWorksheet($title) && !$this->isExcludedWorksheet($title);
+    }
 
-            if (!$included) {
-                return false;
+    /**
+     * Returns true if the worksheet should be indluded
+     *
+     * @param string $title The title of the worksheet
+     *
+     * @return boolean
+     */
+    protected function isIncludedWorksheet($title)
+    {
+        if (!isset($this->options['include_worksheets'])) {
+            return true;
+        }
+
+        foreach ($this->options['include_worksheets'] as $regexp) {
+            if (preg_match($regexp, $title)) {
+                return true;
             }
         }
 
+        return false;
+    }
+
+
+    /**
+     * Returns true if the worksheet should be excluded
+     *
+     * @param string $title The title of the worksheet
+     *
+     * @return boolean
+     */
+    protected function isExcludedWorksheet($title)
+    {
         foreach ($this->options['exclude_worksheets'] as $regexp) {
             if (preg_match($regexp, $title)) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     /**
