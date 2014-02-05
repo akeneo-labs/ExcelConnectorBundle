@@ -69,6 +69,9 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
         $this->iteratorOptions = $iteratorOptions;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getConfigurationFields()
     {
         return array(
@@ -102,7 +105,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     /**
      * Set uploaded file
      *
-     * @param string $uploadedFile
+     * @param File $uploadedFile
      *
      * @return FileIteratorReader
      */
