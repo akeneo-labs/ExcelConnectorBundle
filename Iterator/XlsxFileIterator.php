@@ -60,7 +60,7 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
             array(
                 'skip_empty' => false,
                 'label_row'  => 1,
-                'data_row'   => 1
+                'data_row'   => 2
             )
         );
     }
