@@ -83,7 +83,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     {
         parent::rewind();
 
-        $xls = $this->getInnerIterator()->getExcelObject();
+        $xls = $this->innerIterator->getExcelObject();
         $attributeWorksheet = null;
         $helper = $this->getExcelHelper();
         foreach ($xls->getWorksheetIterator() as $worksheet) {
