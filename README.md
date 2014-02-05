@@ -1,4 +1,31 @@
-ExcelConnectorBundle
-====================
+Akeneo Excel Connector Bundle
+=============================
 
-Excel Connector
+This bundle contains utility classes used to create Excel connectors.
+It also provides a method to initiate the PIM with a single Excel file.
+
+
+Installing the bundle
+---------------------
+From your application root:
+
+    $ php composer.phar require --prefer-dist "akeneo/excel-connector-bundle=dev-master"
+
+Register the bundle by adding the following line inside the `app/AppKernel.php` file, just before the "return $bundles;" line:
+
+    $bundles[] = new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle();
+
+
+Initializing the PIM with an Excel file
+---------------------------------------
+
+To initialize the PIM with an Excel file, use the following steps :
+
+ * Copy the Resources/fixtures/minimal folder inside the Resources/fixtures folder of one of your bundles.
+ * Edit the init.xlsx file to your needs
+ * Define the data used by the installer in the parameters.yml file:
+
+    installer_data: 'AcmeDemoBundle:minimal'
+
+The init.xlsx file can also be loaded individually by using the pim:installer:load-fixtures command.
+
