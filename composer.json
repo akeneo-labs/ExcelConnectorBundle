@@ -1,6 +1,6 @@
 {
     "name": "akeneo/excel-connector-bundle",
-    "type": "symfony/bundle",
+    "type": "symfony-bundle",
     "description": "Akeneo PIM Excel connector bundle",
     "keywords": ["pim", "akeneo", "ecommerce", "e-commerce", "excel", "connector"],
     "homepage": "http://akeneo.com",
@@ -8,7 +8,8 @@
     "authors": [
         {
             "name": "Antoine Guigan",
-            "email": "antoine@akeneo.com"
+            "email": "antoine@akeneo.com",
+            "homepage": "http://akeneo.com"
         }
     ],
     "repositories": [
