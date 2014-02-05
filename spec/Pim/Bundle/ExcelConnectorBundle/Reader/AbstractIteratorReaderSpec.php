@@ -1,12 +1,17 @@
 <?php
 
-namespace spec\Pim\Bundle\ExcelConnectorBundle\Tests\Stubs\Reader;
+namespace spec\Pim\Bundle\ExcelConnectorBundle\Reader;
 
 use Oro\Bundle\BatchBundle\Entity\StepExecution;
 use PhpSpec\ObjectBehavior;
 
-class ArrayIteratorReaderSpec extends ObjectBehavior
+class AbstractIteratorReaderSpec extends ObjectBehavior
 {
+    public function let()
+    {
+        $this->beAnInstanceOf('Pim\Bundle\ExcelConnectorBundle\Tests\Stubs\Reader\ArrayIteratorReader');
+    }
+
     public function it_is_initializable()
     {
         $this->beConstructedWith(array());

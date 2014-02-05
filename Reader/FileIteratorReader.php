@@ -15,7 +15,7 @@ use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-abstract class AbstractFileIteratorReader extends AbstractIteratorReader implements UploadedFileAwareInterface
+class FileIteratorReader extends AbstractIteratorReader implements UploadedFileAwareInterface
 {
     /**
      * @var FileIteratorFactory
@@ -46,7 +46,7 @@ abstract class AbstractFileIteratorReader extends AbstractIteratorReader impleme
      * @Assert\Type(type="bool")
      * @Assert\True(groups={"UploadExecution"})
      */
-    protected $uploadAllowed;
+    protected $uploadAllowed = false;
 
     /**
      * Constructor
