@@ -47,7 +47,7 @@ class ExcelHelper
             }
         }
 
-        while (count($values) && !$values[count($values) - 1]) {
+        while (count($values) && '' === trim($values[count($values) - 1])) {
             unset($values[count($values) - 1]);
         }
 
