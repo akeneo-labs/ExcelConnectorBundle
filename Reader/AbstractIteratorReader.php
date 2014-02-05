@@ -37,7 +37,7 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
      *
      * @param boolean $batchMode
      */
-    public function __construct($batchMode)
+    public function __construct($batchMode = false)
     {
         $this->batchMode = $batchMode;
     }

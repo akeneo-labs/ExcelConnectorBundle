@@ -167,6 +167,12 @@ abstract class AbstractFileIteratorReader extends AbstractIteratorReader impleme
      */
     protected function createIterator()
     {
-        return $this->iteratorFactory->create($this->iteratorClass, $this->filePath, $this->iteratorOptions);
+        $iterator = $this->iteratorFactory->create($this->iteratorClass, $this->filePath, $this->iteratorOptions);
+
+        if ($iterator instanceof InitializableIteratorInterface) {
+            $iterator->initialize();
+        }
+
+        return $iterator;
     }
 }

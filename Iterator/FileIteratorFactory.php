@@ -46,10 +46,6 @@ class FileIteratorFactory
             $iterator->setContainer($this->container);
         }
 
-        if ($iterator instanceof InitializableIteratorInterface) {
-            $iterator->initialize();
-        }
-
         return $iterator;
     }
 }
