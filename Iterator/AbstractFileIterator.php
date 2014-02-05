@@ -27,8 +27,8 @@ abstract class AbstractFileIterator implements \Iterator
     /**
      * Constructor
      *
-     * @param type  $filePath
-     * @param array $options
+     * @param string $filePath
+     * @param array  $options
      */
     public function __construct($filePath, array $options = array())
     {

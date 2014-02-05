@@ -141,7 +141,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     /**
      * Returns the code of the attribute used as label for the family
      *
-     * @param \PHPExcel_Worksheet $worsheet
+     * @param \PHPExcel_Worksheet $worksheet
      *
      * @return string
      */

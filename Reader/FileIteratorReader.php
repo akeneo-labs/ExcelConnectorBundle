@@ -42,7 +42,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     protected $filePath;
 
     /**
-     * @var string
+     * @var boolean
      *
      * @Assert\Type(type="bool")
      * @Assert\True(groups={"UploadExecution"})
@@ -104,7 +104,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      *
      * @param string $uploadedFile
      *
-     * @return AbstractFileIteratorReader
+     * @return FileIteratorReader
      */
     public function setUploadedFile(File $uploadedFile)
     {
@@ -119,7 +119,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      *
      * @param string $filePath
      *
-     * @return AbstractFileIteratorReader
+     * @return FileIteratorReader
      */
     public function setFilePath($filePath)
     {
@@ -134,7 +134,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      *
      * @param boolean $uploadAllowed
      *
-     * @return AbstractFileIteratorReader
+     * @return FileIteratorReader
      */
     public function setUploadAllowed($uploadAllowed)
     {
