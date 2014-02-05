@@ -34,6 +34,17 @@ class FileIteratorReaderSpec extends ObjectBehavior
         }
     }
 
+    public function it_initializes_iterators(\Iterator $iterator)
+    {
+        $iterator->implement('Pim\Bundle\ExcelConnectorBundle\Iterator\InitializableIteratorInterface');
+        $iterator->initialize()->shouldBeCalledTimes(1);
+        $iterator->valid()->willReturn(false);
+        $this->setFilePath('file_path');
+        $this->iteratorFactory->create('iterator_class', 'file_path', array('iterator_options'))
+            ->willReturn($iterator);
+        $this->read()->shouldReturn(null);
+    }
+
     public function it_has_a_file_path_property()
     {
         $this->setFilePath('file_path');
