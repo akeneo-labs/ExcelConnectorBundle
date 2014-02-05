@@ -122,6 +122,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     protected function initializeValuesIterator()
     {
         $this->valuesIterator = $this->createValuesIterator($this->worksheetIterator->current());
+        $this->valuesIterator->rewind();
         if (!$this->valuesIterator->valid()) {
             $this->valuesIterator = null;
             $this->worksheetIterator->next();
