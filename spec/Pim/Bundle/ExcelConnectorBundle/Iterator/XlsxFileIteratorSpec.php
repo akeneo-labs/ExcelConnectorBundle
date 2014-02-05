@@ -136,4 +136,25 @@ class XlsxFileIteratorSpec extends ObjectBehavior
         }
         $this->valid()->shouldReturn(false);
     }
+
+    public function it_can_skip_empty_values()
+    {
+        $this->beConstructedWith(
+            __DIR__ . '/../fixtures/with_empty.xlsx',
+            array(
+                'skip_empty' => true,
+            )
+        );
+        $this->setContainer($this->container);
+        $this->initialize();
+        $values = array(
+            array('column1' => 'value1', 'column3' => 'value2'),
+            array('column1' => 'value3', 'column2' => 'value4'),
+        );
+        foreach ($values as $row) {
+            $this->current()->shouldReturn($row);
+            $this->next();
+        }
+        $this->valid()->shouldReturn(false);
+    }
 }
