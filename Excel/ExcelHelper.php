@@ -82,9 +82,9 @@ class ExcelHelper
 
     /**
      * Strips empty values from the end of an array
-     * 
+     *
      * @param array $values
-     * 
+     *
      * @return array
      */
     protected function trimArray(array $values)
