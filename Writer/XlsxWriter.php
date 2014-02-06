@@ -42,6 +42,20 @@ class XlsWriter extends FileWriter implements InitializableInterface
     protected $builder;
 
     /**
+     * Constructor
+     * 
+     * @param ExcelBuilderFactory $builderFactory
+     * @param type $builderClass
+     * @param type $builderOptions
+     */
+    function __construct(ExcelBuilderFactory $builderFactory, $builderClass, $builderOptions)
+    {
+        $this->builderFactory = $builderFactory;
+        $this->builderClass = $builderClass;
+        $this->builderOptions = $builderOptions;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function initialize()
