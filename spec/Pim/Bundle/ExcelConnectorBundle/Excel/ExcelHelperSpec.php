@@ -47,6 +47,7 @@ class ExcelHelperSpec extends ObjectBehavior
     }
 
     /**
+     * Returns a worksheet by file name and worksheet name
      *
      * @param string $fileName
      * @param string $worksheetName

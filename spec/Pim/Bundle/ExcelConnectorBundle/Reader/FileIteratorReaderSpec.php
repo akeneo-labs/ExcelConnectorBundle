@@ -9,11 +9,8 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class FileIteratorReaderSpec extends ObjectBehavior
 {
-    protected $iteratorFactory;
-
     public function let(FileIteratorFactory $iteratorFactory)
     {
-        $this->iteratorFactory = $iteratorFactory;
         $this->beConstructedWith($iteratorFactory, 'iterator_class', array('iterator_options'));
     }
 
@@ -22,10 +19,10 @@ class FileIteratorReaderSpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Reader\FileIteratorReader');
     }
 
-    public function it_calls_the_iterator_factory()
+    public function it_calls_the_iterator_factory(FileIteratorFactory $iteratorFactory)
     {
         $values = array('value1', 'value2', 'value3');
-        $this->iteratorFactory->create('iterator_class', 'file_path', array('iterator_options'))
+        $iteratorFactory->create('iterator_class', 'file_path', array('iterator_options'))
             ->willReturn(new ArrayIterator($values));
 
         $this->setFilePath('file_path');

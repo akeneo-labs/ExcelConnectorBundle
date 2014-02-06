@@ -8,13 +8,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class XlsxFileIteratorSpec extends ObjectBehavior
 {
-    protected $container;
-
     public function let(ContainerInterface $container)
     {
         $helper = new ExcelHelper;
-        $this->container = $container;
-        $this->container->get('pim_excel_connector.excel.helper')->willReturn($helper);
+        $container->get('pim_excel_connector.excel.helper')->willReturn($helper);
     }
 
     public function it_is_initializable()
@@ -23,10 +20,10 @@ class XlsxFileIteratorSpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Iterator\XlsxFileIterator');
     }
 
-    public function it_can_read_multiple_tabs()
+    public function it_can_read_multiple_tabs(ContainerInterface $container)
     {
         $this->beConstructedWith(__DIR__ . '/../fixtures/lists.xlsx', array());
-        $this->setContainer($this->container);
+        $this->setContainer($container);
         $this->rewind();
         $values = array(
             array('tab1_column1' => 'tab1_value1', 'tab1_column2' => 'tab1_value3'),
@@ -45,13 +42,13 @@ class XlsxFileIteratorSpec extends ObjectBehavior
         $this->valid()->shouldReturn(false);
     }
 
-    public function it_can_filter_non_included_tabs()
+    public function it_can_filter_non_included_tabs(ContainerInterface $container)
     {
         $this->beConstructedWith(
             __DIR__ . '/../fixtures/lists.xlsx',
             array('include_worksheets' => array('/included/'))
         );
-        $this->setContainer($this->container);
+        $this->setContainer($container);
         $this->rewind();
         $values = array(
             array('tab1_column1' => 'tab1_value1', 'tab1_column2' => 'tab1_value3'),
@@ -68,13 +65,13 @@ class XlsxFileIteratorSpec extends ObjectBehavior
         $this->valid()->shouldReturn(false);
     }
 
-    public function it_can_filter_excluded_tabs()
+    public function it_can_filter_excluded_tabs(ContainerInterface $container)
     {
         $this->beConstructedWith(
             __DIR__ . '/../fixtures/lists.xlsx',
             array('exclude_worksheets' => array('/excluded/'))
         );
-        $this->setContainer($this->container);
+        $this->setContainer($container);
         $this->rewind();
         $values = array(
             array('tab1_column1' => 'tab1_value1', 'tab1_column2' => 'tab1_value3'),
@@ -91,7 +88,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
         $this->valid()->shouldReturn(false);
     }
 
-    public function it_can_filter_included_and_excluded_tabs()
+    public function it_can_filter_included_and_excluded_tabs(ContainerInterface $container)
     {
         $this->beConstructedWith(
             __DIR__ . '/../fixtures/lists.xlsx',
@@ -100,7 +97,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
                 'include_worksheets' => array('/included/'),
             )
         );
-        $this->setContainer($this->container);
+        $this->setContainer($container);
         $this->rewind();
         $values = array(
             array('tab1_column1' => 'tab1_value1', 'tab1_column2' => 'tab1_value3'),
@@ -115,7 +112,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
         $this->valid()->shouldReturn(false);
     }
 
-    public function it_can_use_a_different_data_range()
+    public function it_can_use_a_different_data_range(ContainerInterface $container)
     {
         $this->beConstructedWith(
             __DIR__ . '/../fixtures/with_header.xlsx',
@@ -124,7 +121,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
                 'data_row'  => 4
             )
         );
-        $this->setContainer($this->container);
+        $this->setContainer($container);
         $this->rewind();
         $values = array(
             array('column1' => 'value1', 'column2' => 'value2'),
@@ -137,7 +134,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
         $this->valid()->shouldReturn(false);
     }
 
-    public function it_can_skip_empty_values()
+    public function it_can_skip_empty_values(ContainerInterface $container)
     {
         $this->beConstructedWith(
             __DIR__ . '/../fixtures/with_empty.xlsx',
@@ -145,7 +142,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
                 'skip_empty' => true,
             )
         );
-        $this->setContainer($this->container);
+        $this->setContainer($container);
         $this->rewind();
         $values = array(
             array('column1' => 'value1', 'column3' => 'value2'),
