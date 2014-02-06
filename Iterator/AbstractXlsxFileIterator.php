@@ -186,7 +186,6 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
         return false;
     }
 
-
     /**
      * Returns true if the worksheet should be excluded
      *
