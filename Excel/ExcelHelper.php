@@ -80,6 +80,13 @@ class ExcelHelper
         return array_slice($data, 0, $count);
     }
 
+    /**
+     * Strips empty values from the end of an array
+     * 
+     * @param array $values
+     * 
+     * @return array
+     */
     protected function trimArray(array $values)
     {
         while (count($values) && '' === trim($values[count($values) - 1])) {
