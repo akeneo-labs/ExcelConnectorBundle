@@ -47,11 +47,7 @@ class ExcelHelper
             }
         }
 
-        while (count($values) && '' === trim($values[count($values) - 1])) {
-            unset($values[count($values) - 1]);
-        }
-
-        return $values;
+        return $this->trimArray($values);
     }
 
     /**
@@ -82,5 +78,14 @@ class ExcelHelper
         }
 
         return array_slice($data, 0, $count);
+    }
+
+    protected function trimArray(array $values)
+    {
+        while (count($values) && '' === trim($values[count($values) - 1])) {
+            unset($values[count($values) - 1]);
+        }
+
+        return $values;
     }
 }
