@@ -82,24 +82,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     public function rewind()
     {
         parent::rewind();
-
-        $xls = $this->innerIterator->getExcelObject();
-        $attributeWorksheet = null;
-        $helper = $this->getExcelHelper();
-        foreach ($xls->getWorksheetIterator() as $worksheet) {
-            if ($worksheet->getTitle() == 'attribute_types') {
-                $attributeWorksheet = $worksheet;
-                break;
-            }
-        }
-        if (!$attributeWorksheet) {
-            throw new \Exception('No attribute_types worksheet in the excel file');
-        }
-        $this->attributeTypes = array();
-        foreach ($attributeWorksheet->getRowIterator(2) as $row) {
-            $data = $helper->getRowData($row);
-            $this->attributeTypes[$data[1]] = $data[0];
-        }
+        $this->initializeAttributeTypes();
     }
 
     /**
@@ -119,5 +102,43 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     protected function getExcelHelper()
     {
         return $this->container->get('pim_excel_connector.excel.helper');
+    }
+
+    /**
+     * Initializes the attribute types dictionnary
+     */
+    protected function initializeAttributeTypes()
+    {
+        $attributeWorksheet = $this->getAttributeWorksheet();
+        $helper = $this->getExcelHelper();
+        $this->attributeTypes = array();
+        foreach ($attributeWorksheet->getRowIterator(2) as $row) {
+            $data = $helper->getRowData($row);
+            $this->attributeTypes[$data[1]] = $data[0];
+        }
+    }
+
+    /**
+     * Returns the attribute worksheet
+     *
+     * @throws \RuntimeException
+     *
+     * @return \PHPExcel_Worksheet
+     */
+    protected function getAttributeWorksheet()
+    {
+        $xls = $this->innerIterator->getExcelObject();
+        $attributeWorksheet = null;
+        foreach ($xls->getWorksheetIterator() as $worksheet) {
+            if ($worksheet->getTitle() == 'attribute_types') {
+                $attributeWorksheet = $worksheet;
+                break;
+            }
+        }
+        if (!$attributeWorksheet) {
+            throw new \RuntimeException('No attribute_types worksheet in the excel file');
+        }
+
+        return $attributeWorksheet;
     }
 }
