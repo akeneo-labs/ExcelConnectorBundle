@@ -27,7 +27,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
     {
         $this->beConstructedWith(__DIR__ . '/../fixtures/lists.xlsx', array());
         $this->setContainer($this->container);
-        $this->initialize();
+        $this->rewind();
         $values = array(
             array('tab1_column1' => 'tab1_value1', 'tab1_column2' => 'tab1_value3'),
             array('tab1_column1' => 'tab1_value2', 'tab1_column2' => 'tab1_value4'),
@@ -52,7 +52,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
             array('include_worksheets' => array('/included/'))
         );
         $this->setContainer($this->container);
-        $this->initialize();
+        $this->rewind();
         $values = array(
             array('tab1_column1' => 'tab1_value1', 'tab1_column2' => 'tab1_value3'),
             array('tab1_column1' => 'tab1_value2', 'tab1_column2' => 'tab1_value4'),
@@ -75,7 +75,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
             array('exclude_worksheets' => array('/excluded/'))
         );
         $this->setContainer($this->container);
-        $this->initialize();
+        $this->rewind();
         $values = array(
             array('tab1_column1' => 'tab1_value1', 'tab1_column2' => 'tab1_value3'),
             array('tab1_column1' => 'tab1_value2', 'tab1_column2' => 'tab1_value4'),
@@ -101,7 +101,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
             )
         );
         $this->setContainer($this->container);
-        $this->initialize();
+        $this->rewind();
         $values = array(
             array('tab1_column1' => 'tab1_value1', 'tab1_column2' => 'tab1_value3'),
             array('tab1_column1' => 'tab1_value2', 'tab1_column2' => 'tab1_value4'),
@@ -125,7 +125,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
             )
         );
         $this->setContainer($this->container);
-        $this->initialize();
+        $this->rewind();
         $values = array(
             array('column1' => 'value1', 'column2' => 'value2'),
             array('column1' => 'value3', 'column2' => 'value4'),
@@ -146,7 +146,7 @@ class XlsxFileIteratorSpec extends ObjectBehavior
             )
         );
         $this->setContainer($this->container);
-        $this->initialize();
+        $this->rewind();
         $values = array(
             array('column1' => 'value1', 'column3' => 'value2'),
             array('column1' => 'value3', 'column2' => 'value4'),
