@@ -109,10 +109,10 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
      */
     protected function initializeAttributeTypes()
     {
-        $attributeWorksheet = $this->getAttributeWorksheet();
+        $worksheet = $this->getAttributeTypesWorksheet();
         $helper = $this->getExcelHelper();
         $this->attributeTypes = array();
-        foreach ($attributeWorksheet->getRowIterator(2) as $row) {
+        foreach ($worksheet->getRowIterator(2) as $row) {
             $data = $helper->getRowData($row);
             $this->attributeTypes[$data[1]] = $data[0];
         }
@@ -125,20 +125,13 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
      *
      * @return \PHPExcel_Worksheet
      */
-    protected function getAttributeWorksheet()
+    protected function getAttributeTypesWorksheet()
     {
-        $xls = $this->innerIterator->getExcelObject();
-        $attributeWorksheet = null;
-        foreach ($xls->getWorksheetIterator() as $worksheet) {
-            if ($worksheet->getTitle() == 'attribute_types') {
-                $attributeWorksheet = $worksheet;
-                break;
-            }
-        }
-        if (!$attributeWorksheet) {
+        $worksheet = $this->innerIterator->getExcelObject()->getSheetByName('attribute_types');
+        if (!$worksheet) {
             throw new \RuntimeException('No attribute_types worksheet in the excel file');
         }
 
-        return $attributeWorksheet;
+        return $worksheet;
     }
 }
