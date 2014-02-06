@@ -56,7 +56,6 @@ services:
             - label_row: 3
               data_row: 4
               include_worksheets: [ '/^association_types/' ]
-            - true
 
     pim_excel_connector.reader.xls_init.attribute:
         parent: pim_excel_connector.reader.xls_init
