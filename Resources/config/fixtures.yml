@@ -57,6 +57,13 @@ xls_init_attributes:
         reader:         pim_excel_connector.reader.xls_init.attribute
         processor:      pim_base_connector.processor.attribute
 
+xls_init_attribute_options:
+    order: 50
+    file_name: init
+    xlsx:
+        reader:         pim_excel_connector.reader.xls_init.attribute_option
+        processor:      pim_base_connector.processor.attribute_option
+
 xls_init_families:
     order: 60
     file_name: init

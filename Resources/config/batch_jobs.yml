@@ -1,0 +1,55 @@
+connector:
+    name: Akeneo Excel Connector
+    jobs:
+        init_import:
+            title: pim_excel_connector.jobs.init_import.import.title
+            type: import
+            steps:
+                attribute_groups:
+                    title: pim_excel_connector.jobs.attribute_group.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls_init.attribute_group
+                        processor: pim_base_connector.processor.attribute_group
+                        writer:    pim_excel_connector.writer.orm.attribute_group
+                group_types:
+                    title: pim_excel_connector.jobs.group_type.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls_init.group_type
+                        processor: pim_base_connector.processor.group_type
+                        writer:    pim_excel_connector.writer.orm.group_type
+                association_types:
+                    title: pim_excel_connector.jobs.association_type.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls_init.association_type
+                        processor: pim_base_connector.processor.association_type
+                        writer:    pim_base_connector.writer.orm.association_type
+                categories:
+                    title: pim_excel_connector.jobs.category.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls_init.category
+                        processor: pim_base_connector.processor.category
+                        writer:    pim_base_connector.writer.orm.category
+                channels:
+                    title: pim_excel_connector.jobs.channel.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls_init.channel
+                        processor: pim_base_connector.processor.channel
+                        writer:    pim_excel_connector.writer.orm.channel
+                attributes:
+                    title: pim_excel_connector.jobs.attribute.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls_init.attribute
+                        processor: pim_base_connector.processor.attribute
+                        writer:    pim_base_connector.writer.orm.attribute
+                attribute_options:
+                    title: pim_excel_connector.jobs.attribute_option.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls_init.attribute_option
+                        processor: pim_base_connector.processor.attribute_option
+                        writer:    pim_base_connector.writer.orm.attribute_option
+                families:
+                    title: pim_excel_connector.jobs.family.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls_init.family
+                        processor: pim_base_connector.processor.family
+                        writer:    pim_excel_connector.writer.orm.family

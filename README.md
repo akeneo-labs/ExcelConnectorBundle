@@ -17,6 +17,10 @@ Register the bundle by adding the following line inside the `app/AppKernel.php` 
     $bundles[] = new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle();
 
 
+WARNING: while the PIM is not released in its 1.0 version, it might be better to manually edit composer.json and 
+proceed to a composer.phar update akeneo/excel-connector-bundle
+
+
 Initializing the PIM with an Excel file
 ---------------------------------------
 
@@ -28,5 +32,8 @@ To initialize the PIM with an Excel file, use the following steps :
 
     installer_data: 'AcmeDemoBundle:minimal'
 
-The init.xlsx file can also be loaded individually by using the pim:installer:load-fixtures command.
+The init.xlsx file can also be loaded in the following ways :
+
+ * individually by using the pim:installer:load-fixtures command.
+ * using the "Initialisation import" from the "Akeneo Excel Connector"
 

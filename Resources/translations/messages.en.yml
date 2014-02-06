@@ -1,0 +1,29 @@
+pim_excel_connector:
+    jobs:
+        init_import:
+            import:
+                title: Initialisation import
+        attribute_group:
+            import:
+                title: Attribute group import
+        group_type:
+            import:
+                title: Group type import
+        association_type:
+            import:
+                title: Association type import
+        category:
+            import:
+                title: Category import
+        channel:
+            import:
+                title: Channel import
+        attribute:
+            import:
+                title: Attribute import
+        attribute_option:
+            import:
+                title: Attribute option import
+        family:
+            import:
+                title: Family import

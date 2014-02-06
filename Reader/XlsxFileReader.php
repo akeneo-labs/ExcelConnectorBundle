@@ -2,6 +2,9 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
+use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * XLSX file reader
  *
@@ -33,7 +36,7 @@ class XlsxFileReader extends FileIteratorReader
             new Assert\NotBlank(),
             new AssertFile(
                 array(
-                    'allowedExtensions' => array('csv', 'zip'),
+                    'allowedExtensions' => array('xlsx'),
                     'mimeTypes'         => array(
                         'application/vnd.ms-excel',
                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

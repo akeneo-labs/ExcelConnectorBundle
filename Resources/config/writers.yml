@@ -1,0 +1,20 @@
+services:
+    pim_excel_connector.writer.orm.attribute_group:
+        class: %pim_base_connector.writer.orm.entity.class%
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+
+    pim_excel_connector.writer.orm.group_type:
+        class: %pim_base_connector.writer.orm.entity.class%
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+
+    pim_excel_connector.writer.orm.channel:
+        class: %pim_base_connector.writer.orm.entity.class%
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+
+    pim_excel_connector.writer.orm.family:
+        class: %pim_base_connector.writer.orm.entity.class%
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
