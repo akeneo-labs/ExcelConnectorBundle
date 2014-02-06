@@ -1,0 +1,62 @@
+<?php
+
+namespace Pim\Bundle\ExcelConnectorBundle\Processor;
+
+use Oro\Bundle\BatchBundle\Item\AbstractConfigurableStepElement;
+use Oro\Bundle\BatchBundle\Item\ItemProcessorInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
+/**
+ * Processor encoding the data for a specific format
+ *
+ * @author    Antoine Guigan <antoine@akeneo.com>
+ * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+class NormalizerProcessor extends AbstractConfigurableStepElement implements ItemProcessorInterface
+{
+    /**
+     * @var NormalizerInterface
+     */
+    protected $normalizer;
+
+    /**
+     * @var string
+     */
+    protected $format;
+
+    /**
+     * @var array
+     */
+    protected $context;
+
+    /**
+     * Constructor
+     * 
+     * @param \Symfony\Component\Serializer\normalizer\normalizerInterface $normalizer
+     * @param string $format
+     * @param array $context
+     */
+    function __construct(normalizerInterface $normalizer, $format, $context)
+    {
+        $this->normalizer = $normalizer;
+        $this->format = $format;
+        $this->context = $context;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigurationFields()
+    {
+        return array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function process($item)
+    {
+        return $this->normalizer->normalize($item, $this->format, $this->context);
+    }
+}
