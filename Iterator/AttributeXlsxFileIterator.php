@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class AttributeXlsxFileIterator extends \FilterIterator implements InitializableIteratorInterface, ContainerAwareInterface
+class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -25,6 +25,11 @@ class AttributeXlsxFileIterator extends \FilterIterator implements Initializable
     protected $attributeTypes;
 
     /**
+     * @var XlsxFileIterator
+     */
+    private $innerIterator;
+
+    /**
      * Constructor
      *
      * @param string $filePath
@@ -32,7 +37,8 @@ class AttributeXlsxFileIterator extends \FilterIterator implements Initializable
      */
     public function __construct($filePath, array $options = array())
     {
-        parent::__construct(new XlsxFileIterator($filePath, $options));
+        $this->innerIterator = new XlsxFileIterator($filePath, $options);
+        parent::__construct($this->innerIterator);
     }
 
     /**
@@ -73,12 +79,11 @@ class AttributeXlsxFileIterator extends \FilterIterator implements Initializable
     /**
      * {@inheritdoc}
      */
-    public function initialize()
+    public function rewind()
     {
-        $this->getInnerIterator()->initialize();
-        $this->rewind();
+        parent::rewind();
 
-        $xls = $this->getInnerIterator()->getExcelObject();
+        $xls = $this->innerIterator->getExcelObject();
         $attributeWorksheet = null;
         $helper = $this->getExcelHelper();
         foreach ($xls->getWorksheetIterator() as $worksheet) {
@@ -103,7 +108,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements Initializable
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->getInnerIterator()->setContainer($container);
+        $this->innerIterator->setContainer($container);
     }
 
     /**
