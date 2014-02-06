@@ -47,7 +47,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     public function accept()
     {
         $data = $this->current();
-        unset($data['code']);
+        unset($data['code'], $data['use_as_label']);
 
         foreach ($data as $value) {
             if (trim($value)) {
@@ -68,9 +68,8 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
 
         if (isset($item['type'])) {
             if (isset($this->attributeTypes[$item['type']])) {
-                $item['attribute_type'] = $this->attributeTypes[$item['type']];
+                $item['type'] = $this->attributeTypes[$item['type']];
             }
-            unset($item['type']);
         }
 
         return $item;
