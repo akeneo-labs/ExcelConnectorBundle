@@ -1,6 +1,0 @@
-parameters:
-    pim_excel_connector.excel.helper.class: Pim\Bundle\ExcelConnectorBundle\Excel\ExcelHelper
-
-services:
-    pim_excel_connector.excel.helper:
-        class: %pim_excel_connector.excel.helper.class%

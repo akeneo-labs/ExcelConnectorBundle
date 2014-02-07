@@ -1,0 +1,9 @@
+parameters:
+    pim_excel_connector.processor.normalizer.class: Pim\Bundle\ExcelConnectorBundle\Processor\NormalizerProcessor
+
+services:
+    pim_excel_connector.processor.normalizer.product_csv:
+        class: %pim_excel_connector.processor.normalizer.class%
+        arguments:
+            - '@pim_serializer'
+            - csv

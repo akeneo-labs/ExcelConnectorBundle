@@ -33,11 +33,11 @@ class NormalizerProcessor extends AbstractConfigurableStepElement implements Ite
     /**
      * Constructor
      *
-     * @param \Symfony\Component\Serializer\normalizer\normalizerInterface $normalizer
-     * @param string                                                       $format
-     * @param array                                                        $context
+     * @param NormalizerInterface $normalizer
+     * @param string              $format
+     * @param array               $context
      */
-    public function __construct(normalizerInterface $normalizer, $format, $context)
+    public function __construct(NormalizerInterface $normalizer, $format, array $context = array())
     {
         $this->normalizer = $normalizer;
         $this->format = $format;

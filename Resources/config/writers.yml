@@ -1,3 +1,6 @@
+parameters:
+    pim_excel_connector.writer.xlsx.class: Pim\Bundle\ExcelConnectorBundle\Writer\XlsxWriter
+
 services:
     pim_excel_connector.writer.orm.attribute_group:
         class: %pim_base_connector.writer.orm.entity.class%
@@ -18,3 +21,19 @@ services:
         class: %pim_base_connector.writer.orm.entity.class%
         arguments:
             - '@doctrine.orm.default_entity_manager'
+
+    pim_base_connector.writer.xlsx:
+        class: %pim_excel_connector.writer.xlsx.class%
+        abstract: true
+        arguments:
+            - '@pim_excel_connector.excel.builder.factory'
+
+    pim_base_connector.writer.xlsx.product:
+        parent: pim_base_connector.writer.xlsx
+        arguments:
+            - '%pim_excel_connector.excel.builder.class%'
+
+    pim_base_connector.writer.xlsx.product_family:
+        parent: pim_base_connector.writer.xlsx
+        arguments:
+            - '%pim_excel_connector.excel.builder.product_family.class%'

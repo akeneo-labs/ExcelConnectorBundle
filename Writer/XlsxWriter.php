@@ -45,10 +45,10 @@ class XlsxWriter extends FileWriter implements InitializableInterface
      * Constructor
      *
      * @param ExcelBuilderFactory $builderFactory
-     * @param type                $builderClass
-     * @param type                $builderOptions
+     * @param string              $builderClass
+     * @param array               $builderOptions
      */
-    public function __construct(ExcelBuilderFactory $builderFactory, $builderClass, $builderOptions)
+    public function __construct(ExcelBuilderFactory $builderFactory, $builderClass, array $builderOptions = array())
     {
         $this->builderFactory = $builderFactory;
         $this->builderClass = $builderClass;
