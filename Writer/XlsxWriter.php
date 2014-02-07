@@ -79,6 +79,6 @@ class XlsxWriter extends FileWriter implements InitializableInterface
     public function flush()
     {
         $writer = new \PHPExcel_Writer_Excel2007($this->builder->getExcelObject());
-        $writer->save($this->filePath);
+        $writer->save($this->getPath());
     }
 }
