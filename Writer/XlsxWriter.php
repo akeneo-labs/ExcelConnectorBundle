@@ -14,7 +14,7 @@ use Pim\Bundle\ExcelConnectorBundle\Excel\ExcelBuilderFactory;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class XlsWriter extends FileWriter implements InitializableInterface
+class XlsxWriter extends FileWriter implements InitializableInterface
 {
     /**
      * @Assert\NotBlank(groups={"Execution"})
@@ -43,12 +43,12 @@ class XlsWriter extends FileWriter implements InitializableInterface
 
     /**
      * Constructor
-     * 
+     *
      * @param ExcelBuilderFactory $builderFactory
-     * @param type $builderClass
-     * @param type $builderOptions
+     * @param type                $builderClass
+     * @param type                $builderOptions
      */
-    function __construct(ExcelBuilderFactory $builderFactory, $builderClass, $builderOptions)
+    public function __construct(ExcelBuilderFactory $builderFactory, $builderClass, $builderOptions)
     {
         $this->builderFactory = $builderFactory;
         $this->builderClass = $builderClass;

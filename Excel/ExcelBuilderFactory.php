@@ -32,8 +32,8 @@ class ExcelBuilderFactory
     /**
      * Creates an $builder for the given arguments
      *
-     * @param string $class    The class of the $builder
-     * @param array  $options  The options of the $builder
+     * @param string $class   The class of the $builder
+     * @param array  $options The options of the $builder
      *
      * @return ExcelBuilderInterface
      */

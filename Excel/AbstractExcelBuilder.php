@@ -17,7 +17,12 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     /**
      * @var array
      */
-    protected $indexes;
+    protected $rowIndexes;
+
+    /**
+     * @var array
+     */
+    protected $labels;
 
     /**
      * @var array
@@ -53,7 +58,8 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     public function add(array $item)
     {
         $worksheet = $this->getWorksheet($item);
-        $this->writeValues($worksheet, $this->indexes[$worksheet->getTitle()], array_values($item));
+        $this->writeLabels($worksheet, $item);
+        $this->writeValues($worksheet, $item);
     }
 
     /**
@@ -64,6 +70,7 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
         if (!$this->clean) {
             $this->cleanup();
         }
+
         return $this->xls;
     }
 
@@ -86,17 +93,17 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     protected function getWorksheet(array $data)
     {
         $name = $this->getWorksheetName($data);
-        if (!isset($this->indexes[$name])) {
-            $worksheet = $this->createWorksheet($name, $data);
+        if (!isset($this->labels[$name])) {
+            return $this->createWorksheet($name, $data);
+        } else {
+            return $this->xls->getSheetByName($name);
         }
-
-        return $worksheet;
     }
 
     /**
      * Creates a worksheet with the given name
      *
-     * @param type $name
+     * @param type  $name
      * @param array $data
      *
      * @return array \PHPExcelWorksheet
@@ -105,39 +112,57 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     {
         $worksheet = $this->xls->createSheet();
         $worksheet->setTitle($name);
-        $this->indexes[$name] = $this->options['data_row'];
-        $this->writeLabels($worksheet, $data);
+        $this->rowIndexes[$name] = $this->options['data_row'];
+        $this->labels[$name] = [];
+
+        return $worksheet;
     }
 
     /**
      * Cleanup the Excel file
      */
-    protected function cleanup() {
-        $this->xls->removeSheetByIndex(0);
+    protected function cleanup()
+    {
+        if (count($this->labels)) {
+            $this->xls->removeSheetByIndex(0);
+        }
     }
 
     /**
      * Writes labels for the submitted data
      *
      * @param \PHPExcel_Worksheet $worksheet
-     * @param array $data
+     * @param array               $data
      */
     protected function writeLabels(\PHPExcel_Worksheet $worksheet, array $data)
     {
-        $this->writeValues($worksheet, $this->options['label_row'], array_keys($data));
+        $worksheetName = $worksheet->getTitle();
+        $missing = array_diff(array_keys($data), $this->labels[$worksheetName]);
+        $column = count($this->labels[$worksheetName]);
+        foreach ($missing as $label) {
+            $this->labels[$worksheetName][] = $label;
+            $worksheet->setCellValueByColumnAndRow($column, $this->options['label_row'], $label);
+            $column++;
+        }
     }
 
     /**
      * Writes a row of values
      *
      * @param \PHPExcel_Worksheet $worksheet
-     * @param array $data An array of values with column indexes as keys
+     * @param array               $data      An array of values with column indexes as keys
      */
-    protected function writeValues(\PHPExcel_Worksheet $worksheet, $rowIndex, array $data)
+    protected function writeValues(\PHPExcel_Worksheet $worksheet, array $data)
     {
-        foreach($data as $columnIndex => $value) {
-            $worksheet->setCellValueByColumnAndRow($columnIndex, $rowIndex, $value);
+        $worksheetName = $worksheet->getTitle();
+        $row = $this->rowIndexes[$worksheetName];
+        foreach ($this->labels[$worksheet->getTitle()] as $column => $label) {
+            if (isset($data[$label])) {
+                $worksheet->setCellValueByColumnAndRow($column, $row, $data[$label]);
+            }
         }
+
+        $this->rowIndexes[$worksheetName]++;
     }
 
     /**
