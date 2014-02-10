@@ -64,6 +64,18 @@ class ExcelHelper
     }
 
     /**
+     * Creates a row iterator
+     * @param \PHPExcel_Worksheet $worksheet
+     * @param int                 $row
+     *
+     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\RowIterator
+     */
+    public function createRowIterator(\PHPExcel_Worksheet $worksheet, $row)
+    {
+        return new RowIterator($this, $worksheet->getRowIterator($row));
+    }
+
+    /**
      * Resizes an array to the specified data count
      *
      * @param array $data

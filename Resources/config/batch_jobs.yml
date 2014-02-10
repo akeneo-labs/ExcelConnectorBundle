@@ -1,11 +1,11 @@
 connector:
     name: Akeneo Excel Connector
     jobs:
-        product_family_export:
+        excel_product_family_export:
             title: pim_excel_connector.jobs.product_family.export.title
             type: export
             steps:
-                product_export:
+                export:
                     class: Pim\Bundle\ExcelConnectorBundle\Step\InitializableWriterItemStep
                     title: pim_excel_connector.jobs.product.export.title
                     services:
@@ -13,7 +13,24 @@ connector:
                         processor: pim_excel_connector.processor.normalizer.product_csv
                         writer:    pim_base_connector.writer.xlsx.product_family
 
-        init_import:
+        excel_product_import:
+            title: pim_excel_connector.jobs.excel_product_import.title
+            type:  import
+            steps:
+                import:
+                    title:     pim_excel_connector.jobs.excel_product_import.import.title
+                    services:
+                        reader:    pim_excel_connector.reader.xls.product
+                        processor: pim_excel_connector.processor.heterogenous_product
+                        writer:    pim_base_connector.writer.orm.product
+                import_associations:
+                    title:     pim_excel_connector.jobs.excel_product_import.import_associations.title
+                    services:
+                        reader:    pim_base_connector.reader.cached_association
+                        processor: pim_base_connector.processor.association
+                        writer:    pim_base_connector.writer.orm.association
+
+        excel_init_import:
             title: pim_excel_connector.jobs.init_import.import.title
             type: import
             steps:

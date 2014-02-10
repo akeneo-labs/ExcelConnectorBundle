@@ -20,6 +20,7 @@ class XlsxFileReader extends FileIteratorReader
      *     groups={"Execution"},
      *     allowedExtensions={"xlsx"},
      *     mimeTypes={
+     *         "application/zip",
      *         "application/vnd.ms-excel",
      *         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
      *     }
@@ -39,6 +40,7 @@ class XlsxFileReader extends FileIteratorReader
                     'allowedExtensions' => array('xlsx'),
                     'mimeTypes'         => array(
                         'application/vnd.ms-excel',
+                        'application/zip',
                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     )
                 )
