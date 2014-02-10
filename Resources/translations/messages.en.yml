@@ -27,3 +27,11 @@ pim_excel_connector:
         family:
             import:
                 title: Family import
+        product:
+            import:
+                title: Product import
+            export:
+                title: Product export
+        product_family:
+            export:
+                title: Product family export
