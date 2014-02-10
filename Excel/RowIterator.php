@@ -33,6 +33,6 @@ class RowIterator extends \IteratorIterator
      */
     public function valid()
     {
-        return (count($this->helper->getRowData(parent::current())) > 0) && parent::valid();
+        return parent::valid() && (count($this->helper->getRowData(parent::current())) > 0);
     }
 }
