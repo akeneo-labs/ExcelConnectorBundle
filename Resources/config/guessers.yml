@@ -1,5 +1,5 @@
 services:
-    pim_excel_conntector.transformer.guesser.conversion_units:
+    pim_excel_connector.transformer.guesser.conversion_units:
         class: %pim_transform.transformer.guesser.regexp.class%
         public: false
         arguments:
