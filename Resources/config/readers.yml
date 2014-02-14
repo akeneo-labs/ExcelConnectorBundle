@@ -87,3 +87,8 @@ services:
               labels_data_row: 2
               labels_column: 4
               include_worksheets: [ '/^family/' ]
+
+    pim_excel_connector.reader.xls.product:
+        parent: pim_excel_connector.reader.xls_init
+        arguments:
+          - %pim_excel_connector.iterator.file.xlsx.class%

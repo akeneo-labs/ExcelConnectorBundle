@@ -32,6 +32,7 @@ services:
         parent: pim_base_connector.writer.xlsx
         arguments:
             - '%pim_excel_connector.excel.builder.class%'
+            - { worksheet_name: PRODUCTS }
 
     pim_base_connector.writer.xlsx.product_family:
         parent: pim_base_connector.writer.xlsx
