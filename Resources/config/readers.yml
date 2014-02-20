@@ -64,7 +64,7 @@ services:
             - label_row: 6
               data_row: 7
               skip_empty: true
-              include_worksheets: [ '/^family/' ]
+              include_worksheets: [ '/^family/', '/^attributes/' ]
 
     pim_excel_connector.reader.xls_init.attribute_option:
         parent: pim_excel_connector.reader.xls_init
