@@ -111,7 +111,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
         $worksheet = $this->getAttributeTypesWorksheet();
         $helper = $this->getExcelHelper();
         $this->attributeTypes = array();
-        foreach ($worksheet->getRowIterator(2) as $row) {
+        foreach ($helper->createRowIterator($worksheet, 2) as $row) {
             $data = $helper->getRowData($row);
             $this->attributeTypes[$data[1]] = $data[0];
         }
@@ -134,3 +134,4 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
         return $worksheet;
     }
 }
+

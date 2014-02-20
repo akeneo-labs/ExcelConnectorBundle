@@ -119,12 +119,13 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     protected function getRequirements(\PHPExcel_Worksheet $worksheet)
     {
         $startColumn = count($this->attributeLabels);
-        $families = $this->getExcelHelper()
+        $helper = $this->getExcelHelper();
+        $families = $helper
             ->getRowDataForRowNumber($worksheet, $this->options['family_label_row'], $startColumn);
         $requirements = array_fill_keys($families, array());
         $codeColumn = array_search('code', $this->attributeLabels);
 
-        $rowIterator = $worksheet->getRowIterator($this->options['attribute_data_row']);
+        $rowIterator = $helper->createRowIterator($worksheet, $this->options['attribute_data_row']);
         foreach ($rowIterator as $row) {
             $code = trim($worksheet->getCellByColumnAndRow($codeColumn, $row->getRowIndex())->getValue());
             foreach ($families as $index => $family) {
