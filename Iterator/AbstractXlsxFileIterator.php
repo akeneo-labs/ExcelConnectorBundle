@@ -36,20 +36,6 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     protected $valuesIterator;
 
     /**
-     * Constructor
-     *
-     * @param string $filePath
-     * @param array  $options
-     */
-    public function __construct($filePath, array $options = array())
-    {
-        parent::__construct($filePath, $options);
-
-        $reader = new \PHPExcel_Reader_Excel2007();
-        $this->xls = $reader->load($filePath);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function current()
@@ -84,6 +70,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      */
     public function rewind()
     {
+        $this->xls = $this->getObjectCache()->load($this->filePath);
         $this->worksheetIterator = new \CallbackFilterIterator(
             $this->xls->getWorksheetIterator(),
             function ($worksheet) {
@@ -215,6 +202,16 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     protected function getExcelHelper()
     {
         return $this->container->get('pim_excel_connector.excel.helper');
+    }
+
+    /**
+     * Returns the object cache
+     * 
+     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\ObjectCache
+     */
+    protected function getObjectCache()
+    {
+        return $this->container->get('pim_excel_connector.excel.object_cache');
     }
 
     /**
