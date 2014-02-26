@@ -2,16 +2,13 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
-use PhpSpec\ObjectBehavior;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Pim\Bundle\ExcelConnectorBundle\Excel\ExcelHelper;
 
-class AttributeXlsxFileIteratorSpec extends ObjectBehavior
+class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 {
     public function let(ContainerInterface $container)
     {
-        $helper = new ExcelHelper;
-        $container->get('pim_excel_connector.excel.helper')->willReturn($helper);
+        parent::let($container);
         $this->beConstructedWith(
             __DIR__ . '/../fixtures/init.xlsx',
             [
