@@ -170,7 +170,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     {
         $codeColumn = array_search('code', $this->attributeLabels);
         $rowIterator = new \CallbackFilterIterator(
-            $worksheet->getRowIterator($this->options['attribute_data_row']),
+            $this->getExcelHelper()->createRowIterator($worksheet, $this->options['attribute_data_row']),
             function ($row) use ($worksheet, $codeColumn) {
                 $code = trim($worksheet->getCellByColumnAndRow($codeColumn, $row->getRowIndex())->getValue());
 
