@@ -206,7 +206,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
 
     /**
      * Returns the object cache
-     * 
+     *
      * @return \Pim\Bundle\ExcelConnectorBundle\Excel\ObjectCache
      */
     protected function getObjectCache()
