@@ -4,7 +4,7 @@ namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use Oro\Bundle\BatchBundle\Item\UploadedFileAwareInterface;
+use Akeneo\Bundle\BatchBundle\Item\UploadedFileAwareInterface;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\FileIteratorFactory;
 use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
 

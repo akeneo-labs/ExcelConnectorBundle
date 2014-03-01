@@ -2,7 +2,7 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Reader;
 
-use Oro\Bundle\BatchBundle\Entity\StepExecution;
+use Akeneo\Bundle\BatchBundle\Entity\StepExecution;
 use PhpSpec\ObjectBehavior;
 
 class AbstractIteratorReaderSpec extends ObjectBehavior

@@ -2,8 +2,8 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Step;
 
-use Oro\Bundle\BatchBundle\Entity\StepExecution;
-use Oro\Bundle\BatchBundle\Step\ItemStep;
+use Akeneo\Bundle\BatchBundle\Entity\StepExecution;
+use Akeneo\Bundle\BatchBundle\Step\ItemStep;
 use Pim\Bundle\ExcelConnectorBundle\Writer\InitializableInterface;
 
 /**
