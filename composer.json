@@ -25,7 +25,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "akeneo/pim-community-dev": "*",
+        "akeneo/pim-community-dev": ">1.0.0-RC1,<1.1.0",
         "phpoffice/phpexcel": "1.8.0rc1"
     },
     "require-dev": {
