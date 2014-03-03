@@ -7,11 +7,3 @@ services:
         arguments:
             - '@pim_serializer'
             - csv
-
-    pim_excel_connector.processor.heterogenous_product:
-        class: %pim_base_connector.processor.product.class%
-        arguments:
-            - '@pim_base_connector.validator.product_import'
-            - '@translator'
-            - '@pim_excel_connector.transformer.heterogenous_product'
-            - '%pim_catalog.entity.product.class%'
