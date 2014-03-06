@@ -10,15 +10,11 @@ Installing the bundle
 ---------------------
 From your application root:
 
-    $ php composer.phar require --prefer-dist "akeneo/excel-connector-bundle=dev-master"
+    $ php composer.phar require --prefer-dist "akeneo/excel-connector-bundle"
 
 Register the bundle by adding the following line inside the `app/AppKernel.php` file, just before the "return $bundles;" line:
 
     $bundles[] = new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle();
-
-
-WARNING: while the PIM is not released in its 1.0 version, it might be better to manually edit composer.json and 
-proceed to a composer.phar update akeneo/excel-connector-bundle
 
 
 Initializing the PIM with an Excel file
