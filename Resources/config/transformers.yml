@@ -1,11 +1,6 @@
 parameters:
     pim_excel_connector.transformer.property.conversion_units.class: Pim\Bundle\ExcelConnectorBundle\Transformer\Property\ConversionUnitsTransformer
-    pim_excel_connector.transformer.heterogenous_product.class:      Pim\Bundle\ExcelConnectorBundle\Transformer\HeterogenousProductTransformer
 
 services:
     pim_excel_connector.transformer.property.conversion_units:
         class: %pim_excel_connector.transformer.property.conversion_units.class%
-
-    pim_excel_connector.transformer.heterogenous_product:
-        class: %pim_excel_connector.transformer.heterogenous_product.class%
-        parent: pim_transform.transformer.product
