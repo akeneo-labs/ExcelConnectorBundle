@@ -6,7 +6,6 @@ connector:
             type: export
             steps:
                 export:
-                    class: Pim\Bundle\ExcelConnectorBundle\Step\InitializableWriterItemStep
                     title: pim_excel_connector.jobs.product.export.title
                     services:
                         reader:    pim_base_connector.reader.orm.product
@@ -18,7 +17,6 @@ connector:
             type: export
             steps:
                 export:
-                    class: Pim\Bundle\ExcelConnectorBundle\Step\InitializableWriterItemStep
                     title: pim_excel_connector.jobs.product.export.title
                     services:
                         reader:    pim_base_connector.reader.orm.product
