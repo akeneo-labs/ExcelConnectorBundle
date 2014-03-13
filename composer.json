@@ -16,19 +16,12 @@
         {
             "type": "vcs",
             "url": "https://github.com/akeneo/pim-community-dev.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/akeneo/platform.git"
         }
     ],
     "minimum-stability": "dev",
     "require": {
-        "akeneo/pim-community-dev": ">1.0.0-RC1,<1.1.0",
+        "akeneo/pim-community-dev": "~1.1",
         "phpoffice/phpexcel": "1.8.0rc1"
-    },
-    "require-dev": {
-        "henrikbjorn/phpspec-code-coverage" : "1.0.*@dev"
     },
     "config": {
         "bin-dir": "bin"
