@@ -20,7 +20,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "akeneo/pim-community-dev": "~1.1",
+        "akeneo/pim-community-dev": ">=1.0.O,<1.2.0",
+        "akeneo/batch-bundle": "0.1.4",
         "phpoffice/phpexcel": "1.8.0rc1"
     },
     "config": {
