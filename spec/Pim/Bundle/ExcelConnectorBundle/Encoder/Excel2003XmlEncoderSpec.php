@@ -7,12 +7,12 @@ use Pim\Bundle\ExcelConnectorBundle\Encoder\Excel2003XmlEncoder;
 
 class Excel2003XmlEncoderSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Encoder\Excel2003XmlEncoder');
     }
 
-    function it_encodes_rows()
+    public function it_encodes_rows()
     {
         $this->encode(['2012', 18.5,'18.5', 'string'], Excel2003XmlEncoder::FORMAT_NAME)
             ->shouldReturn(
@@ -21,7 +21,7 @@ class Excel2003XmlEncoderSpec extends ObjectBehavior
             );
     }
 
-    function it_supports_excel_2003_xml_format()
+    public function it_supports_excel_2003_xml_format()
     {
         $this->supportsEncoding(Excel2003XmlEncoder::FORMAT_NAME)->shouldReturn(true);
     }

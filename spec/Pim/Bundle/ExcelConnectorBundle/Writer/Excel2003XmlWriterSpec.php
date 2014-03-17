@@ -11,7 +11,7 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
 {
     protected $tempFile;
 
-    function let(EncoderInterface $encoder)
+    public function let(EncoderInterface $encoder)
     {
         $this->tempFile = tempnam('/tmp', 'excel_2003_xml_writer_spec');
         $this->beConstructedWith(
@@ -23,12 +23,12 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         $this->setFilePath($this->tempFile);
 
         $encoder->supportsEncoding('format')->willReturn(true);
-        $encoder->encode(Argument::any(), 'format', Argument::any())->will(function($args) {
+        $encoder->encode(Argument::any(), 'format', Argument::any())->will(function ($args) {
             return implode(',', $args[0]) . "\n";
         });
     }
 
-    function letGo()
+    public function letGo()
     {
         if ($this->tempFile && file_exists($this->tempFile)) {
             unlink($this->tempFile);
@@ -36,14 +36,14 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         }
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Writer\Excel2003XmlWriter');
     }
 
-    function it_writes_homogeneous_items()
+    public function it_writes_homogeneous_items()
     {
-        
+
         $this->initialize();
         $this->write(
             [
@@ -57,8 +57,7 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         );
     }
 
-
-    function it_writes_in_multiple_batches()
+    public function it_writes_in_multiple_batches()
     {
         $this->initialize();
         $this->write([['column1' => 'value1', 'column2' => 'value2']]);
@@ -69,7 +68,7 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         );
     }
 
-    function it_writes_heteregoneous_items()
+    public function it_writes_heteregoneous_items()
     {
         $this->initialize();
         $this->write(
@@ -84,17 +83,18 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         );
     }
 
-    function getMatchers()
+    public function getMatchers()
     {
         return [
             'writeDataInFile' => [$this, 'hasDataInFile']
         ];
     }
 
-    function hasDataInFile($result, $columnCount, $data)
+    public function hasDataInFile($result, $columnCount, $data)
     {
         $expected = "HEADER\n" . implode('', array_fill(0,$columnCount, Excel2003XmlWriter::COLUMN_XML)) . $data .
             "\nFOOTER";
+
         return $expected === file_get_contents($this->tempFile);
     }
 
