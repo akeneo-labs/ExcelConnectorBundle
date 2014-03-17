@@ -83,6 +83,12 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         );
     }
 
+    public function it_writes_empty_files()
+    {
+        $this->initialize();
+        $this->flush()->shouldWriteDataInFile(0, '');
+    }
+
     public function getMatchers()
     {
         return [
@@ -92,8 +98,13 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
 
     public function hasDataInFile($result, $columnCount, $data)
     {
-        $expected = "HEADER\n" . implode('', array_fill(0,$columnCount, Excel2003XmlWriter::COLUMN_XML)) . $data .
-            "\nFOOTER";
+        $expected =
+            "HEADER\n" .
+            (
+                $columnCount
+                ? implode('', array_fill(0,$columnCount, Excel2003XmlWriter::COLUMN_XML)) . $data
+                : ''
+            ) . "\nFOOTER";
 
         return $expected === file_get_contents($this->tempFile);
     }

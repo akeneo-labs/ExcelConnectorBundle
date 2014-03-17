@@ -175,6 +175,10 @@ class Excel2003XmlWriter extends FileWriter
      */
     protected function writeColumns()
     {
+        if (!count($this->labels)) {
+            return;
+        }
+
         fwrite($this->handler, implode('', array_fill(0, count($this->labels), static::COLUMN_XML)));
     }
 
