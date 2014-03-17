@@ -19,7 +19,7 @@ class Excel2003XmlWriter extends FileWriter
     /**
      * @staticvar string
      */
-    const COLUMN_XML = '<Column ss:Span="1" ss:Width="64,008"/>';
+    const COLUMN_XML = '<Column ss:Span="1" ss:Width="64"/>';
 
     /**
      * @var EncoderInterface

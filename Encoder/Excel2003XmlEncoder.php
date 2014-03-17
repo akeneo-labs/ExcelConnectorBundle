@@ -38,7 +38,7 @@ class Excel2003XmlEncoder implements EncoderInterface
             $cells .= strtr(
                 static::CELL_TEMPLATE,
                 [
-                    '{{type}}' => is_numeric($data) ? 'Number' : 'String',
+                    '{{type}}' => is_numeric($value) ? 'Number' : 'String',
                     '{{data}}' => $value
                 ]
             );
