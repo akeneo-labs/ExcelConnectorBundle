@@ -21,7 +21,7 @@ class Excel2003XmlEncoder implements EncoderInterface
     /**
      * @staticvar string XML template for one cell
      */
-    const CELL_TEMPLATE='<Cell><Data ss::Type="{{type}}">{{data}}</Data></Cell>';
+    const CELL_TEMPLATE='<Cell><Data ss:Type="{{type}}">{{data}}</Data></Cell>';
 
     /**
      * @staticvar string XML template for one row
@@ -33,9 +33,9 @@ class Excel2003XmlEncoder implements EncoderInterface
      */
     public function encode($data, $format, array $context = array())
     {
-        $data = '';
+        $cells = '';
         foreach ($data as $value) {
-            $data .= strtr(
+            $cells .= strtr(
                 static::CELL_TEMPLATE,
                 [
                     '{{type}}' => is_numeric($data) ? 'Number' : 'String',
@@ -44,7 +44,7 @@ class Excel2003XmlEncoder implements EncoderInterface
             );
         }
 
-        return strtr(static::ROW_TEMPLATE, '{{cells}}', $data);
+        return strtr(static::ROW_TEMPLATE, [ '{{cells}}' => $cells ]);
     }
 
     /**

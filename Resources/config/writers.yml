@@ -45,5 +45,5 @@ services:
         arguments:
             - @pim_serializer
             - 'excel_2003_xml'
-            - %pim_excel_connector.root_dir%/Resources/view/excel_2003_header.txt
-            - %pim_excel_connector.root_dir%/Resources/view/excel_2003_footer.txt
+            - %pim_excel_connector.root_dir%/Resources/views/excel_2003_xml_header.txt
+            - %pim_excel_connector.root_dir%/Resources/views/excel_2003_xml_footer.txt

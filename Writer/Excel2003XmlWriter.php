@@ -92,7 +92,7 @@ class Excel2003XmlWriter extends FileWriter
      */
     public function initialize()
     {
-        $this->labels = array();
+        $this->labels = [];
         $this->tempHandler = fopen('php://temp', 'rw');
     }
 
@@ -105,7 +105,8 @@ class Excel2003XmlWriter extends FileWriter
         $this->writeHeader();
         $this->writeColumns();
         $this->writeLabels();
-        stream_copy_to_stream(fseek($this->tempHandler, 0), $this->handler);
+        fseek($this->tempHandler, 0);
+        stream_copy_to_stream($this->tempHandler, $this->handler);
         $this->writeFooter();
         fclose($this->tempHandler);
         fclose($this->handler);
@@ -119,11 +120,11 @@ class Excel2003XmlWriter extends FileWriter
     protected function writeItem(array $item)
     {
         $context = $this->getContext($item);
-        $row = array();
+        $row = [];
         foreach ($this->labels as $header) {
             if (array_key_exists($header, $item)) {
                 $row[] = $item[$header];
-                unset($item['header']);
+                unset($item[$header]);
             } else {
                 $row[] = '';
             }
@@ -134,7 +135,7 @@ class Excel2003XmlWriter extends FileWriter
             $row[] = $value;
         }
 
-        fwrite($this->tempHandler, $this->encoder->encode($value, $this->format, $context));
+        fwrite($this->tempHandler, $this->encoder->encode($row, $this->format, $context));
 
         if ($this->stepExecution) {
             $this->stepExecution->incrementSummaryInfo('write');
