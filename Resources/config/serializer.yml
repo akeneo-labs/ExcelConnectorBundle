@@ -1,0 +1,8 @@
+parameters:
+    pim_excel_connector.encoder.excel_2003_xml.class: Pim\Bundle\ExcelConnectorBundle\Encoder\Excel2003XmlEncoder
+
+services:
+    pim_excel_connector.encoder.excel_2003_xml.class:
+        class: %pim_excel_connector.encoder.excel_2003_xml.class%
+        tags:
+            - { name: pim_serializer.encoder }

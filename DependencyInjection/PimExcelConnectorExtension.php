@@ -19,6 +19,7 @@ class PimExcelConnectorExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $container->setParameter('pim_excel_connector.root_dir', sprintf('%s/..', __DIR__));
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('iterators.yml');
         $loader->load('readers.yml');
@@ -27,5 +28,6 @@ class PimExcelConnectorExtension extends Extension
         $loader->load('guessers.yml');
         $loader->load('excel.yml');
         $loader->load('processors.yml');
+        $loader->load('serializer.yml');
     }
 }

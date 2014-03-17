@@ -1,5 +1,6 @@
 parameters:
-    pim_excel_connector.writer.xlsx.class: Pim\Bundle\ExcelConnectorBundle\Writer\XlsxWriter
+    pim_excel_connector.writer.xlsx.class:           Pim\Bundle\ExcelConnectorBundle\Writer\XlsxWriter
+    pim_excel_connector.writer.excel_2003_xml.class: Pim\Bundle\ExcelConnectorBundle\Writer\Excel2003XmlWriter
 
 services:
     pim_excel_connector.writer.orm.attribute_group:
@@ -38,3 +39,11 @@ services:
         parent: pim_base_connector.writer.xlsx
         arguments:
             - '%pim_excel_connector.excel.builder.product_family.class%'
+
+    pim_excel_connector.writer.excel_2003_xml:
+        class: %pim_excel_connector.writer.excel_2003_xml.class%
+        arguments:
+            - @pim_serializer
+            - 'excel_2003_xml'
+            - %pim_excel_connector.root_dir%/Resources/view/excel_2003_header.txt
+            - %pim_excel_connector.root_dir%/Resources/view/excel_2003_footer.txt

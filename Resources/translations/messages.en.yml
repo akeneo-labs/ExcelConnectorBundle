@@ -27,11 +27,17 @@ pim_excel_connector:
         family:
             import:
                 title: Family import
-        product:
-            import:
-                title: Product import
-            export:
-                title: Product export
-        product_family:
-            export:
-                title: Product family export
+        xlsx:
+            product:
+                import:
+                    title: XLSX Product import
+                export:
+                    title: XLSX Product export
+            product_family:
+                export:
+                    title: XLSX Product family export
+
+        excel_2003_xml:
+            product:
+                export:
+                    title: Excel 2003 XML Product export

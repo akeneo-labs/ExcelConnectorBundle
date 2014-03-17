@@ -2,7 +2,7 @@ connector:
     name: Akeneo Excel Connector
     jobs:
         excel_product_export:
-            title: pim_excel_connector.jobs.product.export.title
+            title: pim_excel_connector.jobs.xlsx.product.export.title
             type: export
             steps:
                 export:
@@ -13,7 +13,7 @@ connector:
                         writer:    pim_base_connector.writer.xlsx.product
 
         excel_product_family_export:
-            title: pim_excel_connector.jobs.product_family.export.title
+            title: pim_excel_connector.jobs.xlsx.product_family.export.title
             type: export
             steps:
                 export:
@@ -23,8 +23,19 @@ connector:
                         processor: pim_excel_connector.processor.normalizer.product_csv
                         writer:    pim_base_connector.writer.xlsx.product_family
 
+        excel_2003_xml_product_export:
+            title: pim_excel_connector.jobs.excel_2003_xml.product.export.title
+            type: export
+            steps:
+                export:
+                    title: pim_excel_connector.jobs.product.export.title
+                    services:
+                        reader:    pim_base_connector.reader.orm.product
+                        processor: pim_excel_connector.processor.normalizer.product_csv
+                        writer:    pim_excel_connector.writer.excel_2003_xml
+
         excel_product_import:
-            title: pim_excel_connector.jobs.product.import.title
+            title: pim_excel_connector.jobs.xlsx.product.import.title
             type:  import
             steps:
                 import:
