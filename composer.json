@@ -20,7 +20,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "akeneo/pim-community-dev": "dev-maintenance/1.0-backports",
+        "akeneo/pim-community-dev": "dev-maintenance/1.0_backports",
         "phpoffice/phpexcel": "1.8.0rc1"
     },
     "config": {
