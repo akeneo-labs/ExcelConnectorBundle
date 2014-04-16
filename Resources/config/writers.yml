@@ -6,22 +6,22 @@ services:
     pim_excel_connector.writer.doctrine.attribute_group:
         class: %pim_base_connector.writer.doctrine.class%
         arguments:
-            - '@doctrine.orm.default_entity_manager'
+            - '@pim_catalog.doctrine.smart_manager_registry'
 
     pim_excel_connector.writer.doctrine.group_type:
         class: %pim_base_connector.writer.doctrine.class%
         arguments:
-            - '@doctrine.orm.default_entity_manager'
+            - '@pim_catalog.doctrine.smart_manager_registry'
 
     pim_excel_connector.writer.doctrine.channel:
         class: %pim_base_connector.writer.doctrine.class%
         arguments:
-            - '@doctrine.orm.default_entity_manager'
+            - '@pim_catalog.doctrine.smart_manager_registry'
 
     pim_excel_connector.writer.doctrine.family:
         class: %pim_base_connector.writer.doctrine.class%
         arguments:
-            - '@doctrine.orm.default_entity_manager'
+            - '@pim_catalog.doctrine.smart_manager_registry'
 
     pim_base_connector.writer.xlsx:
         class: %pim_excel_connector.writer.xlsx.class%
