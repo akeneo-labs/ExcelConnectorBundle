@@ -3,23 +3,23 @@ parameters:
     pim_excel_connector.writer.excel_2003_xml.class: Pim\Bundle\ExcelConnectorBundle\Writer\Excel2003XmlWriter
 
 services:
-    pim_excel_connector.writer.orm.attribute_group:
-        class: %pim_base_connector.writer.orm.entity.class%
+    pim_excel_connector.writer.doctrine.attribute_group:
+        class: %pim_base_connector.writer.doctrine.class%
         arguments:
             - '@doctrine.orm.default_entity_manager'
 
-    pim_excel_connector.writer.orm.group_type:
-        class: %pim_base_connector.writer.orm.entity.class%
+    pim_excel_connector.writer.doctrine.group_type:
+        class: %pim_base_connector.writer.doctrine.class%
         arguments:
             - '@doctrine.orm.default_entity_manager'
 
-    pim_excel_connector.writer.orm.channel:
-        class: %pim_base_connector.writer.orm.entity.class%
+    pim_excel_connector.writer.doctrine.channel:
+        class: %pim_base_connector.writer.doctrine.class%
         arguments:
             - '@doctrine.orm.default_entity_manager'
 
-    pim_excel_connector.writer.orm.family:
-        class: %pim_base_connector.writer.orm.entity.class%
+    pim_excel_connector.writer.doctrine.family:
+        class: %pim_base_connector.writer.doctrine.class%
         arguments:
             - '@doctrine.orm.default_entity_manager'
 
