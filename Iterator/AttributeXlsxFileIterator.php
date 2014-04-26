@@ -38,6 +38,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     public function __construct($filePath, array $options = array())
     {
         $this->innerIterator = new XlsxFileIterator($filePath, $options);
+
         parent::__construct($this->innerIterator);
     }
 

@@ -25,25 +25,10 @@ class ExcelHelperSpec extends ObjectBehavior
         $this->combineArrays($keys, $values)->shouldReturn(array('key1' => 'value1', 'key2' => 'value2', 'key3' => ''));
     }
 
-    public function it_should_read_a_row_by_row_number()
-    {
-        $worksheet = $this->getWorksheet('helper.xlsx', 'main');
-
-        $this->getRowDataForRowNumber($worksheet, 2)->shouldReturn(array('value1', 'value2', 'value3', 'value4'));
-    }
-
-    public function it_should_read_a_row_by_row_number_with_column_start()
-    {
-        $worksheet = $this->getWorksheet('helper.xlsx', 'main');
-
-        $this->getRowDataForRowNumber($worksheet, 2, 2)->shouldReturn(array('value3', 'value4'));
-    }
-
     public function it_should_trim_empty_formatted_cells()
     {
         $worksheet = $this->getWorksheet('helper.xlsx', 'main');
-
-        $this->getRowDataForRowNumber($worksheet, 3)->shouldReturn(array('value1', 'value2'));
+        $this->getRowData(['', '', 'bogus', 'value1', 'value2', '', null], 3)->shouldReturn(array('value1', 'value2'));
     }
 
     /**

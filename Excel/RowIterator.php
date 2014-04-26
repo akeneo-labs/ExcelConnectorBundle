@@ -17,21 +17,14 @@ class RowIterator extends \FilterIterator
     protected $helper;
 
     /**
-     * @var int
-     */
-    protected $startRow;
-
-    /**
      * Constructor
      *
      * @param ExcelHelper $helper
      * @param \Iterator   $innerIterator
-     * @param int         $startRow
      */
-    public function __construct(ExcelHelper $helper, \Iterator $innerIterator, $startRow)
+    public function __construct(ExcelHelper $helper, \Iterator $innerIterator)
     {
         $this->helper = $helper;
-        $this->startRow = $startRow;
         parent::__construct($innerIterator);
         $this->rewind();
     }
@@ -43,7 +36,6 @@ class RowIterator extends \FilterIterator
     {
         $iterator = $this->getInnerIterator();
 
-        return $iterator->valid() && (count($this->helper->getRowData($iterator->current())) > 0) &&
-            ($this->startRow <= $iterator->key());
+        return $iterator->valid() && (count($this->helper->getRowData($iterator->current())) > 0);
     }
 }

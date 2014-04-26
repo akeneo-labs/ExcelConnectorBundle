@@ -5,7 +5,7 @@ namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Family Xls File Iterator
+ * Channel Xls File Iterator
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
@@ -14,35 +14,67 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
 {
     /**
-     * @var string[]
-     */
-    protected $attributeLabels;
-
-    /**
      *  {@inheritdoc}
      */
     protected function createValuesIterator()
     {
-        return new \ArrayIterator(array($this->getFamilyData()));
+        return new \ArrayIterator(array($this->getChannelData()));
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getFamilyData()
+    protected function getChannelData()
     {
         $helper = $this->getExcelHelper();
         $xls = $this->getExcelObject();
-        $this->attributeLabels = $helper->getRowDataForRowNumber($xls, $this->options['attribute_label_row']);
-        $codeRow = $helper->getRowDataForRowNumber($xls, $this->options['code_row']);
+        $data = [ 'attributes' => [] ];
+        $attributeLabels = [];
+        $channelLabels = [];
+        $labelLocales = [];
+        $codeColumn = null;
+        $useAsLabelColumn = null;
+        $channelColumn = null;
+        foreach ($helper->createRowIterator($xls) as $index => $row) {
+            if ($index == $this->options['code_row']) {
+                $data['code'] = $row[$this->options['code_column']];
+            }
+            if ($index == $this->options['attribute_label_row']) {
+                $attributeLabels = $helper->getRowData($row);
+                $channelColumn = count($attributeLabels);
+                array_splice($channelLabels, 0, $channelColumn);
+                $data['requirements'] = array_fill_keys($channelLabels, []);
+                $codeColumn = array_search('code', $attributeLabels);
+                $useAsLabelColumn = array_search('use_as_label', $attributeLabels);
+            }
+            if ($index == $this->options['channel_label_row']) {
+                $channelLabels = $helper->getRowData($row);
+            }
+            if ($index == $this->options['labels_label_row']) {
+                $labelLocales = $helper->getRowData($row, $this->options['labels_column']);
+            }
+            if ($index == $this->options['labels_data_row']) {
+                $data['labels'] = $helper->combineArrays(
+                    $labelLocales,
+                    $helper->getRowData($row, $this->options['labels_column'])
+                );
+            }
+            if ($index >= (int) $this->options['attribute_data_row']) {
+                $code = $row[$codeColumn];
+                $data['attributes'][] = $code;
+                if (isset($row[$useAsLabelColumn]) && ('1' === trim($row[$useAsLabelColumn]))) {
+                    $data['attribute_as_label'] = $code;
+                }
+                $channelValues = $helper->getRowData($row, $channelColumn);
+                foreach ($channelLabels as $index => $channel) {
+                    if (isset($channelValues[$index]) && '1' === trim($channelValues[$index])) {
+                        $data['requirements'][$channel][] = $code;
+                    }
+                }
+            }
+        }
 
-        return array(
-            'code'               => $codeRow[$this->options['code_column']],
-            'attribute_as_label' => $this->getAttributeAsLabel(),
-            'labels'             => $this->getLabels(),
-            'attributes'         => $this->getAttributes(),
-            'requirements'       => $this->getRequirements()
-        );
+        return $data;
     }
 
     /**
@@ -53,7 +85,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
         parent::setDefaultOptions($resolver);
         $resolver->setRequired(
             array(
-                'family_label_row',
+                'channel_label_row',
                 'attribute_label_row',
                 'attribute_data_row',
                 'code_row',
@@ -64,116 +96,5 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                 'labels_column'
             )
         );
-    }
-
-    /**
-     * Returns the labels of the family
-     *
-     * @return string[]
-     */
-    protected function getLabels()
-    {
-        $helper = $this->getExcelHelper();
-        $xls = $this->getExcelObject();
-        $labels = $helper->getRowDataForRowNumber(
-            $xls,
-            $this->options['labels_label_row'],
-            $this->options['labels_column']
-        );
-        $values = $helper->getRowDataForRowNumber(
-            $xls,
-            $this->options['labels_data_row'],
-            $this->options['labels_column']
-        );
-
-        return $helper->combineArrays($labels, $values);
-    }
-
-    /**
-     * Returns an array of attribute codes
-     *
-     * @return string[]
-     */
-    protected function getAttributes()
-    {
-        $attributes = array();
-        $codeColumn = array_search('code', $this->attributeLabels);
-        foreach ($this->getAttributeRowIterator() as $row) {
-            $attributes[] = $row[$codeColumn];
-        }
-
-        return $attributes;
-    }
-
-    /**
-     * Returns an array of attribute requirements
-     *
-     * @return string[][]
-     */
-    protected function getRequirements()
-    {
-        $startColumn = count($this->attributeLabels);
-        $helper = $this->getExcelHelper();
-        $xls = $this->getExcelObject();
-
-        $families = $helper->getRowDataForRowNumber($xls, $this->options['family_label_row'], $startColumn);
-        $requirements = array_fill_keys($families, array());
-        $codeColumn = array_search('code', $this->attributeLabels);
-
-        $rowIterator = $helper->createRowIterator($xls, $this->options['attribute_data_row']);
-        foreach ($rowIterator as $row) {
-            $code = trim($row[$codeColumn]);
-            foreach ($families as $index => $family) {
-                $value = isset($row[$startColumn + $index]) ? trim($row[$startColumn + $index]) : null;
-                if ('1' === $value) {
-                    $requirements[$family][] = $code;
-                }
-            }
-        }
-
-        return $requirements;
-    }
-
-    /**
-     * Returns the code of the attribute used as label for the family
-     *
-     * @return string
-     */
-    protected function getAttributeAsLabel()
-    {
-        $codeColumn = array_search('code', $this->attributeLabels);
-        $useAsLabelColumn = array_search('use_as_label', $this->attributeLabels);
-        foreach ($this->getAttributeRowIterator() as $row) {
-            $useAsLabel = isset($row[$useAsLabelColumn]) ? trim($row[$useAsLabelColumn]) : null;
-            if ('1' === $useAsLabel) {
-                return trim($row[$codeColumn]);
-            }
-        }
-
-        return '';
-    }
-
-    /**
-     * Returns a row iterator for attributes
-     *
-     * @return \CallbackFilterIterator
-     */
-    protected function getAttributeRowIterator()
-    {
-        $xls = $this->getExcelObject();
-        $helper = $this->getExcelHelper();
-
-        $codeColumn = array_search('code', $this->attributeLabels);
-        $rowIterator = new \CallbackFilterIterator(
-            $helper->createRowIterator($xls, $this->options['attribute_data_row']),
-            function ($row) use ($codeColumn) {
-                $code = isset($row[$codeColumn]) ? trim($row[$codeColumn]) : null;
-
-                return !empty($code);
-            }
-        );
-        $rowIterator->rewind();
-
-        return $rowIterator;
     }
 }

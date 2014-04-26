@@ -12,41 +12,15 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel;
 class ExcelHelper
 {
     /**
-     * Returns an array of values for a row number
-     *
-     * @param \Iterator $worksheet
-     * @param int       $row
-     * @param int       $startColumn
-     *
-     * @deprecated since version 1.2.0
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return array
-     */
-    public function getRowDataForRowNumber(\Iterator $worksheet, $row, $startColumn = 0)
-    {
-        $iterator = $this->createRowIterator($worksheet, $row);
-        $iterator->rewind();
-
-        if (!$iterator->valid()) {
-            throw new \InvalidArgumentException(sprintf('Row %s could not be found in worksheet', $row));
-        }
-
-        return $this->getRowData($iterator->current(), $startColumn) ;
-    }
-
-    /**
      * Creates a row iterator
      *
      * @param \Iterator $worksheet
-     * @param int       $row
      *
      * @return \Iterator
      */
-    public function createRowIterator(\Iterator $worksheet, $row)
+    public function createRowIterator(\Iterator $worksheet)
     {
-        return new RowIterator($this, $worksheet, $row);
+        return new RowIterator($this, $worksheet);
     }
 
     /**
