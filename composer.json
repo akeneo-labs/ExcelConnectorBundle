@@ -32,9 +32,6 @@
         "phpoffice/phpexcel": "1.8.0rc1",
         "akeneo/spreadsheet-reader" : "dev-master"
     },
-    "require-dev": {
-        "henrikbjorn/phpspec-code-coverage" : "1.0.*@dev"
-    },
     "config": {
         "bin-dir": "bin"
     },
