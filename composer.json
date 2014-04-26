@@ -29,7 +29,7 @@
     "minimum-stability": "dev",
     "require": {
         "akeneo/pim-community-dev": "~1.1",
-        "phpoffice/phpexcel": "1.8.0rc1"
+        "phpoffice/phpexcel": "1.8.0rc1",
         "akeneo/spreadsheet-reader" : "dev-master"
     },
     "config": {
