@@ -52,13 +52,15 @@ class ExcelHelperSpec extends ObjectBehavior
      * @param string $fileName
      * @param string $worksheetName
      *
-     * @return \PHPExcel_Worksheet
+     * @return \SpreadsheetReader_XLSX
      */
     public function getWorksheet($fileName, $worksheetName)
     {
-        $reader = new \PHPExcel_Reader_Excel2007;
-        $xls = $reader->load(__DIR__ . '/../fixtures/' . $fileName);
+        $xls = new \SpreadsheetReader(__DIR__ . '/../fixtures/' . $fileName);
 
-        return $xls->getSheetByName($worksheetName);
+        $worksheets = $xls->Sheets();
+        $xls->ChangeSheet(array_search($worksheetName, $worksheets));
+
+        return $xls;
     }
 }
