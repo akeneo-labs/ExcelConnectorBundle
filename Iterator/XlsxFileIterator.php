@@ -43,12 +43,20 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
     /**
      * {@inheritdoc}
      */
-    protected function createValuesIterator(\PHPExcel_Worksheet $worksheet)
+    protected function createValuesIterator()
     {
         $helper = $this->getExcelHelper();
-        $this->labels = $helper->getRowDataForRowNumber($worksheet, $this->options['label_row']);
+        $iterator = $helper->createRowIterator($this->getExcelObject());
+        $iterator->rewind();
+        while ($iterator->valid() && ((int) $this->options['label_row'] > $iterator->key())) {
+            $iterator->next();
+        }
+        $this->labels = $helper->getRowData($iterator->current());
+        while ($iterator->valid() && ((int) $this->options['data_row'] > $iterator->key())) {
+            $iterator->next();
+        }
 
-        return $helper->createRowIterator($worksheet, $this->options['data_row']);
+        return $iterator;
     }
 
     /**

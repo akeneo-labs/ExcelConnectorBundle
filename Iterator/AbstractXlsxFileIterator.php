@@ -21,11 +21,6 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     protected $container;
 
     /**
-     * @var XlsxFileIterator
-     */
-    protected $xls;
-
-    /**
      * @var \Iterator
      */
     protected $worksheetIterator;
@@ -34,6 +29,11 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      * @var \Iterator
      */
     protected $valuesIterator;
+
+    /**
+     * @var \SpreadsheetReader_XLSX
+     */
+    private $xls;
 
     /**
      * {@inheritdoc}
@@ -48,7 +48,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      */
     public function key()
     {
-        return sprintf('%s/%s', $this->worksheetIterator->key(), $this->valuesIterator->key());
+        return sprintf('%s/%s', $this->worksheetIterator->current(), $this->valuesIterator->key());
     }
 
     /**
@@ -70,11 +70,17 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      */
     public function rewind()
     {
-        $this->xls = $this->getObjectCache()->load($this->filePath);
+        $xls = $this->getExcelObject();
         $this->worksheetIterator = new \CallbackFilterIterator(
-            $this->xls->getWorksheetIterator(),
-            function ($worksheet) {
-                return $this->isReadableWorksheet($worksheet);
+            new \ArrayIterator($xls->Sheets()),
+            function ($title, $key) use ($xls) {
+                if ($this->isReadableWorksheet($title)) {
+                    $xls->ChangeSheet($key);
+
+                    return true;
+                }
+
+                return false;
             }
         );
         $this->worksheetIterator->rewind();
@@ -86,12 +92,16 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     }
 
     /**
-     * Returns the associate PHPExcel object
+     * Returns the associated Excel object
      *
-     * @return \PHPExcel
+     * @return \SpreadsheetReader_XLSX
      */
     public function getExcelObject()
     {
+        if (!$this->xls) {
+            $this->xls = $this->getObjectCache()->load($this->filePath);
+        }
+
         return $this->xls;
     }
 
@@ -104,12 +114,12 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     }
 
     /**
-     * Initializes the current record
+     * Initializes the current worksheet
      */
     protected function initializeValuesIterator()
     {
-        $this->valuesIterator = $this->createValuesIterator($this->worksheetIterator->current());
-        $this->valuesIterator->rewind();
+        $this->valuesIterator = $this->createValuesIterator();
+
         if (!$this->valuesIterator->valid()) {
             $this->valuesIterator = null;
             $this->worksheetIterator->next();
@@ -130,14 +140,12 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * Returns true if the worksheet should be read
      *
-     * @param \PHPExcel_Worksheet $worksheet
+     * @param string $title
      *
      * @return boolean
      */
-    protected function isReadableWorksheet(\PHPExcel_Worksheet $worksheet)
+    protected function isReadableWorksheet($title)
     {
-        $title = $worksheet->getTitle();
-
         return $this->isIncludedWorksheet($title) && !$this->isExcludedWorksheet($title);
     }
 
@@ -215,9 +223,9 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     }
 
     /**
-     * @param \PHPExcel_Worksheet $worksheet
+     * Creates the value iterator
      *
      * @return \Iterator
      */
-    abstract protected function createValuesIterator(\PHPExcel_Worksheet $worksheet);
+    abstract protected function createValuesIterator();
 }

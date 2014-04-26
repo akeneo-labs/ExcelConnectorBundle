@@ -12,7 +12,7 @@ class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
         $this->beConstructedWith(
             __DIR__ . '/../fixtures/init.xlsx',
             [
-              'family_label_row'    =>   5,
+              'channel_label_row'    =>   5,
               'attribute_label_row' => 6,
               'attribute_data_row'  => 7,
               'code_row'            => 2,
@@ -36,24 +36,24 @@ class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
         $this->rewind();
         $values = [
             [
-                'code' => 'main',
-                'attribute_as_label' =>  'name',
-                'labels' => ['en_US' => 'Main'],
                 'attributes' => ['sku', 'name', 'type', 'description'],
+                'code' => 'main',
+                'labels' => ['en_US' => 'Main'],
                 'requirements' => [
                     'main' => ['sku', 'name'],
                     'channel2' => ['sku', 'type']
-                ]
+                ],
+                'attribute_as_label' =>  'name',
             ],
             [
-                'code' => 'family2',
-                'attribute_as_label' =>  'name',
-                'labels' => ['en_US' => 'Family 2'],
                 'attributes' => ['sku', 'name', 'type'],
+                'code' => 'family2',
+                'labels' => ['en_US' => 'Family 2'],
                 'requirements' => [
                     'main' => ['sku', 'name'],
                     'channel2' => ['sku', 'type']
-                ]
+                ],
+                'attribute_as_label' =>  'name',
             ]
         ];
 

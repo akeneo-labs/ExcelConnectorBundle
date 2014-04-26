@@ -12,42 +12,32 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel;
 class ExcelHelper
 {
     /**
-     * Returns an array of values for a row number
+     * Creates a row iterator
      *
-     * @param \PHPExcel_Worksheet $worksheet
-     * @param int                 $row
-     * @param int                 $startColumn
+     * @param \Iterator $worksheet
      *
-     * @return array
+     * @return \Iterator
      */
-    public function getRowDataForRowNumber(\PHPExcel_Worksheet $worksheet, $row, $startColumn = 0)
+    public function createRowIterator(\Iterator $worksheet)
     {
-        return $this->getRowData($worksheet->getRowIterator($row)->current(), $startColumn);
+        return new RowIterator($this, $worksheet);
     }
 
     /**
      * Returns an array of values for a row
      *
-     * @param \PHPExcel_Worksheet_Row $row
-     * @param int                     $startColumn
+     * @param array $row
+     * @param int   $startColumn
      *
      * @return array
      */
-    public function getRowData(\PHPExcel_Worksheet_Row $row, $startColumn = 0)
+    public function getRowData(array $row, $startColumn = 0)
     {
-        $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(false);
-
-        $values = array();
-        foreach ($cellIterator as $cell) {
-            if ($startColumn) {
-                $startColumn--;
-            } else {
-                $values[] = $cell->getValue();
-            }
+        if ($startColumn > 0) {
+            array_splice($row, 0, $startColumn);
         }
 
-        return $this->trimArray($values);
+        return $this->trimArray($row);
     }
 
     /**
@@ -61,18 +51,6 @@ class ExcelHelper
     public function combineArrays(array $keys, array $values)
     {
         return array_combine($keys, $this->resizeArray($values, count($keys)));
-    }
-
-    /**
-     * Creates a row iterator
-     * @param \PHPExcel_Worksheet $worksheet
-     * @param int                 $row
-     *
-     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\RowIterator
-     */
-    public function createRowIterator(\PHPExcel_Worksheet $worksheet, $row)
-    {
-        return new RowIterator($this, $worksheet->getRowIterator($row));
     }
 
     /**

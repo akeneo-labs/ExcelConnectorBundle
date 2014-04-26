@@ -24,8 +24,8 @@ class ObjectCache
     public function load($filePath)
     {
         if (!isset($this->cache[$filePath])) {
-            $reader = new \PHPExcel_Reader_Excel2007();
-            $this->cache[$filePath] =  $reader->load($filePath);
+            $reader = new \SpreadsheetReader_XLSX($filePath);
+            $this->cache[$filePath] =  $reader;
         }
 
         return $this->cache[$filePath];

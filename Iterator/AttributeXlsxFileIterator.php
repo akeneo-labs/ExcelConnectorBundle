@@ -38,6 +38,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     public function __construct($filePath, array $options = array())
     {
         $this->innerIterator = new XlsxFileIterator($filePath, $options);
+
         parent::__construct($this->innerIterator);
     }
 
@@ -80,8 +81,8 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
      */
     public function rewind()
     {
-        parent::rewind();
         $this->initializeAttributeTypes();
+        parent::rewind();
     }
 
     /**
@@ -108,10 +109,11 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
      */
     protected function initializeAttributeTypes()
     {
-        $worksheet = $this->getAttributeTypesWorksheet();
+        $xls = $this->getInnerIterator()->getExcelObject();
+        $xls->ChangeSheet($this->getAttributeTypesWorksheet());
         $helper = $this->getExcelHelper();
         $this->attributeTypes = array();
-        foreach ($helper->createRowIterator($worksheet, 2) as $row) {
+        foreach ($helper->createRowIterator($xls, 2) as $row) {
             $data = $helper->getRowData($row);
             $this->attributeTypes[$data[1]] = $data[0];
         }
@@ -126,8 +128,8 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
      */
     protected function getAttributeTypesWorksheet()
     {
-        $worksheet = $this->innerIterator->getExcelObject()->getSheetByName('attribute_types');
-        if (!$worksheet) {
+        $worksheet = array_search('attribute_types', $this->innerIterator->getExcelObject()->Sheets());
+        if ($worksheet === false) {
             throw new \RuntimeException('No attribute_types worksheet in the excel file');
         }
 
