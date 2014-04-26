@@ -3,13 +3,13 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Excel;
 
 /**
- * Iterates through Excel rows, stopping at an e;pty row
+ * Iterates through Excel rows, stopping at an empty row
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class RowIterator extends \IteratorIterator
+class RowIterator extends \FilterIterator
 {
     /**
      * @var ExcelHelper
@@ -17,22 +17,33 @@ class RowIterator extends \IteratorIterator
     protected $helper;
 
     /**
+     * @var int
+     */
+    protected $startRow;
+
+    /**
      * Constructor
      *
-     * @param \Pim\Bundle\ExcelConnectorBundle\Excel\ExcelHelper $helper
-     * @param \PHPExcel_Worksheet_RowIterator                    $innerIterator
+     * @param ExcelHelper $helper
+     * @param \Iterator   $innerIterator
+     * @param int         $startRow
      */
-    public function __construct(ExcelHelper $helper, \PHPExcel_Worksheet_RowIterator $innerIterator)
+    public function __construct(ExcelHelper $helper, \Iterator $innerIterator, $startRow)
     {
         $this->helper = $helper;
+        $this->startRow = $startRow;
         parent::__construct($innerIterator);
+        $this->rewind();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function accept()
     {
-        return parent::valid() && (count($this->helper->getRowData(parent::current())) > 0);
+        $iterator = $this->getInnerIterator();
+
+        return $iterator->valid() && (count($this->helper->getRowData($iterator->current())) > 0) &&
+            ($this->startRow <= $iterator->key());
     }
 }

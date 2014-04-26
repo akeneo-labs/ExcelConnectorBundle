@@ -14,40 +14,56 @@ class ExcelHelper
     /**
      * Returns an array of values for a row number
      *
-     * @param \PHPExcel_Worksheet $worksheet
-     * @param int                 $row
-     * @param int                 $startColumn
+     * @param \Iterator $worksheet
+     * @param int       $row
+     * @param int       $startColumn
+     *
+     * @deprecated since version 1.2.0
+     *
+     * @throws \InvalidArgumentException
      *
      * @return array
      */
-    public function getRowDataForRowNumber(\PHPExcel_Worksheet $worksheet, $row, $startColumn = 0)
+    public function getRowDataForRowNumber(\Iterator $worksheet, $row, $startColumn = 0)
     {
-        return $this->getRowData($worksheet->getRowIterator($row)->current(), $startColumn);
+        $iterator = $this->createRowIterator($worksheet, $row);
+        $iterator->rewind();
+
+        if (!$iterator->valid()) {
+            throw new \InvalidArgumentException(sprintf('Row %s could not be found in worksheet', $row));
+        }
+
+        return $this->getRowData($iterator->current(), $startColumn) ;
+    }
+
+    /**
+     * Creates a row iterator
+     *
+     * @param \Iterator $worksheet
+     * @param int       $row
+     *
+     * @return \Iterator
+     */
+    public function createRowIterator(\Iterator $worksheet, $row)
+    {
+        return new RowIterator($this, $worksheet, $row);
     }
 
     /**
      * Returns an array of values for a row
      *
-     * @param \PHPExcel_Worksheet_Row $row
-     * @param int                     $startColumn
+     * @param array $row
+     * @param int   $startColumn
      *
      * @return array
      */
-    public function getRowData(\PHPExcel_Worksheet_Row $row, $startColumn = 0)
+    public function getRowData(array $row, $startColumn = 0)
     {
-        $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(false);
-
-        $values = array();
-        foreach ($cellIterator as $cell) {
-            if ($startColumn) {
-                $startColumn--;
-            } else {
-                $values[] = $cell->getValue();
-            }
+        if ($startColumn > 0) {
+            array_splice($row, 0, $startColumn);
         }
 
-        return $this->trimArray($values);
+        return $this->trimArray($row);
     }
 
     /**
@@ -61,18 +77,6 @@ class ExcelHelper
     public function combineArrays(array $keys, array $values)
     {
         return array_combine($keys, $this->resizeArray($values, count($keys)));
-    }
-
-    /**
-     * Creates a row iterator
-     * @param \PHPExcel_Worksheet $worksheet
-     * @param int                 $row
-     *
-     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\RowIterator
-     */
-    public function createRowIterator(\PHPExcel_Worksheet $worksheet, $row)
-    {
-        return new RowIterator($this, $worksheet->getRowIterator($row));
     }
 
     /**
