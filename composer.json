@@ -24,7 +24,7 @@
         {
             "type": "vcs",
             "url": "https://github.com/akeneo/spreadsheet-reader.git"
-        },
+        }
     ],
     "minimum-stability": "dev",
     "require": {
