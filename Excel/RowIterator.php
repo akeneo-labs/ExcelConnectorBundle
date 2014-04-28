@@ -12,19 +12,17 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel;
 class RowIterator extends \FilterIterator
 {
     /**
-     * @var ExcelHelper
+     * @var string
      */
-    protected $helper;
+    private $value;
 
     /**
      * Constructor
      *
-     * @param ExcelHelper $helper
      * @param \Iterator   $innerIterator
      */
-    public function __construct(ExcelHelper $helper, \Iterator $innerIterator)
+    public function __construct(\Iterator $innerIterator)
     {
-        $this->helper = $helper;
         parent::__construct($innerIterator);
         $this->rewind();
     }
@@ -35,7 +33,35 @@ class RowIterator extends \FilterIterator
     public function accept()
     {
         $iterator = $this->getInnerIterator();
+        $this->value = $iterator->valid() 
+                ? $this->trimArray($iterator->current())
+                : array();
 
-        return $iterator->valid() && (count($this->helper->getRowData($iterator->current())) > 0);
+        return $iterator->valid() && (count($this->value) > 0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function current()
+    {
+        return $this->value;
+    }
+
+
+    /**
+     * Strips empty values from the end of an array
+     *
+     * @param array $values
+     *
+     * @return array
+     */
+    protected function trimArray(array $values)
+    {
+        while (count($values) && '' === trim($values[count($values) - 1])) {
+            unset($values[count($values) - 1]);
+        }
+
+        return $values;
     }
 }

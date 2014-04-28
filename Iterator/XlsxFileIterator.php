@@ -24,10 +24,7 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
     public function current()
     {
         $helper = $this->getExcelHelper();
-        $values = $helper->combineArrays(
-            $this->labels,
-            $helper->getRowData($this->valuesIterator->current())
-        );
+        $values = $helper->combineArrays($this->labels, $this->valuesIterator->current());
 
         if ($this->options['skip_empty']) {
             foreach (array_keys($values) as $key) {
@@ -51,7 +48,7 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
         while ($iterator->valid() && ((int) $this->options['label_row'] > $iterator->key())) {
             $iterator->next();
         }
-        $this->labels = $helper->getRowData($iterator->current());
+        $this->labels = $iterator->current();
         while ($iterator->valid() && ((int) $this->options['data_row'] > $iterator->key())) {
             $iterator->next();
         }

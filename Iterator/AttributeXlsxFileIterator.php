@@ -113,9 +113,10 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
         $xls->ChangeSheet($this->getAttributeTypesWorksheet());
         $helper = $this->getExcelHelper();
         $this->attributeTypes = array();
-        foreach ($helper->createRowIterator($xls, 2) as $row) {
-            $data = $helper->getRowData($row);
-            $this->attributeTypes[$data[1]] = $data[0];
+        foreach ($helper->createRowIterator($xls) as $key => $row) {
+            if ($key >= 2) {
+                $this->attributeTypes[$row[1]] = $row[0];
+            }
         }
     }
 
