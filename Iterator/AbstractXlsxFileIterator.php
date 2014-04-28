@@ -74,11 +74,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
         $this->worksheetIterator = new \CallbackFilterIterator(
             new \ArrayIterator($xls->Sheets()),
             function ($title, $key) use ($xls) {
-                if ($this->isReadableWorksheet($title)) {
-                    $xls->ChangeSheet($key);
-
-                    return true;
-                }
+                return $this->isReadableWorksheet($title);
 
                 return false;
             }
@@ -118,6 +114,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      */
     protected function initializeValuesIterator()
     {
+        $this->getExcelObject()->ChangeSheet($this->worksheetIterator->key());
         $this->valuesIterator = $this->createValuesIterator();
 
         if (!$this->valuesIterator->valid()) {

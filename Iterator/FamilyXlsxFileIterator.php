@@ -40,7 +40,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                 $data['code'] = $row[$this->options['code_column']];
             }
             if ($index == $this->options['attribute_label_row']) {
-                $attributeLabels = $helper->getRowData($row);
+                $attributeLabels = $row;
                 $channelColumn = count($attributeLabels);
                 array_splice($channelLabels, 0, $channelColumn);
                 $data['requirements'] = array_fill_keys($channelLabels, []);
@@ -48,15 +48,15 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                 $useAsLabelColumn = array_search('use_as_label', $attributeLabels);
             }
             if ($index == $this->options['channel_label_row']) {
-                $channelLabels = $helper->getRowData($row);
+                $channelLabels = $row;
             }
             if ($index == $this->options['labels_label_row']) {
-                $labelLocales = $helper->getRowData($row, $this->options['labels_column']);
+                $labelLocales = array_slice($row, $this->options['labels_column']);
             }
             if ($index == $this->options['labels_data_row']) {
                 $data['labels'] = $helper->combineArrays(
                     $labelLocales,
-                    $helper->getRowData($row, $this->options['labels_column'])
+                    array_slice($row, $this->options['labels_column'])
                 );
             }
             if ($index >= (int) $this->options['attribute_data_row']) {
@@ -65,7 +65,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                 if (isset($row[$useAsLabelColumn]) && ('1' === trim($row[$useAsLabelColumn]))) {
                     $data['attribute_as_label'] = $code;
                 }
-                $channelValues = $helper->getRowData($row, $channelColumn);
+                $channelValues = array_slice($row, $channelColumn);
                 foreach ($channelLabels as $index => $channel) {
                     if (isset($channelValues[$index]) && '1' === trim($channelValues[$index])) {
                         $data['requirements'][$channel][] = $code;

@@ -25,11 +25,6 @@ class ExcelHelperSpec extends ObjectBehavior
         $this->combineArrays($keys, $values)->shouldReturn(array('key1' => 'value1', 'key2' => 'value2', 'key3' => ''));
     }
 
-    public function it_should_trim_empty_formatted_cells()
-    {
-        $worksheet = $this->getWorksheet('helper.xlsx', 'main');
-        $this->getRowData(['', '', 'bogus', 'value1', 'value2', '', null], 3)->shouldReturn(array('value1', 'value2'));
-    }
 
     /**
      * Returns a worksheet by file name and worksheet name

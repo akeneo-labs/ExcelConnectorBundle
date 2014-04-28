@@ -20,24 +20,7 @@ class ExcelHelper
      */
     public function createRowIterator(\Iterator $worksheet)
     {
-        return new RowIterator($this, $worksheet);
-    }
-
-    /**
-     * Returns an array of values for a row
-     *
-     * @param array $row
-     * @param int   $startColumn
-     *
-     * @return array
-     */
-    public function getRowData(array $row, $startColumn = 0)
-    {
-        if ($startColumn > 0) {
-            array_splice($row, 0, $startColumn);
-        }
-
-        return $this->trimArray($row);
+        return new RowIterator($worksheet);
     }
 
     /**
@@ -68,21 +51,5 @@ class ExcelHelper
         }
 
         return array_slice($data, 0, $count);
-    }
-
-    /**
-     * Strips empty values from the end of an array
-     *
-     * @param array $values
-     *
-     * @return array
-     */
-    protected function trimArray(array $values)
-    {
-        while (count($values) && '' === trim($values[count($values) - 1])) {
-            unset($values[count($values) - 1]);
-        }
-
-        return $values;
     }
 }
