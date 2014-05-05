@@ -92,7 +92,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
 
     /**
      * Returns the Excel Helper service
-     * 
+     *
      * @throws \RuntimeException
      */
     protected function initializeAttributeTypes()
@@ -100,8 +100,8 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
         $xls = $this->getInnerIterator()->getExcelObject();
         $this->attributeTypes = array();
         $attributeWorkseet = $xls->getWorksheetIndex('attribute_types');
-        if (!$attributeWorkseet)  {
-            throw new \RuntimeException('No attribute_types worksheet in the excel file');            
+        if (!$attributeWorkseet) {
+            throw new \RuntimeException('No attribute_types worksheet in the excel file');
         }
         $iterator = $xls->createRowIterator($attributeWorkseet);
 

@@ -68,7 +68,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
         ) {
         $this->beConstructedWith('path', array());
         $this->setContainer($container);
-        
+
         $workbook->getWorksheets()->willReturn(['tab1', 'tab2', 'tab3']);
 
         $this->rewind();

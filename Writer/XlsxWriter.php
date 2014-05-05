@@ -4,8 +4,8 @@ namespace Pim\Bundle\ExcelConnectorBundle\Writer;
 
 use Pim\Bundle\BaseConnectorBundle\Writer\File\FileWriter;
 use Symfony\Component\Validator\Constraints as Assert;
-use Pim\Bundle\ExcelConnectorBundle\Excel\ExcelBuilderInterface;
-use Pim\Bundle\ExcelConnectorBundle\Excel\ExcelBuilderFactory;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ExcelBuilderInterface;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ExcelBuilderFactory;
 
 /**
  * Xlsx file writer

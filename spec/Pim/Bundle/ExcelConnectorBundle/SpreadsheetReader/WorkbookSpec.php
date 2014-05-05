@@ -3,7 +3,7 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\RowIterator;
+use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\RowIterator;
 use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Archive;
 use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\ContentCache;
 use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\ContentCacheReader;
@@ -50,12 +50,12 @@ class WorkbookSpec extends ObjectBehavior
         $this->createRowIterator(1)->shouldReturn($rowIterator2);
     }
 
-    function it_finds_a_worksheet_index_by_name()
+    public function it_finds_a_worksheet_index_by_name()
     {
         $this->getWorksheetIndex('sheet2')->shouldReturn(1);
     }
 
-    function it_returns_null_if_a_worksheet_does_not_exist()
+    public function it_returns_null_if_a_worksheet_does_not_exist()
     {
         $this->getWorksheetIndex('sheet3')->shouldReturn(null);
     }

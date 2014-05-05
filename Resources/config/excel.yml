@@ -1,11 +1,10 @@
 parameters:
-    pim_excel_connector.excel.builder.factory.class:        Pim\Bundle\ExcelConnectorBundle\Excel\ExcelBuilderFactory
-    pim_excel_connector.excel.builder.class:                Pim\Bundle\ExcelConnectorBundle\Excel\ExcelBuilder
-    pim_excel_connector.excel.builder.product_family.class: Pim\Bundle\ExcelConnectorBundle\Excel\ProductFamilyExcelBuilder
+    pim_excel_connector.excel.builder.factory.class:        Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ExcelBuilderFactory
+    pim_excel_connector.excel.builder.class:                Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ExcelBuilder
+    pim_excel_connector.excel.builder.product_family.class: Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ProductFamilyExcelBuilder
 
 services:
     pim_excel_connector.excel.builder.factory:
         class: %pim_excel_connector.excel.builder.factory.class%
         arguments:
             - '@service_container'
-
