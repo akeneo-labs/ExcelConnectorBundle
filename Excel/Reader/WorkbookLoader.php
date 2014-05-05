@@ -15,14 +15,16 @@ class WorkbookLoader
      * Constructor
      *
      * @param ArchiveLoader       $archiveReader
-     * @param ContentCacheLoader  $contentCacheReader
+     * @param RelationshipsLoader $relationshipsLoader
+     * @param ContentCacheLoader  $contentCacheLoader
      * @param WorksheetListReader $worksheetListReader
      * @param RowIteratorFactory  $rowIteratorFactory
      * @param string              $workbookClass
      */
     public function __construct(
         ArchiveLoader $archiveReader,
-        ContentCacheLoader $contentCacheReader,
+        RelationshipsLoader $relationshipsLoader,
+        ContentCacheLoader $contentCacheLoader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         $workbookClass

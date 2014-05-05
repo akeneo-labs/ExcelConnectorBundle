@@ -16,9 +16,10 @@ class WorksheetListReader
      * The keys of the array should be the name of the worksheety XML files inside the archive
      * The values of the array should be the titles of the worksheets
      *
-     * @param Archive $archive
+     * @param Relationships $relationships
+     * @param string        $path
      */
-    public function getWorksheets(Archive $archive)
+    public function getWorksheets(Relationships $relationships, $path)
     {
         throw new  \Exception('NOT IMPLEMENTED');
     }

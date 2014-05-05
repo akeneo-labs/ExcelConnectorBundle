@@ -12,14 +12,26 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class Workbook
 {
     /**
+     * @staticvar string Path to the relationships file inside the XLSX archive
+     */
+    const RELATIONSHIPS_PATH = 'xl/_rels/workbook.xml.rels';
+
+    /**
+     * @staticvar string Path to the workbooks file inside the XLSX archive
+     */
+    const WORKBOOK_PATH = 'xl/workbook.xml';
+
+    /**
      * Constructor
      *
+     * @paral RelationshipsLoader $relationshipsLoader
      * @param ContentCacheLoader  $contentCacheReader
      * @param WorksheetListReader $worksheetListReader
      * @param RowIteratorFactory  $rowIteratorFactory
      * @param Archive             $archive
      */
     public function __construct(
+        RelationshipsLoader $relationshipsLoader,
         ContentCacheLoader $contentCacheReader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,

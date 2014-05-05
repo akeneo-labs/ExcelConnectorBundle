@@ -8,18 +8,21 @@ use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ArchiveLoader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCacheLoader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader;
 
 class WorkbookLoaderSpec extends ObjectBehavior
 {
     public function let(
         ArchiveLoader $archiveReader,
-        ContentCacheLoader $contentCacheReader,
+        RelationshipsLoader $relationshipsLoader,
+        ContentCacheLoader $contentCacheLoader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory
     ) {
         $this->beConstructedWith(
             $archiveReader,
-            $contentCacheReader,
+            $relationshipsLoader,
+            $contentCacheLoader,
             $worksheetListReader,
             $rowIteratorFactory,
             'spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubWorkbook'
@@ -33,7 +36,8 @@ class WorkbookLoaderSpec extends ObjectBehavior
 
     public function it_creates_workbook_objects(
         ArchiveLoader $archiveReader,
-        ContentCacheLoader $contentCacheReader,
+        RelationshipsLoader $relationshipsLoader,
+        ContentCacheLoader $contentCacheLoader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
@@ -42,9 +46,10 @@ class WorkbookLoaderSpec extends ObjectBehavior
 
         $workbook = $this->open('path');
         $workbook->getArchive()->shouldReturn($archive);
-        $workbook->getContentCacheLoader()->shouldReturn($contentCacheReader);
+        $workbook->getContentCacheLoader()->shouldReturn($contentCacheLoader);
         $workbook->getRowIteratorFactory()->shouldReturn($rowIteratorFactory);
         $workbook->getWorksheetListReader()->shouldReturn($worksheetListReader);
+        $workbook->getRelationshpsLoader()->shouldReturn($relationshipsLoader);
     }
 
     public function it_caches_workbook_objects(
@@ -61,18 +66,21 @@ class WorkbookLoaderSpec extends ObjectBehavior
 
 class StubWorkbook
 {
-    protected $contentCacheReader;
+    protected $contentCacheLoader;
     protected $worksheetListReader;
+    protected $relationshipsLoader;
     protected $rowIteratorFactory;
     protected $archive;
 
     public function __construct(
-        ContentCacheLoader $contentCacheReader,
+        ContentCacheLoader $contentCacheLoader,
+        RelationshipsLoader $relationshipsLoader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
     ) {
-        $this->contentCacheReader = $contentCacheReader;
+        $this->contentCacheLoader = $contentCacheLoader;
+        $this->relationshipsLoader = $relationshipsLoader;
         $this->worksheetListReader = $worksheetListReader;
         $this->rowIteratorFactory = $rowIteratorFactory;
         $this->archive = $archive;
@@ -80,7 +88,7 @@ class StubWorkbook
 
     public function getContentCacheLoader()
     {
-        return $this->contentCacheReader;
+        return $this->contentCacheLoader;
     }
 
     public function getRowIteratorFactory()
@@ -96,5 +104,10 @@ class StubWorkbook
     public function getWorksheetListReader()
     {
         return $this->worksheetListReader;
+    }
+
+    public function getRelationshipsLoader()
+    {
+        return $this->relationshipsLoader;
     }
 }

@@ -3,7 +3,6 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive;
 
 class ContentCacheLoaderSpec extends ObjectBehavior
 {
@@ -17,10 +16,9 @@ class ContentCacheLoaderSpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCacheLoader');
     }
 
-    public function it_loads_content_cache(Archive $archive)
+    public function it_loads_content_cache()
     {
-        $archive->extract('archive_path')->willReturn('temp_path');
-        $this->load($archive)->shouldReturn('temp_path');
+        $this->load('path')->getPath()->shouldReturn('temp_path');
     }
 }
 
