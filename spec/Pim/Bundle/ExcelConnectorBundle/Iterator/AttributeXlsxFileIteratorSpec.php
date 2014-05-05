@@ -2,21 +2,51 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
+use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Workbook;
+use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorkbookReader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 {
-    public function let(ContainerInterface $container)
-    {
-        parent::let($container);
-        $this->beConstructedWith(
-            __DIR__ . '/../fixtures/init.xlsx',
-            [
-                'label_row' => 6,
-                'data_row' => 7,
-                'skip_empty' => true,
-                'include_worksheets' => [ '/^family/' ]
-            ]
+    public function let(
+        ContainerInterface $container,
+        ArrayHelper $arrayHelper,
+        WorkbookReader $workbookReader,
+        Workbook $workbook
+    )  {
+        parent::let($container, $arrayHelper, $workbookReader, $workbook);
+        $this->beConstructedWith('path', [ 'include_worksheets' => ['/tab/']]);
+        $workbook->getWorksheets()->willReturn(['tab1', 'tab2', 'attribute_types']);
+        $workbook->getWorksheetIndex('attribute_types')->willReturn(2);
+        $workbook->createRowIterator(0)->willReturn(
+            new \ArrayIterator(
+                [
+                    1 => ['code', 'use_as_label', 'type','key1', 'key2', 'key3'],
+                    2 => ['attribute1', '1', 'type1', 'value1', 'value2', 'value3'],
+                    3 => ['attribute2', '1', '', '', '', ''],
+                    4 => ['attribute3', '1', 'type2', 'value4', '', '']
+                ]
+            )
+        );
+        $workbook->createRowIterator(1)->willReturn(
+            new \ArrayIterator(
+                [
+                    1 => ['code', 'use_as_label', 'type', 'key4', 'key1', 'key2'],
+                    2 => ['attribute4', '1', 'type3', 'value5', '', ''],
+                    3 => ['attribute5', '1', '', '', '', ''],
+                ]
+            )
+        );
+        $workbook->createRowIterator(2)->willReturn(
+            new \ArrayIterator(
+                [
+                    1 => ['code', 'title'],
+                    2 => ['pim_type1', 'type1'],
+                    3 => ['pim_type2', 'type2'],
+                    4 => ['pim_type3', 'type3'],
+                ]
+            )
         );
         $this->setContainer($container);
     }
@@ -28,53 +58,13 @@ class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_reads_attributes()
     {
-        $this->rewind();
         $values = [
-            [
-                'code' => 'sku',
-                'label-en_US' => 'Code article',
-                'type' => 'pim_catalog_identifier',
-                'group' => 'global',
-                'sort_order' => "1",
-                'unique' => "1",
-                'searchable' => "1",
-                'useable_as_grid_column' => "1",
-                'useable_as_grid_filter' => "1",
-            ],
-            [
-                'code' => 'name',
-                'label-en_US' => 'Name',
-                'type' => 'pim_catalog_text',
-                'group' => 'global',
-                'sort_order' => "2",
-                'searchable' => "1",
-                'useable_as_grid_column' => "1",
-                'useable_as_grid_filter' => "1",
-            ],
-            [
-                'code' => 'type',
-                'label-en_US' => 'Type',
-                'type' => 'pim_catalog_multiselect',
-                'group' => 'global',
-                'sort_order' => '3',
-                'searchable' => '1',
-                'localizable' => '1',
-                'locales' => 'fr_FR',
-                'scopable' => '1',
-                'useable_as_grid_column' => '1',
-                'useable_as_grid_filter' => '1',
-            ],
-            [
-                'code' => 'description',
-                'label-en_US' => 'Description',
-                'type' => 'pim_catalog_textarea',
-                'group' => 'global',
-                'sort_order' => '4',
-                'useable_as_grid_column' => '1',
-                'max_characters' => '100'
-            ],
+            ['code' => 'attribute1', 'type' => 'pim_type1', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3'],
+            ['code' => 'attribute3', 'type' => 'pim_type2', 'key1' => 'value4'],
+            ['code' => 'attribute4', 'type' => 'pim_type3', 'key4' => 'value5'],
         ];
 
+        $this->rewind();
         foreach ($values as $item) {
             $this->current()->shouldReturn($item);
             $this->next();

@@ -31,7 +31,9 @@ class WorkbookReader
     }
 
     /**
-     * Opens an xlsx workbook
+     * Opens an xlsx workbook and returns a Workbook object
+     * 
+     * Workbook objects are cached, and will be read only once
      *
      * @param string $path
      *

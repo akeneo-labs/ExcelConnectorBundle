@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use Pim\Bundle\ExcelConnectorBundle\Excel\ObjectCache;
+use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Workbook;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -21,17 +23,17 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     protected $container;
 
     /**
-     * @var \Iterator
+     * @var Iterator
      */
     protected $worksheetIterator;
 
     /**
-     * @var \Iterator
+     * @var Iterator
      */
     protected $valuesIterator;
 
     /**
-     * @var \SpreadsheetReader_XLSX
+     * @var Workbook
      */
     private $xls;
 
@@ -72,7 +74,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     {
         $xls = $this->getExcelObject();
         $this->worksheetIterator = new \CallbackFilterIterator(
-            new \ArrayIterator($xls->Sheets()),
+            new \ArrayIterator($xls->getWorksheets()),
             function ($title, $key) use ($xls) {
                 return $this->isReadableWorksheet($title);
 
@@ -90,12 +92,12 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * Returns the associated Excel object
      *
-     * @return \SpreadsheetReader_XLSX
+     * @return Workbook
      */
     public function getExcelObject()
     {
         if (!$this->xls) {
-            $this->xls = $this->getObjectCache()->load($this->filePath);
+            $this->xls = $this->getWorkbookReader()->open($this->filePath);
         }
 
         return $this->xls;
@@ -114,7 +116,6 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      */
     protected function initializeValuesIterator()
     {
-        $this->getExcelObject()->ChangeSheet($this->worksheetIterator->key());
         $this->valuesIterator = $this->createValuesIterator();
 
         if (!$this->valuesIterator->valid()) {
@@ -200,29 +201,29 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     }
 
     /**
-     * Returns the Excel Helper service
+     * Returns the Array Helper service
      *
-     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\ExcelHelper
+     * @return ArrayHelper
      */
-    protected function getExcelHelper()
+    protected function getArrayHelper()
     {
-        return $this->container->get('pim_excel_connector.excel.helper');
+        return $this->container->get('pim_excel_connector.iterator.array_helper');
     }
 
     /**
-     * Returns the object cache
-     *
-     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\ObjectCache
+     * Returns the workbook reader
+     * 
+     * @return \Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorkbookReader
      */
-    protected function getObjectCache()
+    protected function getWorkbookReader()
     {
-        return $this->container->get('pim_excel_connector.excel.object_cache');
+        return $this->container->get('pim_excel_connector.spreadsheet_reader.workbook_reader');
     }
 
-    /**
+        /**
      * Creates the value iterator
      *
-     * @return \Iterator
+     * @return Iterator
      */
     abstract protected function createValuesIterator();
 }

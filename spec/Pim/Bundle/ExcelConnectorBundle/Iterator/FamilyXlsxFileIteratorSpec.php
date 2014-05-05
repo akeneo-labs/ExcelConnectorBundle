@@ -2,17 +2,54 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
+use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Workbook;
+use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorkbookReader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 {
-    public function let(ContainerInterface $container)
-    {
-        parent::let($container);
+    public function let(
+        ContainerInterface $container,
+        ArrayHelper $arrayHelper,
+        WorkbookReader $workbookReader,
+        Workbook $workbook
+    ) {
+        parent::let($container, $arrayHelper, $workbookReader, $workbook);
+        $workbook->getWorksheets()->willReturn(['bogus', 'family1', 'family2']);
+        $workbook->createRowIterator(1)->willReturn(
+            new \ArrayIterator(
+                [
+                    1  => ['', '', '', '', 'locale1', 'locale2'],
+                    2  => ['bogus', 'family1', 'bogus', 'bogus', 'family1_locale1', 'family1_locale2'],
+                    3  => [],
+                    5  => ['', '', '', '', 'channel1', 'channel2'],
+                    6  => ['code', 'use_as_label', 'column1', 'column2'],
+                    8  => ['attribute1', '', 'bogus', 'bogus', '1', ''],
+                    10 => ['attribute2', '1', 'bogus', 'bogus', '1', '1'],
+                    11 => ['attribute3', '', '', '', '', '1'],
+                ]
+            )
+        );
+        $workbook->createRowIterator(2)->willReturn(
+            new \ArrayIterator(
+                [
+                    1  => ['', '', '', '', 'locale1', 'locale2'],
+                    2  => ['bogus', 'family2', 'bogus', 'bogus', 'family2_locale1', 'family2_locale2'],
+                    3  => [],
+                    5  => ['', '', '', '', 'channel1', 'channel2'],
+                    6  => ['code', 'use_as_label', 'column1', 'column2'],
+                    7  => ['attribute1', '1', 'bogus', 'bogus', '1', ''],
+                    10 => ['attribute5', '', 'bogus', 'bogus', '1', '1'],
+                    11 => ['attribute6', '', '', '', '', '1'],
+                    12 => ['attribute7', '', '', '', '', ''],
+                ]
+            )
+        );
         $this->beConstructedWith(
-            __DIR__ . '/../fixtures/init.xlsx',
+            'path',
             [
-              'channel_label_row'    =>   5,
+              'channel_label_row'   => 5,
               'attribute_label_row' => 6,
               'attribute_data_row'  => 7,
               'code_row'            => 2,
@@ -36,24 +73,24 @@ class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
         $this->rewind();
         $values = [
             [
-                'attributes' => ['sku', 'name', 'type', 'description'],
-                'code' => 'main',
-                'labels' => ['en_US' => 'Main'],
+                'attributes' => ['attribute1', 'attribute2', 'attribute3'],
+                'code' => 'family1',
+                'labels' => ['locale1' => 'family1_locale1', 'locale2' => 'family1_locale2'],
                 'requirements' => [
-                    'main' => ['sku', 'name'],
-                    'channel2' => ['sku', 'type']
+                    'channel1' => ['attribute1', 'attribute2'],
+                    'channel2' => ['attribute2', 'attribute3']
                 ],
-                'attribute_as_label' =>  'name',
+                'attribute_as_label' =>  'attribute2',
             ],
             [
-                'attributes' => ['sku', 'name', 'type'],
+                'attributes' => ['attribute1', 'attribute5', 'attribute6', 'attribute7'],
                 'code' => 'family2',
-                'labels' => ['en_US' => 'Family 2'],
+                'labels' => ['locale1' => 'family2_locale1', 'locale2' => 'family2_locale2'],
                 'requirements' => [
-                    'main' => ['sku', 'name'],
-                    'channel2' => ['sku', 'type']
+                    'channel1' => ['attribute1', 'attribute5'],
+                    'channel2' => ['attribute5', 'attribute6']
                 ],
-                'attribute_as_label' =>  'name',
+                'attribute_as_label' =>  'attribute1',
             ]
         ];
 

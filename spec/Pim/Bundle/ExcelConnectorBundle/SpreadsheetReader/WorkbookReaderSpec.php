@@ -46,6 +46,17 @@ class WorkbookReaderSpec extends ObjectBehavior
         $workbook->getRowIteratorFactory()->shouldReturn($rowIteratorFactory);
         $workbook->getWorksheetListReader()->shouldReturn($worksheetListReader);
     }
+
+    public function it_caches_workbook_objects(
+        ArchiveReader $archiveReader,
+        Archive $archive
+    ) {
+        $archiveReader->open('path')->shouldBeCalledTimes(1)->willReturn($archive);
+
+        $workbook = $this->open('path');
+        $workbook->getArchive()->shouldReturn($archive);
+        $workbook->getArchive()->shouldReturn($archive);
+    }
 }
 
 class StubWorkbook

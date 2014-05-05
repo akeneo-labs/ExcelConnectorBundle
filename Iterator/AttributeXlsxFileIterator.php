@@ -15,11 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwareInterface
 {
     /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
      * @var array
      */
     protected $attributeTypes;
@@ -37,6 +32,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
      */
     public function __construct($filePath, array $options = array())
     {
+        $options['skip_empty'] = true;
         $this->innerIterator = new XlsxFileIterator($filePath, $options);
 
         parent::__construct($this->innerIterator);
@@ -96,44 +92,23 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
 
     /**
      * Returns the Excel Helper service
-     *
-     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\ExcelHelper
-     */
-    protected function getExcelHelper()
-    {
-        return $this->container->get('pim_excel_connector.excel.helper');
-    }
-
-    /**
-     * Initializes the attribute types dictionnary
+     * 
+     * @throws \RuntimeException
      */
     protected function initializeAttributeTypes()
     {
         $xls = $this->getInnerIterator()->getExcelObject();
-        $xls->ChangeSheet($this->getAttributeTypesWorksheet());
-        $helper = $this->getExcelHelper();
         $this->attributeTypes = array();
-        foreach ($helper->createRowIterator($xls) as $key => $row) {
+        $attributeWorkseet = $xls->getWorksheetIndex('attribute_types');
+        if (!$attributeWorkseet)  {
+            throw new \RuntimeException('No attribute_types worksheet in the excel file');            
+        }
+        $iterator = $xls->createRowIterator($attributeWorkseet);
+
+        foreach ($iterator as $key => $row) {
             if ($key >= 2) {
                 $this->attributeTypes[$row[1]] = $row[0];
             }
         }
-    }
-
-    /**
-     * Returns the attribute worksheet
-     *
-     * @throws \RuntimeException
-     *
-     * @return \PHPExcel_Worksheet
-     */
-    protected function getAttributeTypesWorksheet()
-    {
-        $worksheet = array_search('attribute_types', $this->innerIterator->getExcelObject()->Sheets());
-        if ($worksheet === false) {
-            throw new \RuntimeException('No attribute_types worksheet in the excel file');
-        }
-
-        return $worksheet;
     }
 }

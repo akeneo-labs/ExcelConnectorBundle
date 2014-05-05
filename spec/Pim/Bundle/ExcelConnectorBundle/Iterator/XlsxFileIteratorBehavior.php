@@ -3,8 +3,10 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\ExcelHelper;
-use Pim\Bundle\ExcelConnectorBundle\Excel\ObjectCache;
+use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
+use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Workbook;
+use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorkbookReader;
+use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -16,10 +18,19 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class XlsxFileIteratorBehavior extends ObjectBehavior
 {
-    public function let(ContainerInterface $container)
-    {
-        $helper = new ExcelHelper;
-        $container->get('pim_excel_connector.excel.helper')->willReturn($helper);
-        $container->get('pim_excel_connector.excel.object_cache')->willReturn(new ObjectCache());
+    public function let(
+        ContainerInterface $container,
+        ArrayHelper $arrayHelper,
+        WorkbookReader $workbookReader,
+        Workbook $workbook
+    ) {
+        $workbookReader->open('path')->willReturn($workbook);
+        $arrayHelper->combineArrays(Argument::type('array'), Argument::type('array'))->will(
+            function ($args) {
+                return array_combine($args[0], $args[1]);
+            }
+        );
+        $container->get('pim_excel_connector.iterator.array_helper')->willReturn($arrayHelper);
+        $container->get('pim_excel_connector.spreadsheet_reader.workbook_reader')->willReturn($workbookReader);
     }
 }

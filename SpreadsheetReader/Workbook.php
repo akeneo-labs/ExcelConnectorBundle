@@ -51,4 +51,16 @@ class Workbook
     {
         throw new \Exception('NOT IMPLEMENTED');
     }
+
+    /**
+     * Returns a worksheet index by name
+     * 
+     * @param string $name
+     * 
+     * @return int
+     */
+    public function getWorksheetIndex($name)
+    {
+        throw new \Exception('NOT IMPLEMENTED');
+    }
 }
