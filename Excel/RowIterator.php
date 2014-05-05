@@ -19,7 +19,7 @@ class RowIterator extends \FilterIterator
     /**
      * Constructor
      *
-     * @param \Iterator   $innerIterator
+     * @param \Iterator $innerIterator
      */
     public function __construct(\Iterator $innerIterator)
     {
@@ -33,7 +33,7 @@ class RowIterator extends \FilterIterator
     public function accept()
     {
         $iterator = $this->getInnerIterator();
-        $this->value = $iterator->valid() 
+        $this->value = $iterator->valid()
                 ? $this->trimArray($iterator->current())
                 : array();
 
@@ -47,7 +47,6 @@ class RowIterator extends \FilterIterator
     {
         return $this->value;
     }
-
 
     /**
      * Strips empty values from the end of an array

@@ -25,7 +25,6 @@ class ExcelHelperSpec extends ObjectBehavior
         $this->combineArrays($keys, $values)->shouldReturn(array('key1' => 'value1', 'key2' => 'value2', 'key3' => ''));
     }
 
-
     /**
      * Returns a worksheet by file name and worksheet name
      *
