@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
+namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
  * XLSX file reader
@@ -9,20 +9,20 @@ namespace Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class WorkbookReader
+class WorkbookLoader
 {
     /**
      * Constructor
      *
-     * @param ArchiveReader       $archiveReader
-     * @param ContentCacheReader  $contentCacheReader
+     * @param ArchiveLoader       $archiveReader
+     * @param ContentCacheLoader  $contentCacheReader
      * @param WorksheetListReader $worksheetListReader
      * @param RowIteratorFactory  $rowIteratorFactory
      * @param string              $workbookClass
      */
     public function __construct(
-        ArchiveReader $archiveReader,
-        ContentCacheReader $contentCacheReader,
+        ArchiveLoader $archiveReader,
+        ContentCacheLoader $contentCacheReader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         $workbookClass

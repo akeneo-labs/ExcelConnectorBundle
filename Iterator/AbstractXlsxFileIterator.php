@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Workbook;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -96,7 +96,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     public function getExcelObject()
     {
         if (!$this->xls) {
-            $this->xls = $this->getWorkbookReader()->open($this->filePath);
+            $this->xls = $this->getWorkbookLoader()->open($this->filePath);
         }
 
         return $this->xls;
@@ -212,9 +212,9 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * Returns the workbook reader
      *
-     * @return \Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorkbookReader
+     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader
      */
-    protected function getWorkbookReader()
+    protected function getWorkbookLoader()
     {
         return $this->container->get('pim_excel_connector.spreadsheet_reader.workbook_reader');
     }

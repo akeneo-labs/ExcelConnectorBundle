@@ -1,34 +1,34 @@
 <?php
 
-namespace spec\Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
+namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\RowIterator;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Archive;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\ContentCache;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\ContentCacheReader;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\RowIteratorFactory;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorksheetListReader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIterator;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCache;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCacheLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 
 class WorkbookSpec extends ObjectBehavior
 {
     public function let(
-        ContentCacheReader $contentCacheReader,
+        ContentCacheLoader $contentCacheReader,
         ContentCache $contentCache,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
     ) {
         $this->beConstructedWith($contentCacheReader, $worksheetListReader, $rowIteratorFactory, $archive);
-        $contentCacheReader->read($archive)->willReturn($contentCache);
-        $worksheetListReader->read($archive)->willReturn(['path1' => 'sheet1', 'path2' => 'sheet2']);
+        $contentCacheReader->open($archive)->willReturn($contentCache);
+        $worksheetListReader->getWorksheets($archive)->willReturn(['path1' => 'sheet1', 'path2' => 'sheet2']);
         $archive->extract('path1')->willReturn('extracted_path1');
         $archive->extract('path2')->willReturn('extracted_path2');
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Workbook');
+        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook');
     }
 
     public function it_returns_the_worksheet_list()

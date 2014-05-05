@@ -4,8 +4,8 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 use ArrayIterator;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Workbook;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorkbookReader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
@@ -13,7 +13,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookReader $workbookReader,
+        WorkbookLoader $workbookReader,
         Workbook $workbook
     ) {
         parent::let($container, $arrayHelper, $workbookReader, $workbook);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
+namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
  * ContentCache factory
@@ -9,15 +9,14 @@ namespace Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class ContentCacheReader
+class ContentCacheLoader
 {
     /**
      * Constructor
      *
      * @param string $contentCacheClass The class for created objects
-     * @param int    $maxCachedElements The max number of elements to be cached
      */
-    public function __construct($contentCacheClass, $maxCachedElements)
+    public function __construct($contentCacheClass)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }
@@ -29,7 +28,7 @@ class ContentCacheReader
      *
      * @return ContentCache
      */
-    public function read(Archive $archive)
+    public function open(Archive $archive)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

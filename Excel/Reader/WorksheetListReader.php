@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
+namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
  *
@@ -18,7 +18,7 @@ class WorksheetListReader
      *
      * @param Archive $archive
      */
-    public function read(Archive $archive)
+    public function getWorksheets(Archive $archive)
     {
         throw new  \Exception('NOT IMPLEMENTED');
     }

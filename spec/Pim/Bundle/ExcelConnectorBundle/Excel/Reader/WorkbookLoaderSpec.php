@@ -1,19 +1,19 @@
 <?php
 
-namespace spec\Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
+namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Archive;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\ArchiveReader;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\ContentCacheReader;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\RowIteratorFactory;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorksheetListReader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ArchiveLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCacheLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 
-class WorkbookReaderSpec extends ObjectBehavior
+class WorkbookLoaderSpec extends ObjectBehavior
 {
     public function let(
-        ArchiveReader $archiveReader,
-        ContentCacheReader $contentCacheReader,
+        ArchiveLoader $archiveReader,
+        ContentCacheLoader $contentCacheReader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory
     ) {
@@ -22,18 +22,18 @@ class WorkbookReaderSpec extends ObjectBehavior
             $contentCacheReader,
             $worksheetListReader,
             $rowIteratorFactory,
-            'spec\Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\StubWorkbook'
+            'spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubWorkbook'
         );
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorkbookReader');
+        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader');
     }
 
     public function it_creates_workbook_objects(
-        ArchiveReader $archiveReader,
-        ContentCacheReader $contentCacheReader,
+        ArchiveLoader $archiveReader,
+        ContentCacheLoader $contentCacheReader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
@@ -42,13 +42,13 @@ class WorkbookReaderSpec extends ObjectBehavior
 
         $workbook = $this->open('path');
         $workbook->getArchive()->shouldReturn($archive);
-        $workbook->getContentCacheReader()->shouldReturn($contentCacheReader);
+        $workbook->getContentCacheLoader()->shouldReturn($contentCacheReader);
         $workbook->getRowIteratorFactory()->shouldReturn($rowIteratorFactory);
         $workbook->getWorksheetListReader()->shouldReturn($worksheetListReader);
     }
 
     public function it_caches_workbook_objects(
-        ArchiveReader $archiveReader,
+        ArchiveLoader $archiveReader,
         Archive $archive
     ) {
         $archiveReader->open('path')->shouldBeCalledTimes(1)->willReturn($archive);
@@ -67,7 +67,7 @@ class StubWorkbook
     protected $archive;
 
     public function __construct(
-        ContentCacheReader $contentCacheReader,
+        ContentCacheLoader $contentCacheReader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
@@ -78,7 +78,7 @@ class StubWorkbook
         $this->archive = $archive;
     }
 
-    public function getContentCacheReader()
+    public function getContentCacheLoader()
     {
         return $this->contentCacheReader;
     }

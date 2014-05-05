@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
+namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
  * Row iterator for an Excel worksheet

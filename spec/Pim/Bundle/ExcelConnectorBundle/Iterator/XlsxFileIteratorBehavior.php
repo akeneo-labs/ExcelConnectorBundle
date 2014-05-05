@@ -4,8 +4,8 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\Workbook;
-use Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader\WorkbookReader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -21,7 +21,7 @@ class XlsxFileIteratorBehavior extends ObjectBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookReader $workbookReader,
+        WorkbookLoader $workbookReader,
         Workbook $workbook
     ) {
         $workbookReader->open('path')->willReturn($workbook);

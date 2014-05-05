@@ -1,6 +1,6 @@
 <?php
 
-namespace Pim\Bundle\ExcelConnectorBundle\SpreadsheetReader;
+namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
  * Represents an XLSX workbook
@@ -14,13 +14,13 @@ class Workbook
     /**
      * Constructor
      *
-     * @param ContentCacheReader  $contentCacheReader
+     * @param ContentCacheLoader  $contentCacheReader
      * @param WorksheetListReader $worksheetListReader
      * @param RowIteratorFactory  $rowIteratorFactory
      * @param Archive             $archive
      */
     public function __construct(
-        ContentCacheReader $contentCacheReader,
+        ContentCacheLoader $contentCacheReader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
