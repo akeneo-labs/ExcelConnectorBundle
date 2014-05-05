@@ -24,7 +24,7 @@ class RowIteratorFactory
     /**
      * Creates a row iterator for the XML given worksheet file
      *
-     * @param ContentCache $contentCache
+     * @param ContentCache $contentCache the content cache for the workbook
      * @param string       $path         the path to the extracted XML worksheet file
      *
      * @return RowIterator

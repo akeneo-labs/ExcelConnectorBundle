@@ -3,7 +3,7 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
- * XLSX archive reader
+ * XLSX archive loader
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
@@ -11,10 +11,24 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class ArchiveLoader
 {
+    protected $archiveClass;
+
+    /**
+     * Constructor
+     *
+     * @param string $archiveClass The class of loaded objects
+     */
+    public function __construct($archiveClass)
+    {
+        $this->archiveClass = $archiveClass;
+    }
+
     /**
      * Opens the given archive
      *
      * @param string $path
+     *
+     * @return Archive
      */
     public function open($path)
     {

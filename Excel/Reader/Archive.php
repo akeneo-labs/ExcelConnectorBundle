@@ -14,11 +14,11 @@ class Archive
     /**
      * Constructor
      *
-     * @param string $path
+     * @param string $archivePath
      */
     public function __construct($archivePath)
     {
-        throw new \Exception('NOT NIMPLEMENTED');
+        throw new \Exception('NOT IMPLEMENTED');
     }
 
     /**
@@ -32,7 +32,7 @@ class Archive
      */
     public function extract($filePath)
     {
-        throw new \Exception('NOT NIMPLEMENTED');
+        throw new \Exception('NOT IMPLEMENTED');
     }
 
     /**

@@ -16,7 +16,10 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class RowIterator implements \Iterator
 {
     /**
-     * {@inheritdoc}
+     * Constructor
+     *
+     * @param ContentCache $contentCache
+     * @param string       $path
      */
     public function __construct(ContentCache $contentCache, $path)
     {
