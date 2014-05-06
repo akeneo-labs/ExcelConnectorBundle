@@ -13,7 +13,7 @@ class ArchiveLoader
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $archiveClass;
 

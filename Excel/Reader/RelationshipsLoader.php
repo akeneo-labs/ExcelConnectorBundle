@@ -13,7 +13,7 @@ class RelationshipsLoader
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $relationshipClass;
     /**

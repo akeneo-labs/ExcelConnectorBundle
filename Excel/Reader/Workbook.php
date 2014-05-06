@@ -23,7 +23,7 @@ class Workbook
     const WORKBOOK_PATH = 'xl/workbook.xml';
 
     /**
-     * @var RelationshipsLoader  
+     * @var RelationshipsLoader
      */
     protected $relationshipsLoader;
 
@@ -40,7 +40,7 @@ class Workbook
 
     /**
      *
-     * @var RowIteratorFactory 
+     * @var RowIteratorFactory
      */
     protected $rowIteratorFactory;
 
@@ -67,7 +67,7 @@ class Workbook
 
     /**
      *
-     * @var SharedStrings 
+     * @var SharedStrings
      */
     private $sharedStrings;
 
@@ -112,7 +112,7 @@ class Workbook
             $path = $this->archive->extract(static::WORKBOOK_PATH);
             $this->worksheets = $this->worksheetListReader->getWorksheets($this->getRelationships(), $path);
         }
-        
+
         return array_values($this->worksheets);
     }
 
@@ -149,6 +149,7 @@ class Workbook
             $path = $this->archive->extract(static::RELATIONSHIPS_PATH);
             $this->relationships = $this->relationshipsLoader->open($path);
         }
+
         return $this->relationships;
     }
 
