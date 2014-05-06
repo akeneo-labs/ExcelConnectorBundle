@@ -24,7 +24,10 @@ class WorkbookSpec extends ObjectBehavior
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
-        Archive $archive
+        Archive $archive,
+        Relationships $relationships,
+        SharedStrings $sharedStrings,
+        ValueTransformer $valueTransformer
     ) {
         $this->beConstructedWith(
             $relationshipsLoader,
@@ -34,6 +37,45 @@ class WorkbookSpec extends ObjectBehavior
             $rowIteratorFactory,
             $archive
         );
+        $archive->extract(Argument::type('string'))->will(
+            function ($args) {
+                return sprintf('temp_%s', $args[0]);
+            }
+        );
+
+        $relationshipsLoader->open('temp_' . Workbook::RELATIONSHIPS_PATH)
+            ->should(
+                function () {
+                    static $count = 1;
+                    $count++;
+
+                    return 1 === $count;
+                }
+            )
+            ->willReturn($relationships);
+
+        $relationships->getSharedStringsPath()->willReturn('shared_strings');
+        $sharedStringsLoader->open('temp_shared_strings')
+            ->should(
+                function () {
+                    static $count = 0;
+
+                    return 1 === ++$count;
+                }
+            )
+            ->willReturn($sharedStrings);
+
+        $valueTransformerFactory->create($sharedStrings)->willReturn($valueTransformer);
+
+        $worksheetListReader->getWorksheets($relationships, 'temp_' . Workbook::WORKBOOK_PATH)
+            ->should(
+                function () {
+                    static $count = 0;
+
+                    return 1 === ++$count;
+                }
+            )
+            ->willReturn(['path1' => 'sheet1', 'path2' => 'sheet2']);
     }
 
     public function it_is_initializable()
@@ -47,39 +89,11 @@ class WorkbookSpec extends ObjectBehavior
     }
 
     public function it_creates_row_iterators(
-        RelationshipsLoader $relationshipsLoader,
-        SharedStringsLoader $sharedStringsLoader,
-        SharedStrings $sharedStrings,
-        ValueTransformerFactory $valueTransformerFactory,
         ValueTransformer $valueTransformer,
-        WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
-        Archive $archive,
         RowIterator $rowIterator1,
-        RowIterator $rowIterator2,
-        Relationships $relationships
+        RowIterator $rowIterator2
     ) {
-        $archive->extract(Argument::type('string'))->will(
-            function ($args) {
-                return sprintf('temp_%s', $args[0]);
-            }
-        );
-
-        $relationshipsLoader->open('temp_' . Workbook::RELATIONSHIPS_PATH)
-            ->shouldBeCalledTimes(1)
-            ->willReturn($relationships);
-
-        $relationships->getSharedStringsPath()->willReturn('shared_strings');
-        $sharedStringsLoader->open('temp_shared_strings')
-            ->shouldBeCalledTimes(1)
-            ->willReturn($sharedStrings);
-
-        $valueTransformerFactory->create($sharedStrings)->willReturn($valueTransformer);
-
-        $worksheetListReader->getWorksheets($relationships, 'temp_' . Workbook::WORKBOOK_PATH)
-            ->shouldBeCalledTimes(1)
-            ->willReturn(['path1' => 'sheet1', 'path2' => 'sheet2']);
-
         $rowIteratorFactory->create($valueTransformer, 'temp_path1')->willReturn($rowIterator1);
         $rowIteratorFactory->create($valueTransformer, 'temp_path2')->willReturn($rowIterator2);
 
