@@ -3,17 +3,17 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformer;
 use Prophecy\Argument;
 
 class RowIteratorSpec extends ObjectBehavior
 {
-    public function let(SharedStrings $sharedStrings)
+    public function let(ValueTransformer $valueTransformer)
     {
-        $this->beConstructedWith($sharedStrings, __DIR__ . '/../../fixtures/sheet.xml');
-        $sharedStrings->get(Argument::type('string'))->will(
+        $this->beConstructedWith($valueTransformer, __DIR__ . '/../../fixtures/sheet.xml');
+        $valueTransformer->transform(Argument::type('string'))->will(
             function ($args) {
-                return 'string_' . $args[0];
+                return (trim($args[0])) ? 'transformed_' . trim($args[0]) : '';
             }
         );
     }
@@ -26,10 +26,10 @@ class RowIteratorSpec extends ObjectBehavior
     public function it_iterates_through_worksheets()
     {
         $values = [
-            1 => ['string_0', 'string_1'],
-            2 => ['string_2', 'string3', 'string4'],
-            4 => ['string_5', '', 'string6'],
-            6 => ['', '1578', '37235']
+            1 => ['transformed_0', 'transformed_1'],
+            2 => ['transformed_2', 'transformed_3', 'transformed_4'],
+            4 => ['transformed_5', '', 'transformed_6'],
+            6 => ['', 'transformed_1578', 'transformed_37235']
         ];
 
         $this->rewind();

@@ -11,12 +11,22 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class SharedStrings
 {
+    /**
+     * Constructor
+     *
+     * @param string $path path to the extracted shared strings XML file
+     */
     public function __construct($path)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }
 
-    public function get($id)
+    /**
+     * Returns a shared string by index
+     *
+     * @param int $index
+     */
+    public function get($index)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

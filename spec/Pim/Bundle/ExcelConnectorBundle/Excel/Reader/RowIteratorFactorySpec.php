@@ -3,7 +3,7 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformer;
 
 class RowIteratorFactorySpec extends ObjectBehavior
 {
@@ -17,29 +17,29 @@ class RowIteratorFactorySpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory');
     }
 
-    public function it_creates_row_iterators(SharedStrings $sharedStrings)
+    public function it_creates_row_iterators(ValueTransformer $valueTransformer)
     {
-        $iterator = $this->create($sharedStrings);
+        $iterator = $this->create($valueTransformer, 'path');
         $iterator->getPath()->shouldReturn('path');
-        $iterator->getSharedStrings()->shouldReturn($sharedStrings);
+        $iterator->getValueTransformer()->shouldReturn($valueTransformer);
     }
 }
 
 class StubRowIterator
 {
-    protected $sharedStrings;
+    protected $valueTransformer;
     protected $path;
-    public function __construct($sharedStrings, $path)
+    public function __construct($valueTransformer, $path)
     {
-        $this->sharedStrings = $sharedStrings;
+        $this->valueTransformer = $valueTransformer;
         $this->path = $path;
     }
     public function getPath()
     {
         return $this->path;
     }
-    public function getSharedStrings()
+    public function getValueTransformer()
     {
-        return $this->sharedStrings;
+        return $this->valueTransformer;
     }
 }

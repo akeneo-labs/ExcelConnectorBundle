@@ -24,16 +24,18 @@ class Workbook
     /**
      * Constructor
      *
-     * @paral RelationshipsLoader $relationshipsLoader
-     * @param SharedStringsLoader  $sharedStringsReader
-     * @param WorksheetListReader $worksheetListReader
-     * @param RowIteratorFactory  $rowIteratorFactory
-     * @param Archive             $archive
+     * @param RelationshipsLoader     $relationshipsLoader
+     * @param SharedStringsLoader     $sharedStringsLoader
+     * @param WorksheetListReader     $worksheetListReader
+     * @param ValueTransformerFactory $valueTransformerFactory
+     * @param RowIteratorFactory      $rowIteratorFactory
+     * @param Archive                 $archive
      */
     public function __construct(
         RelationshipsLoader $relationshipsLoader,
-        SharedStringsLoader $sharedStringsReader,
+        SharedStringsLoader $sharedStringsLoader,
         WorksheetListReader $worksheetListReader,
+        ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
     ) {

@@ -5,10 +5,11 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ArchiveLoader;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformerFactory;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 
 class WorkbookLoaderSpec extends ObjectBehavior
 {
@@ -17,6 +18,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
         WorksheetListReader $worksheetListReader,
+        ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory
     ) {
         $this->beConstructedWith(
@@ -24,6 +26,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
             $relationshipsLoader,
             $sharedStringsLoader,
             $worksheetListReader,
+            $valueTransformerFactory,
             $rowIteratorFactory,
             'spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubWorkbook'
         );
@@ -39,6 +42,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
         WorksheetListReader $worksheetListReader,
+        ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
     ) {
@@ -49,6 +53,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
         $workbook->getSharedStringsLoader()->shouldReturn($sharedStringsLoader);
         $workbook->getRowIteratorFactory()->shouldReturn($rowIteratorFactory);
         $workbook->getWorksheetListReader()->shouldReturn($worksheetListReader);
+        $workbook->getValueTransformerFactory()->shouldReturn($valueTransformerFactory);
         $workbook->getRelationshpsLoader()->shouldReturn($relationshipsLoader);
     }
 
@@ -70,18 +75,21 @@ class StubWorkbook
     protected $worksheetListReader;
     protected $relationshipsLoader;
     protected $rowIteratorFactory;
+    protected $valueTransformerFactory;
     protected $archive;
 
     public function __construct(
         SharedStringsLoader $sharedStringsLoader,
         RelationshipsLoader $relationshipsLoader,
         WorksheetListReader $worksheetListReader,
+        ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
     ) {
         $this->sharedStringsLoader = $sharedStringsLoader;
         $this->relationshipsLoader = $relationshipsLoader;
         $this->worksheetListReader = $worksheetListReader;
+        $this->valueTransformerFactory = $valueTransformerFactory;
         $this->rowIteratorFactory = $rowIteratorFactory;
         $this->archive = $archive;
     }
@@ -109,5 +117,10 @@ class StubWorkbook
     public function getRelationshipsLoader()
     {
         return $this->relationshipsLoader;
+    }
+
+    public function getValueTransformerFactory()
+    {
+        return $this->valueTransformerFactory;
     }
 }

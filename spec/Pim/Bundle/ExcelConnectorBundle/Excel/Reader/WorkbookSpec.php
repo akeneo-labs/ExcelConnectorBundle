@@ -4,14 +4,16 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIterator;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Relationships;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIterator;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformer;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformerFactory;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 use Prophecy\Argument;
 
 class WorkbookSpec extends ObjectBehavior
@@ -20,6 +22,7 @@ class WorkbookSpec extends ObjectBehavior
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
         WorksheetListReader $worksheetListReader,
+        ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
     ) {
@@ -27,6 +30,7 @@ class WorkbookSpec extends ObjectBehavior
             $relationshipsLoader,
             $sharedStringsLoader,
             $worksheetListReader,
+            $valueTransformerFactory,
             $rowIteratorFactory,
             $archive
         );
@@ -46,15 +50,15 @@ class WorkbookSpec extends ObjectBehavior
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
         SharedStrings $sharedStrings,
+        ValueTransformerFactory $valueTransformerFactory,
+        ValueTransformer $valueTransformer,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive,
         RowIterator $rowIterator1,
         RowIterator $rowIterator2,
         Relationships $relationships
-    )
-    {
-
+    ) {
         $archive->extract(Argument::type('string'))->will(
             function ($args) {
                 return sprintf('temp_%s', $args[0]);
@@ -70,12 +74,14 @@ class WorkbookSpec extends ObjectBehavior
             ->shouldBeCalledTimes(1)
             ->willReturn($sharedStrings);
 
+        $valueTransformerFactory->create($sharedStrings)->willReturn($valueTransformer);
+
         $worksheetListReader->getWorksheets($relationships, 'temp_' . Workbook::WORKBOOK_PATH)
             ->shouldBeCalledTimes(1)
             ->willReturn(['path1' => 'sheet1', 'path2' => 'sheet2']);
 
-        $rowIteratorFactory->create($sharedStrings, 'temp_path1')->willReturn($rowIterator1);
-        $rowIteratorFactory->create($sharedStrings, 'temp_path2')->willReturn($rowIterator2);
+        $rowIteratorFactory->create($valueTransformer, 'temp_path1')->willReturn($rowIterator1);
+        $rowIteratorFactory->create($valueTransformer, 'temp_path2')->willReturn($rowIterator2);
 
         $this->createRowIterator(0)->shouldReturn($rowIterator1);
         $this->createRowIterator(1)->shouldReturn($rowIterator2);

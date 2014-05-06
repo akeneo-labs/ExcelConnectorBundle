@@ -7,7 +7,7 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  *
  * The iterator returns arrays of results.
  *
- * Empty values are trimmed from the right of the rows, and empty rows are skipped.
+ * Empty values are trimed from the right of the rows, and empty rows are skipped.
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
@@ -16,9 +16,9 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class RowIterator implements \Iterator
 {
     /**
-     * @var SharedStrings
+     * @var ValueTransformer
      */
-    protected $sharedStrings;
+    protected $valueTransformer;
 
     /**
      * @var string
@@ -48,12 +48,12 @@ class RowIterator implements \Iterator
     /**
      * Constructor
      *
-     * @param SharedStrings $sharedStrings
-     * @param string       $path
+     * @param ValueTransformer $valueTransformer
+     * @param string           $path
      */
-    public function __construct(SharedStrings $sharedStrings, $path)
+    public function __construct(ValueTransformer $valueTransformer, $path)
     {
-        $this->sharedStrings = $sharedStrings;
+        $this->valueTransformer = $valueTransformer;
         $this->path = $path;
     }
 
@@ -78,6 +78,9 @@ class RowIterator implements \Iterator
      */
     public function next()
     {
+        $this->valid = false;
+        $this->currentValue = null;
+        $this->currentKey = null;
         // Should set $this->currentKey, $this->currentValue and $this->valid
         // According to the next found row tag in the xls file
         throw new \Exception('NOT IMPLEMENTED');
