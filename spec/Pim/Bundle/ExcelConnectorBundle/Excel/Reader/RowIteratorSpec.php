@@ -8,7 +8,8 @@ use Prophecy\Argument;
 
 class RowIteratorSpec extends ObjectBehavior
 {
-    function let(ContentCache $contentCache) {
+    public function let(ContentCache $contentCache)
+    {
         $this->beConstructedWith($contentCache, __DIR__ . '/../../fixtures/sheet.xml');
         $contentCache->get(Argument::type('string'))->will(
             function ($args) {
@@ -16,13 +17,13 @@ class RowIteratorSpec extends ObjectBehavior
             }
         );
     }
-    
-    function it_is_initializable()
+
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIterator');
     }
 
-    function it_iterates_through_worksheets()
+    public function it_iterates_through_worksheets()
     {
         $values = [
             1 => ['string_0', 'string_1'],
@@ -42,7 +43,7 @@ class RowIteratorSpec extends ObjectBehavior
         $this->valid->shouldReturn(false);
     }
 
-    function it_can_be_rewinded()
+    public function it_can_be_rewinded()
     {
         $this->rewind();
         $this->valid()->shouldReturn(true);

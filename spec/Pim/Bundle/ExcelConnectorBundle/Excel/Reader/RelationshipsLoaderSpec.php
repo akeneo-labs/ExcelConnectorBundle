@@ -3,21 +3,20 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class RelationshipsLoaderSpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $this->beConstructedWith('spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubRelationships');
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader');
     }
 
-    function it_loads_relationships()
+    public function it_loads_relationships()
     {
         $this->load('path')->getPath()->shouldReturn('path');
     }

@@ -7,12 +7,12 @@ use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Relationships;
 
 class WorksheetListReaderSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader');
     }
 
-    function it_returns_a_worksheet_list(Relationships $relationships)
+    public function it_returns_a_worksheet_list(Relationships $relationships)
     {
         $relationships->getWorksheetPath(\Prophecy\Argument::type('string'))->will(
             function ($args) {
