@@ -11,6 +11,7 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class Workbook
 {
+
     /**
      * @staticvar string Path to the relationships file inside the XLSX archive
      */
@@ -32,9 +33,27 @@ class Workbook
     protected $valueTransformerFactory;
 
     /**
+     *
+     * @var SharedStringsLoader
+     */
+    protected $sharedStringsLoader;
+
+    /**
+     *
+     * @var RowIteratorFactory 
+     */
+    protected $rowIteratorFactory;
+
+    /**
      * @var Archive
      */
     protected $archive;
+
+    /**
+     *
+     * @var WorksheetListReader
+     */
+    protected $worksheetListReader;
 
     /**
      * @var Relationships
@@ -47,6 +66,18 @@ class Workbook
     private $valueTransformer;
 
     /**
+     *
+     * @var SharedStrings 
+     */
+    private $sharedStrings;
+
+    /**
+     *
+     * @var array
+     */
+    private $worksheets;
+
+    /**
      * Constructor
      *
      * @param RelationshipsLoader     $relationshipsLoader
@@ -57,14 +88,15 @@ class Workbook
      * @param Archive                 $archive
      */
     public function __construct(
-        RelationshipsLoader $relationshipsLoader,
-        SharedStringsLoader $sharedStringsLoader,
-        WorksheetListReader $worksheetListReader,
-        ValueTransformerFactory $valueTransformerFactory,
-        RowIteratorFactory $rowIteratorFactory,
-        Archive $archive
-    ) {
-        throw new \Exception('NOT IMPLEMENTED');
+    RelationshipsLoader $relationshipsLoader, SharedStringsLoader $sharedStringsLoader, WorksheetListReader $worksheetListReader, ValueTransformerFactory $valueTransformerFactory, RowIteratorFactory $rowIteratorFactory, Archive $archive
+    )
+    {
+        $this->relationshipsLoader = $relationshipsLoader;
+        $this->sharedStringsLoader = $sharedStringsLoader;
+        $this->worksheetListReader = $worksheetListReader;
+        $this->valueTransformerFactory = $valueTransformerFactory;
+        $this->rowIteratorFactory = $rowIteratorFactory;
+        $this->archive = $archive;
     }
 
     /**
@@ -76,7 +108,12 @@ class Workbook
      */
     public function getWorksheets()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        if (!$this->worksheets) {
+            $path = $this->archive->extract(static::WORKBOOK_PATH);
+            $this->worksheets = $this->worksheetListReader->getWorksheets($this->getRelationships(), $path);
+        }
+        
+        return array_values($this->worksheets);
     }
 
     /**
@@ -126,4 +163,13 @@ class Workbook
 
         return $this->valueTransformer;
     }
+
+    protected function getSharedStrings()
+    {
+        if (!$this->sharedStrings) {
+            $path = $this->archive->extract($this->relationships->getSharedStringsPath());
+            $this->sharedStrings = $this->sharedStringsLoader->open($path);
+        }
+    }
+
 }

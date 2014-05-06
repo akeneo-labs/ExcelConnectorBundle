@@ -12,13 +12,18 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class RelationshipsLoader
 {
     /**
+     *
+     * @var string 
+     */
+    protected $relationshipClass;
+    /**
      * Constructor
      *
      * @param string $relationshipClass The class of the relationship objects
      */
     public function __construct($relationshipClass)
     {
-        throw new \Exception('NOT IMPLEMENTED');;
+        $this->relationshipClass = $relationshipClass;
     }
 
     /**
@@ -30,6 +35,6 @@ class RelationshipsLoader
      */
     public function open($path)
     {
-        throw new \Exception('NOT IMPLEMENTED');;
+        return new $this->relationshipClass($path);
     }
 }

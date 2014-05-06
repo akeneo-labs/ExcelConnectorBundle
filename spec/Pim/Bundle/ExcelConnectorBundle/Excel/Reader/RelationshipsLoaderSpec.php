@@ -18,7 +18,7 @@ class RelationshipsLoaderSpec extends ObjectBehavior
 
     public function it_loads_relationships()
     {
-        $this->load('path')->getPath()->shouldReturn('path');
+        $this->open('path')->getPath()->shouldReturn('path');
     }
 }
 
