@@ -16,6 +16,36 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class RowIterator implements \Iterator
 {
     /**
+     * @var ContentCache
+     */
+    protected $contentCache;
+
+    /**
+     * @var string
+     */
+    protected $path;
+
+    /**
+     * @var \XMLReader
+     */
+    protected $xml;
+
+    /**
+     * @var array
+     */
+    protected $currentKey;
+
+    /**
+     * @var array
+     */
+    protected $currentValue;
+
+    /**
+     * @var Boolean
+     */
+    protected $valid;
+
+    /**
      * Constructor
      *
      * @param ContentCache $contentCache
@@ -23,7 +53,8 @@ class RowIterator implements \Iterator
      */
     public function __construct(ContentCache $contentCache, $path)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->contentCache = $contentCache;
+        $this->path = $path;
     }
 
     /**
@@ -31,7 +62,7 @@ class RowIterator implements \Iterator
      */
     public function current()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return $this->currentValue;
     }
 
     /**
@@ -39,7 +70,7 @@ class RowIterator implements \Iterator
      */
     public function key()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return $this->currentKey;
     }
 
     /**
@@ -47,6 +78,8 @@ class RowIterator implements \Iterator
      */
     public function next()
     {
+        // Should set $this->currentKey, $this->currentValue and $this->valid
+        // According to the next found row tag in the xls file
         throw new \Exception('NOT IMPLEMENTED');
     }
 
@@ -55,7 +88,11 @@ class RowIterator implements \Iterator
      */
     public function rewind()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        if ($this->xml) {
+            $this->xml->close();
+        }
+        $this->xml = new \XMLReader($this->path);
+        $this->next();
     }
 
     /**
