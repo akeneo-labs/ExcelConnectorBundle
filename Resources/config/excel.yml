@@ -3,17 +3,20 @@ parameters:
     pim_excel_connector.excel.builder.class:                Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ExcelBuilder
     pim_excel_connector.excel.builder.product_family.class: Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ProductFamilyExcelBuilder
 
-    pim_excel_connector.excel.reader.archive.class:               Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive
-    pim_excel_connector.excel.reader.archive_loader.class:        Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ArchiveLoader
-    pim_excel_connector.excel.reader.shared_strings.class:         Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings
-    pim_excel_connector.excel.reader.shared_strings_loader.class:  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader
-    pim_excel_connector.excel.reader.relationships.class:         Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Relationships
-    pim_excel_connector.excel.reader.relationships_loader.class:  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader
-    pim_excel_connector.excel.reader.worksheet_list_reader.class: Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader
-    pim_excel_connector.excel.reader.row_iterator.class:          Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Relationships
-    pim_excel_connector.excel.reader.row_iterator_factory.class:  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory
-    pim_excel_connector.excel.reader.workbook.class:              Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook
-    pim_excel_connector.excel.reader.workbook_loader.class:       Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader
+    pim_excel_connector.excel.reader.archive.class:                   Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive
+    pim_excel_connector.excel.reader.archive_loader.class:            Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ArchiveLoader
+    pim_excel_connector.excel.reader.shared_strings.class:            Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings
+    pim_excel_connector.excel.reader.shared_strings_loader.class:     Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader
+    pim_excel_connector.excel.reader.relationships.class:             Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Relationships
+    pim_excel_connector.excel.reader.relationships_loader.class:      Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader
+    pim_excel_connector.excel.reader.worksheet_list_reader.class:     Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader
+    pim_excel_connector.excel.reader.row_iterator.class:              Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Relationships
+    pim_excel_connector.excel.reader.row_iterator_factory.class:      Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory
+    pim_excel_connector.excel.reader.value_transformer.class:         Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformer
+    pim_excel_connector.excel.reader.value_transformer_factory.class: Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformerFactory
+    pim_excel_connector.excel.reader.row_iterator_factory.class:      Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory
+    pim_excel_connector.excel.reader.workbook.class:                  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook
+    pim_excel_connector.excel.reader.workbook_loader.class:           Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader
 
 services:
     pim_excel_connector.excel.builder.factory:
@@ -38,6 +41,11 @@ services:
 
     pim_excel_connector.excel.reader.worksheet_list_reader:
         class: %pim_excel_connector.excel.reader.worksheet_list_reader.class%
+
+    pim_excel_connector.excel.reader.value_transformer_factory:
+        class: %pim_excel_connector.excel.reader.value_transformer_factory.class%
+        arguments:
+            - %pim_excel_connector.excel.reader.value_transformer.class%
 
     pim_excel_connector.excel.reader.row_iterator_factory:
         class: %pim_excel_connector.excel.reader.row_iterator_factory.class%
