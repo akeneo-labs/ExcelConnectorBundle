@@ -169,7 +169,7 @@ class Workbook
     }
 
     /**
-     * 
+     *
      * @return type
      */
     protected function getSharedStrings()
@@ -183,7 +183,7 @@ class Workbook
     }
 
     /**
-     * 
+     *
      */
     protected function getWorksheetPaths()
     {
