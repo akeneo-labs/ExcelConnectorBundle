@@ -78,6 +78,12 @@ class Workbook
     private $worksheets;
 
     /**
+     *
+     * @var RowIterator
+     */
+    private $rowIterator;
+
+    /**
      * Constructor
      *
      * @param RelationshipsLoader     $relationshipsLoader
@@ -108,16 +114,11 @@ class Workbook
      */
     public function getWorksheets()
     {
-        if (!$this->worksheets) {
-            $path = $this->archive->extract(static::WORKBOOK_PATH);
-            $this->worksheets = $this->worksheetListReader->getWorksheets($this->getRelationships(), $path);
-        }
-
-        return array_values($this->worksheets);
+        return array_values($this->getWorksheetPaths());
     }
 
     /**
-     * Returns a row iterator for the current workseet index
+     * Returns a row iterator for the current worksheet index
      *
      * @param int $worksheetIndex
      *
@@ -125,7 +126,9 @@ class Workbook
      */
     public function createRowIterator($worksheetIndex)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $paths = array_keys($this->getWorksheetPaths());
+
+        return $this->rowIteratorFactory->create($this->getValueTransformer(), $this->archive->extract($paths[$worksheetIndex]));
     }
 
     /**
@@ -137,7 +140,7 @@ class Workbook
      */
     public function getWorksheetIndex($name)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return array_search($name, $this->getWorksheets());
     }
 
     /**
@@ -165,12 +168,31 @@ class Workbook
         return $this->valueTransformer;
     }
 
+    /**
+     * 
+     * @return type
+     */
     protected function getSharedStrings()
     {
         if (!$this->sharedStrings) {
             $path = $this->archive->extract($this->relationships->getSharedStringsPath());
             $this->sharedStrings = $this->sharedStringsLoader->open($path);
         }
+
+        return $this->sharedStrings;
+    }
+
+    /**
+     * 
+     */
+    protected function getWorksheetPaths()
+    {
+        if (!$this->worksheets) {
+            $path = $this->archive->extract(static::WORKBOOK_PATH);
+            $this->worksheets = $this->worksheetListReader->getWorksheets($this->getRelationships(), $path);
+        }
+
+        return $this->worksheets;
     }
 
 }

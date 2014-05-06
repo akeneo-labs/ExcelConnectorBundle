@@ -97,8 +97,8 @@ class WorkbookSpec extends ObjectBehavior
         $this->getWorksheetIndex('sheet2')->shouldReturn(1);
     }
 
-    public function it_returns_null_if_a_worksheet_does_not_exist()
+    public function it_returns_false_if_a_worksheet_does_not_exist()
     {
-        $this->getWorksheetIndex('sheet3')->shouldReturn(null);
+        $this->getWorksheetIndex('sheet3')->shouldReturn(false);
     }
 }
