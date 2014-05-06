@@ -44,9 +44,9 @@ class ValueTransformer
     /**
      * Constructor
      *
-     * @param ContentCache $contentCache
+     * @param SharedStrings $sharedStrings
      */
-    public function __construct(ContentCache $contentCache)
+    public function __construct(SharedStrings $sharedStrings)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

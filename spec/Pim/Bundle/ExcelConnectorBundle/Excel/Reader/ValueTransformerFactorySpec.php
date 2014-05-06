@@ -3,7 +3,7 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCache;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
 
 class ValueTransformerFactorySpec extends ObjectBehavior
 {
@@ -17,9 +17,9 @@ class ValueTransformerFactorySpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformerFactory');
     }
 
-    public function it_creates_value_transformers(ContentCache $contentCache)
+    public function it_creates_value_transformers(SharedStrings $sharedStrings)
     {
-        $this->create($contentCache)->getContentCache()->shouldReturn($contentCache);
+        $this->create($sharedStrings)->getSharedStrings()->shouldReturn($sharedStrings);
     }
 }
 

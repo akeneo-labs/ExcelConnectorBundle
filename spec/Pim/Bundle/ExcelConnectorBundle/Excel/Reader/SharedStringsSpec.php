@@ -4,7 +4,7 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
 
-class ContentCacheSpec extends ObjectBehavior
+class SharedStringsSpec extends ObjectBehavior
 {
     public function let()
     {
@@ -13,7 +13,7 @@ class ContentCacheSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCache');
+        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings');
     }
 
     public function it_returns_shared_strings()

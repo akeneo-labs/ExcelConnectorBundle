@@ -23,11 +23,11 @@ class ValueTransformerFactory
     /**
      * Creates a value transformer
      *
-     * @param ContentCache $contentCache
+     * @param SharedStrings $sharedStrings
      *
      * @return ValueTransformer
      */
-    public function create(ContentCache $contentCache)
+    public function create(SharedStrings $sharedStrings)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

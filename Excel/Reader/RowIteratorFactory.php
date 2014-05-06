@@ -24,12 +24,12 @@ class RowIteratorFactory
     /**
      * Creates a row iterator for the XML given worksheet file
      *
-     * @param ContentCache $contentCache the content cache for the workbook
+     * @param SharedStrings $sharedStrings the content cache for the workbook
      * @param string       $path         the path to the extracted XML worksheet file
      *
      * @return RowIterator
      */
-    public function create(ContentCache $contentCache, $path)
+    public function create(SharedStrings $sharedStrings, $path)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

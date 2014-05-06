@@ -16,9 +16,9 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class RowIterator implements \Iterator
 {
     /**
-     * @var ContentCache
+     * @var SharedStrings
      */
-    protected $contentCache;
+    protected $sharedStrings;
 
     /**
      * @var string
@@ -48,12 +48,12 @@ class RowIterator implements \Iterator
     /**
      * Constructor
      *
-     * @param ContentCache $contentCache
+     * @param SharedStrings $sharedStrings
      * @param string       $path
      */
-    public function __construct(ContentCache $contentCache, $path)
+    public function __construct(SharedStrings $sharedStrings, $path)
     {
-        $this->contentCache = $contentCache;
+        $this->sharedStrings = $sharedStrings;
         $this->path = $path;
     }
 

@@ -3,15 +3,15 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCache;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
 use Prophecy\Argument;
 
 class RowIteratorSpec extends ObjectBehavior
 {
-    public function let(ContentCache $contentCache)
+    public function let(SharedStrings $sharedStrings)
     {
-        $this->beConstructedWith($contentCache, __DIR__ . '/../../fixtures/sheet.xml');
-        $contentCache->get(Argument::type('string'))->will(
+        $this->beConstructedWith($sharedStrings, __DIR__ . '/../../fixtures/sheet.xml');
+        $sharedStrings->get(Argument::type('string'))->will(
             function ($args) {
                 return 'string_' . $args[0];
             }

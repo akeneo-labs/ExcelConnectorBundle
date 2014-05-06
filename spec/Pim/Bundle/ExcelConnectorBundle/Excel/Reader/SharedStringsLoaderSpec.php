@@ -4,25 +4,25 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
 
-class ContentCacheLoaderSpec extends ObjectBehavior
+class SharedStringsLoaderSpec extends ObjectBehavior
 {
     public function let()
     {
-        $this->beConstructedWith('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubContentCache');
+        $this->beConstructedWith('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubSharedStrings');
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCacheLoader');
+        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader');
     }
 
-    public function it_loads_content_cache()
+    public function it_loads_shared_strings()
     {
         $this->load('path')->getPath()->shouldReturn('temp_path');
     }
 }
 
-class StubContentCache
+class StubSharedStrings
 {
     protected $path;
     public function __construct($path)

@@ -3,20 +3,20 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCache;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformer;
 use Prophecy\Argument;
 
 class ValueTransformerSpec extends ObjectBehavior
 {
-    public function let(ContentCache $contentCache)
+    public function let(SharedStrings $sharedStrings)
     {
-        $contentCache->get(Argument::type('string'))->will(
+        $sharedStrings->get(Argument::type('string'))->will(
             function ($args) {
                 return 'shared_' . $args[0];
             }
         );
-        $this->beConstructedWith($contentCache);
+        $this->beConstructedWith($sharedStrings);
     }
 
     public function it_is_initializable()

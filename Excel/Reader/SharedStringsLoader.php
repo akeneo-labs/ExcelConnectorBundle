@@ -3,20 +3,32 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
- * Contains the shared strings of an Excel workbook
+ * SharedStrings factory
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class ContentCache
+class SharedStringsLoader
 {
-    public function __construct($path)
+    /**
+     * Constructor
+     *
+     * @param string $sharedStringsClass The class for created objects
+     */
+    public function __construct($sharedStringsClass)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }
 
-    public function get($id)
+    /**
+     * Creates a SharedStrings from the archive
+     *
+     * @param string $path
+     *
+     * @return SharedStrings
+     */
+    public function open($path)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

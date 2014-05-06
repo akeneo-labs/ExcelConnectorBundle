@@ -5,7 +5,7 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ArchiveLoader;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCacheLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader;
@@ -15,14 +15,14 @@ class WorkbookLoaderSpec extends ObjectBehavior
     public function let(
         ArchiveLoader $archiveReader,
         RelationshipsLoader $relationshipsLoader,
-        ContentCacheLoader $contentCacheLoader,
+        SharedStringsLoader $sharedStringsLoader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory
     ) {
         $this->beConstructedWith(
             $archiveReader,
             $relationshipsLoader,
-            $contentCacheLoader,
+            $sharedStringsLoader,
             $worksheetListReader,
             $rowIteratorFactory,
             'spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubWorkbook'
@@ -37,7 +37,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
     public function it_creates_workbook_objects(
         ArchiveLoader $archiveReader,
         RelationshipsLoader $relationshipsLoader,
-        ContentCacheLoader $contentCacheLoader,
+        SharedStringsLoader $sharedStringsLoader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
@@ -46,7 +46,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
 
         $workbook = $this->open('path');
         $workbook->getArchive()->shouldReturn($archive);
-        $workbook->getContentCacheLoader()->shouldReturn($contentCacheLoader);
+        $workbook->getSharedStringsLoader()->shouldReturn($sharedStringsLoader);
         $workbook->getRowIteratorFactory()->shouldReturn($rowIteratorFactory);
         $workbook->getWorksheetListReader()->shouldReturn($worksheetListReader);
         $workbook->getRelationshpsLoader()->shouldReturn($relationshipsLoader);
@@ -66,29 +66,29 @@ class WorkbookLoaderSpec extends ObjectBehavior
 
 class StubWorkbook
 {
-    protected $contentCacheLoader;
+    protected $sharedStringsLoader;
     protected $worksheetListReader;
     protected $relationshipsLoader;
     protected $rowIteratorFactory;
     protected $archive;
 
     public function __construct(
-        ContentCacheLoader $contentCacheLoader,
+        SharedStringsLoader $sharedStringsLoader,
         RelationshipsLoader $relationshipsLoader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive
     ) {
-        $this->contentCacheLoader = $contentCacheLoader;
+        $this->sharedStringsLoader = $sharedStringsLoader;
         $this->relationshipsLoader = $relationshipsLoader;
         $this->worksheetListReader = $worksheetListReader;
         $this->rowIteratorFactory = $rowIteratorFactory;
         $this->archive = $archive;
     }
 
-    public function getContentCacheLoader()
+    public function getSharedStringsLoader()
     {
-        return $this->contentCacheLoader;
+        return $this->sharedStringsLoader;
     }
 
     public function getRowIteratorFactory()

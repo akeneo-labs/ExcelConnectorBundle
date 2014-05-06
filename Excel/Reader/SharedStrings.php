@@ -3,32 +3,20 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
- * ContentCache factory
+ * Contains the shared strings of an Excel workbook
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class ContentCacheLoader
+class SharedStrings
 {
-    /**
-     * Constructor
-     *
-     * @param string $contentCacheClass The class for created objects
-     */
-    public function __construct($contentCacheClass)
+    public function __construct($path)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }
 
-    /**
-     * Creates a ContentCache from the archive
-     *
-     * @param string $path
-     *
-     * @return ContentCache
-     */
-    public function open($path)
+    public function get($id)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

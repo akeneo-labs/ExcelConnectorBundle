@@ -25,14 +25,14 @@ class Workbook
      * Constructor
      *
      * @paral RelationshipsLoader $relationshipsLoader
-     * @param ContentCacheLoader  $contentCacheReader
+     * @param SharedStringsLoader  $sharedStringsReader
      * @param WorksheetListReader $worksheetListReader
      * @param RowIteratorFactory  $rowIteratorFactory
      * @param Archive             $archive
      */
     public function __construct(
         RelationshipsLoader $relationshipsLoader,
-        ContentCacheLoader $contentCacheReader,
+        SharedStringsLoader $sharedStringsReader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive

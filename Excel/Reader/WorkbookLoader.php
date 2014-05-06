@@ -16,7 +16,7 @@ class WorkbookLoader
      *
      * @param ArchiveLoader       $archiveReader
      * @param RelationshipsLoader $relationshipsLoader
-     * @param ContentCacheLoader  $contentCacheLoader
+     * @param SharedStringsLoader  $sharedStringsLoader
      * @param WorksheetListReader $worksheetListReader
      * @param RowIteratorFactory  $rowIteratorFactory
      * @param string              $workbookClass
@@ -24,7 +24,7 @@ class WorkbookLoader
     public function __construct(
         ArchiveLoader $archiveReader,
         RelationshipsLoader $relationshipsLoader,
-        ContentCacheLoader $contentCacheLoader,
+        SharedStringsLoader $sharedStringsLoader,
         WorksheetListReader $worksheetListReader,
         RowIteratorFactory $rowIteratorFactory,
         $workbookClass

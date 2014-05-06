@@ -5,8 +5,8 @@ parameters:
 
     pim_excel_connector.excel.reader.archive.class:               Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Archive
     pim_excel_connector.excel.reader.archive_loader.class:        Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ArchiveLoader
-    pim_excel_connector.excel.reader.content_cache.class:         Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCache
-    pim_excel_connector.excel.reader.content_cache_loader.class:  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ContentCacheLoader
+    pim_excel_connector.excel.reader.shared_strings.class:         Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings
+    pim_excel_connector.excel.reader.shared_strings_loader.class:  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader
     pim_excel_connector.excel.reader.relationships.class:         Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Relationships
     pim_excel_connector.excel.reader.relationships_loader.class:  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader
     pim_excel_connector.excel.reader.worksheet_list_reader.class: Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader
@@ -26,10 +26,10 @@ services:
         arguments:
             - %pim_excel_connector.excel.reader.archive.class%
 
-    pim_excel_connector.excel.reader.content_cache_loader:
-        class: %pim_excel_connector.excel.reader.content_cache_loader.class%
+    pim_excel_connector.excel.reader.shared_strings_loader:
+        class: %pim_excel_connector.excel.reader.shared_strings_loader.class%
         arguments:
-            - %pim_excel_connector.excel.reader.content_cache.class%
+            - %pim_excel_connector.excel.reader.shared_strings.class%
 
     pim_excel_connector.excel.reader.relationships_loader:
         class: %pim_excel_connector.excel.reader.relationships_loader.class%
@@ -49,7 +49,7 @@ services:
         arguments:
             - @pim_excel_connector.excel.reader.archive_loader
             - @pim_excel_connector.excel.reader.relationships_loader
-            - @pim_excel_connector.excel.reader.content_cache_loader
+            - @pim_excel_connector.excel.reader.shared_strings_loader
             - @pim_excel_connector.excel.reader.worksheet_list_reader
             - @pim_excel_connector.excel.reader.row_iterator_factory
             - %pim_excel_connector.excel.reader.workbook.class%
