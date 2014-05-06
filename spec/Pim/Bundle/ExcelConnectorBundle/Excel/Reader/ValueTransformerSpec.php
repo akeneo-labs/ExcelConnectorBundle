@@ -46,6 +46,8 @@ class ValueTransformerSpec extends ObjectBehavior
     public function it_transforms_strings()
     {
         $this->transform('string', ValueTransformer::TYPE_STRING, '1')->shouldReturn('string');
+        $this->transform('string', ValueTransformer::TYPE_INLINE_STRING, '1')->shouldReturn('string');
+        $this->transform('string', ValueTransformer::TYPE_ERROR, '1')->shouldReturn('string');
     }
 
     public function it_transforms_numbers()
@@ -55,6 +57,13 @@ class ValueTransformerSpec extends ObjectBehavior
 
     public function it_transforms_dates()
     {
-        $this->transform('1', ValueTransformer::TYPE_NUMBER, '2')->shouldReturn('date_2');
+        $this->transform('1', ValueTransformer::TYPE_NUMBER, '2')->shouldReturn('date_1');
+    }
+
+    public function it_transforms_boolans()
+    {
+        $this->transform('1', ValueTransformer::TYPE_BOOL, null)->shouldReturn(true);
+        $this->transform('0', ValueTransformer::TYPE_BOOL, '1')->shouldReturn(false);
+        $this->transform('', ValueTransformer::TYPE_BOOL, '1')->shouldReturn(false);
     }
 }

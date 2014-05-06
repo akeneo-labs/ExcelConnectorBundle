@@ -12,6 +12,21 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class ValueTransformer
 {
     /**
+     * @var DateTransformer
+     */
+    protected $dateTransformer;
+
+    /**
+     * @var SharedStrings
+     */
+    protected $sharedStrings;
+
+    /**
+     * @var Styles
+     */
+    protected $styles;
+
+    /**
      * @staticvar string Boolean type
      */
     const TYPE_BOOL = 'b';
@@ -49,7 +64,9 @@ class ValueTransformer
      */
     public function __construct(DateTransformer $dateTransformer, SharedStrings $sharedStrings, Styles $styles)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->dateTransformer = $dateTransformer;
+        $this->sharedStrings = $sharedStrings;
+        $this->styles = $styles;
     }
 
     /**
@@ -65,6 +82,19 @@ class ValueTransformer
      */
     public function transform($value, $type, $style)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        switch ($type) {
+            case static::TYPE_BOOL :
+                return ('1' === $value);
+            case static::TYPE_SHARED_STRING :
+                return $this->sharedStrings->get($value);
+            case static::TYPE_NUMBER :
+                $format = $this->styles->get($style);
+
+                return $this->dateTransformer->isDateFormat($format)
+                    ? $this->dateTransformer->transform($value)
+                    : $value * 1;
+            default :
+                return trim($value);
+        }
     }
 }
