@@ -23,4 +23,9 @@ class SharedStringsSpec extends ObjectBehavior
         $this->get(4)->shouldReturn('value3');
         $this->get(5)->shouldReturn('value4');
     }
+
+    public function it_throws_an_exception_if_there_is_no_string()
+    {
+        $this->shouldThrow('\InvalidArgumentException')->duringGet(10);
+    }
 }

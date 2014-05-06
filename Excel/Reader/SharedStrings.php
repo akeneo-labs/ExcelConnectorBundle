@@ -12,22 +12,84 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class SharedStrings
 {
     /**
+     * @var \XMLReader
+     */
+    protected $xml;
+
+    /**
+     * @var boolean
+     */
+    protected $valid = true;
+
+    /**
+     * @var array
+     */
+    protected $values = [];
+
+    /**
+     * @var int
+     */
+    protected $currentIndex = -1;
+
+    /**
      * Constructor
      *
      * @param string $path path to the extracted shared strings XML file
      */
     public function __construct($path)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->xml = new \XMLReader();
+        $this->xml->open($path);
     }
 
     /**
      * Returns a shared string by index
      *
      * @param int $index
+     *
+     * @throws \InvalidArgumentException
      */
     public function get($index)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        while ($this->valid && !isset($this->values[$index])) {
+            $this->readNext();
+        }
+        if ((!isset($this->values[$index]))) {
+            throw new \InvalidArgumentException(sprintf('No value with index %s', $index));
+        }
+
+        return $this->values[$index];
+    }
+
+    /**
+     * Reads the next value in the file
+     */
+    protected function readNext()
+    {
+        while ($this->xml->read()) {
+            if (\XMLReader::ELEMENT === $this->xml->nodeType) {
+                switch ($this->xml->name) {
+                    case 'si' :
+                        $this->currentIndex++;
+                        break;
+                    case 't' :
+                        $this->values[$this->currentIndex] = $this->xml->readString();
+
+                        return;
+                }
+            }
+        }
+
+        $this->valid = false;
+    }
+
+    /**
+     * Closes the XMLReader instance
+     */
+    public function __destruct()
+    {
+        if ($this->xml) {
+            $this->xml->close();
+        }
     }
 }
