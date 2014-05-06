@@ -15,6 +15,7 @@ use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformerFactory;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 use Prophecy\Argument;
+use Prophecy\Exception\Prediction\UnexpectedCallsException;
 
 class WorkbookSpec extends ObjectBehavior
 {
@@ -43,38 +44,28 @@ class WorkbookSpec extends ObjectBehavior
             }
         );
 
+        $beCalledAtMostOnce = function ($calls, $object, $method) {
+            if (count($calls) > 1) {
+                throw new UnexpectedCallsException(
+                    'Method should be called at most once',
+                    $method,
+                    $calls
+                );
+            }
+        };
         $relationshipsLoader->open('temp_' . Workbook::RELATIONSHIPS_PATH)
-            ->should(
-                function () {
-                    static $count = 1;
-                    $count++;
-
-                    return 1 === $count;
-                }
-            )
+            ->should($beCalledAtMostOnce)
             ->willReturn($relationships);
 
         $relationships->getSharedStringsPath()->willReturn('shared_strings');
         $sharedStringsLoader->open('temp_shared_strings')
-            ->should(
-                function () {
-                    static $count = 0;
-
-                    return 1 === ++$count;
-                }
-            )
+            ->should($beCalledAtMostOnce)
             ->willReturn($sharedStrings);
 
         $valueTransformerFactory->create($sharedStrings)->willReturn($valueTransformer);
 
         $worksheetListReader->getWorksheets($relationships, 'temp_' . Workbook::WORKBOOK_PATH)
-            ->should(
-                function () {
-                    static $count = 0;
-
-                    return 1 === ++$count;
-                }
-            )
+            ->should($beCalledAtMostOnce)
             ->willReturn(['path1' => 'sheet1', 'path2' => 'sheet2']);
     }
 
