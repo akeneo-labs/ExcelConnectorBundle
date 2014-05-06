@@ -22,6 +22,31 @@ class Workbook
     const WORKBOOK_PATH = 'xl/workbook.xml';
 
     /**
+     * @var RelationshipsLoader  
+     */
+    protected $relationshipsLoader;
+
+    /**
+     * @var ValueTransformerFactory
+     */
+    protected $valueTransformerFactory;
+
+    /**
+     * @var Archive
+     */
+    protected $archive;
+
+    /**
+     * @var Relationships
+     */
+    private $relationships;
+
+    /**
+     * @var ValueTransformer
+     */
+    private $valueTransformer;
+
+    /**
      * Constructor
      *
      * @param RelationshipsLoader     $relationshipsLoader
@@ -57,7 +82,7 @@ class Workbook
     /**
      * Returns a row iterator for the current workseet index
      *
-     * @param int $worksheerIndex
+     * @param int $worksheetIndex
      *
      * @return \Iterator
      */
@@ -76,5 +101,29 @@ class Workbook
     public function getWorksheetIndex($name)
     {
         throw new \Exception('NOT IMPLEMENTED');
+    }
+
+    /**
+     * @return Relationships
+     */
+    protected function getRelationships()
+    {
+        if (!$this->relationships) {
+            $path = $this->archive->extract(static::RELATIONSHIPS_PATH);
+            $this->relationships = $this->relationshipsLoader->open($path);
+        }
+        return $this->relationships;
+    }
+
+    /**
+     * @return ValueTransformer
+     */
+    protected function getValueTransformer()
+    {
+        if (!$this->valueTransformer) {
+            $this->valueTransformer = $this->valueTransformerFactory->create($this->getSharedStrings());
+        }
+
+        return $this->valueTransformer;
     }
 }
