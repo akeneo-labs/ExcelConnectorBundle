@@ -35,8 +35,20 @@ class Relationships
 
     /**
      * Returns the path of the shared strings file inside the xlsx file
+     *
+     * @return string
      */
     public function getSharedStringsPath()
+    {
+        throw new \Exception('NOT IMPLEMENTED');
+    }
+
+    /**
+     * Returns the path of the styles XML file inside the xlsx file
+     *
+     * @return string
+     */
+    public function getStylesPath()
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

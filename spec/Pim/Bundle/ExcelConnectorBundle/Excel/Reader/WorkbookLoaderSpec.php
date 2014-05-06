@@ -8,6 +8,7 @@ use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ArchiveLoader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RelationshipsLoader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StylesLoader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformerFactory;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 
@@ -17,6 +18,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
         ArchiveLoader $archiveReader,
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
+        StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory
@@ -25,6 +27,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
             $archiveReader,
             $relationshipsLoader,
             $sharedStringsLoader,
+            $stylesLoader,
             $worksheetListReader,
             $valueTransformerFactory,
             $rowIteratorFactory,
@@ -41,6 +44,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
         ArchiveLoader $archiveReader,
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
+        StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
@@ -51,6 +55,7 @@ class WorkbookLoaderSpec extends ObjectBehavior
         $workbook = $this->open('path');
         $workbook->getArchive()->shouldReturn($archive);
         $workbook->getSharedStringsLoader()->shouldReturn($sharedStringsLoader);
+        $workbook->getStylesLoader()->shouldReturn($stylesLoader);
         $workbook->getRowIteratorFactory()->shouldReturn($rowIteratorFactory);
         $workbook->getWorksheetListReader()->shouldReturn($worksheetListReader);
         $workbook->getValueTransformerFactory()->shouldReturn($valueTransformerFactory);
@@ -74,6 +79,7 @@ class StubWorkbook
     protected $sharedStringsLoader;
     protected $worksheetListReader;
     protected $relationshipsLoader;
+    protected $stylesLoader;
     protected $rowIteratorFactory;
     protected $valueTransformerFactory;
     protected $archive;
@@ -81,6 +87,7 @@ class StubWorkbook
     public function __construct(
         SharedStringsLoader $sharedStringsLoader,
         RelationshipsLoader $relationshipsLoader,
+        StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
@@ -88,6 +95,7 @@ class StubWorkbook
     ) {
         $this->sharedStringsLoader = $sharedStringsLoader;
         $this->relationshipsLoader = $relationshipsLoader;
+        $this->stylesLoader = $stylesLoader;
         $this->worksheetListReader = $worksheetListReader;
         $this->valueTransformerFactory = $valueTransformerFactory;
         $this->rowIteratorFactory = $rowIteratorFactory;
@@ -122,5 +130,10 @@ class StubWorkbook
     public function getValueTransformerFactory()
     {
         return $this->valueTransformerFactory;
+    }
+
+    public function getStylesLoader()
+    {
+        return $this->stylesLoader;
     }
 }

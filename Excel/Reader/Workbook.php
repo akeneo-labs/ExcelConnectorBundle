@@ -50,7 +50,11 @@ class Workbook
     protected $archive;
 
     /**
-     *
+     * @var StylesLoader
+     */
+    protected $stylesLoader;
+
+    /**
      * @var WorksheetListReader
      */
     protected $worksheetListReader;
@@ -72,33 +76,38 @@ class Workbook
     private $sharedStrings;
 
     /**
-     *
      * @var array
      */
     private $worksheets;
 
     /**
-     *
-     * @var RowIterator
+     * @var Styles
      */
-    private $rowIterator;
+    private $styles;
 
     /**
      * Constructor
      *
      * @param RelationshipsLoader     $relationshipsLoader
      * @param SharedStringsLoader     $sharedStringsLoader
+     * @param StylesLoader            $stylesLoader
      * @param WorksheetListReader     $worksheetListReader
      * @param ValueTransformerFactory $valueTransformerFactory
      * @param RowIteratorFactory      $rowIteratorFactory
      * @param Archive                 $archive
      */
     public function __construct(
-    RelationshipsLoader $relationshipsLoader, SharedStringsLoader $sharedStringsLoader, WorksheetListReader $worksheetListReader, ValueTransformerFactory $valueTransformerFactory, RowIteratorFactory $rowIteratorFactory, Archive $archive
-    )
-    {
+        RelationshipsLoader $relationshipsLoader,
+        SharedStringsLoader $sharedStringsLoader,
+        StylesLoader $stylesLoader,
+        WorksheetListReader $worksheetListReader,
+        ValueTransformerFactory $valueTransformerFactory,
+        RowIteratorFactory $rowIteratorFactory,
+        Archive $archive
+    ) {
         $this->relationshipsLoader = $relationshipsLoader;
         $this->sharedStringsLoader = $sharedStringsLoader;
+        $this->stylesLoader = $stylesLoader;
         $this->worksheetListReader = $worksheetListReader;
         $this->valueTransformerFactory = $valueTransformerFactory;
         $this->rowIteratorFactory = $rowIteratorFactory;
@@ -162,15 +171,17 @@ class Workbook
     protected function getValueTransformer()
     {
         if (!$this->valueTransformer) {
-            $this->valueTransformer = $this->valueTransformerFactory->create($this->getSharedStrings());
+            $this->valueTransformer = $this->valueTransformerFactory->create(
+                $this->getSharedStrings(),
+                $this->getStyles()
+            );
         }
 
         return $this->valueTransformer;
     }
 
     /**
-     *
-     * @return type
+     * @return SharedStrings
      */
     protected function getSharedStrings()
     {
@@ -183,7 +194,7 @@ class Workbook
     }
 
     /**
-     *
+     * @return array
      */
     protected function getWorksheetPaths()
     {
@@ -195,4 +206,16 @@ class Workbook
         return $this->worksheets;
     }
 
+    /**
+     * @return Styles
+     */
+    protected function getStyles()
+    {
+        if (!$this->styles) {
+            $path = $this->archive->extract($this->relationships->getStylesPath());
+            $this->styles = $this->stylesLoader->open($path);
+        }
+
+        return $this->styles;
+    }
 }

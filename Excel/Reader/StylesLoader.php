@@ -3,33 +3,32 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 /**
- * Creates ValueTransformer objects
+ * Styles factory
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class ValueTransformerFactory
+class StylesLoader
 {
     /**
      * Constructor
      *
-     * @param DateTransformer $dateTransformer
-     * @param string          $transformerClass The class of the created objects
+     * @param string $stylesClass The class for created objects
      */
-    public function __construct(DateTransformer $dateTransformer, $transformerClass)
+    public function __construct($stylesClass)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }
 
     /**
-     * Creates a value transformer
+     * Creates a Styles from the archive
      *
-     * @param SharedStrings $sharedStrings
+     * @param string $path
      *
-     * @return ValueTransformer
+     * @return Styles
      */
-    public function create(SharedStrings $sharedStrings, Styles $styles)
+    public function open($path)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

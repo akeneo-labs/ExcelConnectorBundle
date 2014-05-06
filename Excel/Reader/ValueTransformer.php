@@ -44,9 +44,10 @@ class ValueTransformer
     /**
      * Constructor
      *
-     * @param SharedStrings $sharedStrings
+     * @param DateTransformer $dateTransformer
+     * @param SharedStrings   $sharedStrings
      */
-    public function __construct(SharedStrings $sharedStrings)
+    public function __construct(DateTransformer $dateTransformer, SharedStrings $sharedStrings, Styles $styles)
     {
         throw new \Exception('NOT IMPLEMENTED');
     }

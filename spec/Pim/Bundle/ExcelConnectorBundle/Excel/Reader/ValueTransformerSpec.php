@@ -3,20 +3,34 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\DateTransformer;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Styles;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformer;
 use Prophecy\Argument;
 
 class ValueTransformerSpec extends ObjectBehavior
 {
-    public function let(SharedStrings $sharedStrings)
-    {
+    public function let(
+        DateTransformer $dateTransformer,
+        SharedStrings $sharedStrings,
+        Styles $styles
+    ) {
+        $styles->get('1')->willReturn('string');
+        $styles->get('2')->willReturn('date');
+        $dateTransformer->isDateFormat('string')->willReturn(false);
+        $dateTransformer->isDateFormat('date')->willReturn(true);
+        $dateTransformer->transform(Argument::type('string'))->will(
+            function ($args) {
+                return 'date_' . $args[0];
+            }
+        );
         $sharedStrings->get(Argument::type('string'))->will(
             function ($args) {
                 return 'shared_' . $args[0];
             }
         );
-        $this->beConstructedWith($sharedStrings);
+        $this->beConstructedWith($dateTransformer, $sharedStrings, $styles);
     }
 
     public function it_is_initializable()
@@ -26,16 +40,21 @@ class ValueTransformerSpec extends ObjectBehavior
 
     public function it_transforms_shared_strings()
     {
-        $this->transform('1', ValueTransformer::TYPE_SHARED_STRING, '')->shouldReturn('shared_1');
+        $this->transform('1', ValueTransformer::TYPE_SHARED_STRING, '1')->shouldReturn('shared_1');
     }
 
     public function it_transforms_strings()
     {
-        $this->transform('string', ValueTransformer::TYPE_STRING, '')->shouldReturn('string');
+        $this->transform('string', ValueTransformer::TYPE_STRING, '1')->shouldReturn('string');
     }
 
     public function it_transforms_numbers()
     {
-        $this->transform('10.2', ValueTransformer::TYPE_NUMBER, '')->shouldReturn('10.2');
+        $this->transform('10.2', ValueTransformer::TYPE_NUMBER, '1')->shouldReturn(10.2);
+    }
+
+    public function it_transforms_dates()
+    {
+        $this->transform('1', ValueTransformer::TYPE_NUMBER, '2')->shouldReturn('date_2');
     }
 }

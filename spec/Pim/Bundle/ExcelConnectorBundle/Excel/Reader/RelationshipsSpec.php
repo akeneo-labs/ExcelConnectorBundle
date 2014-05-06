@@ -27,4 +27,9 @@ class RelationshipsSpec extends ObjectBehavior
     {
         $this->getSharedStringsPath()->shouldReturn('xl/sharedStrings.xml');
     }
+
+    public function it_returns_styles_path()
+    {
+        $this->getStylesPath()->shouldReturn('xl/styles.xml');
+    }
 }

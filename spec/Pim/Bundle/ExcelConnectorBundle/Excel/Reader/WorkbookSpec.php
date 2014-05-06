@@ -10,6 +10,8 @@ use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIterator;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIteratorFactory;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStrings;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SharedStringsLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Styles;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StylesLoader;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformer;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformerFactory;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
@@ -22,17 +24,20 @@ class WorkbookSpec extends ObjectBehavior
     public function let(
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
+        StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
         Archive $archive,
         Relationships $relationships,
         SharedStrings $sharedStrings,
-        ValueTransformer $valueTransformer
+        ValueTransformer $valueTransformer,
+        Styles $styles
     ) {
         $this->beConstructedWith(
             $relationshipsLoader,
             $sharedStringsLoader,
+            $stylesLoader,
             $worksheetListReader,
             $valueTransformerFactory,
             $rowIteratorFactory,
@@ -58,11 +63,14 @@ class WorkbookSpec extends ObjectBehavior
             ->willReturn($relationships);
 
         $relationships->getSharedStringsPath()->willReturn('shared_strings');
+        $relationships->getStylesPath()->willReturn('styles');
+
         $sharedStringsLoader->open('temp_shared_strings')
             ->should($beCalledAtMostOnce)
             ->willReturn($sharedStrings);
 
-        $valueTransformerFactory->create($sharedStrings)->willReturn($valueTransformer);
+        $stylesLoader->open(('temp_styles'))->willReturn($styles);
+        $valueTransformerFactory->create($sharedStrings, $styles)->willReturn($valueTransformer);
 
         $worksheetListReader->getWorksheets($relationships, 'temp_' . Workbook::WORKBOOK_PATH)
             ->should($beCalledAtMostOnce)
