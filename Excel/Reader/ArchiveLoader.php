@@ -11,6 +11,10 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class ArchiveLoader
 {
+    /**
+     *
+     * @var string 
+     */
     protected $archiveClass;
 
     /**
@@ -32,6 +36,6 @@ class ArchiveLoader
      */
     public function open($path)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return new $this->archiveClass($path);
     }
 }
