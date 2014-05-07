@@ -9,27 +9,25 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Styles
+class Styles extends AbstractXMLDictionnary
 {
     /**
-     * Constructor
-     *
-     * @param string $stylesPath the path to the XML styles file
+     * {@inheritdoc}
      */
-    public function __construct($path)
+    protected function readNext()
     {
-        throw new \Exception('NOT IMPLEMENTED');
-    }
+        $xml = $this->getXMLReader();
+        while ($xml->read()) {
+            if (\XMLReader::END_ELEMENT === $xml->nodeType && 'numFmts' === $xml->name) {
+                break;
+            } elseif (\XMLReader::ELEMENT === $xml->nodeType && 'numFmt' === $xml->name) {
+                $this->values[(string) $xml->getAttribute('numFmtId')] = (string) $xml->getAttribute('formatCode');
 
-    /**
-     * Returns a format by id
-     *
-     * @param string $id
-     *
-     * @return string
-     */
-    public function get($id)
-    {
-        throw new \Exception('NOT IMPLEMENTED');
+                return;
+            }
+        }
+
+        $this->valid = false;
+        $this->closeXMLReader();
     }
 }

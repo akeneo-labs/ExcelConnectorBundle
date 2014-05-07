@@ -22,4 +22,9 @@ class StylesSpec extends ObjectBehavior
         $this->get('165')->shouldReturn('DD/MM/YY\ HH:MM');
         $this->get('166')->shouldReturn('DD/MM/YY');
     }
+
+    public function it_throws_an_exception_if_there_is_no_style()
+    {
+        $this->shouldThrow('\InvalidArgumentException')->duringGet('bogus');
+    }
 }
