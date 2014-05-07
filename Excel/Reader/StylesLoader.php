@@ -12,13 +12,18 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class StylesLoader
 {
     /**
+     * @var string
+     */
+    protected $class;
+
+    /**
      * Constructor
      *
-     * @param string $stylesClass The class for created objects
+     * @param string $class The class for created objects
      */
-    public function __construct($stylesClass)
+    public function __construct($class)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->class = $class;
     }
 
     /**
@@ -30,6 +35,6 @@ class StylesLoader
      */
     public function open($path)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return new $this->class($path);
     }
 }

@@ -8,7 +8,7 @@ class StylesLoaderSpec extends ObjectBehavior
 {
     public function let()
     {
-        $this->beConstructedWith('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubStyles');
+        $this->beConstructedWith('spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubStyles');
     }
 
     public function it_is_initializable()
@@ -18,7 +18,7 @@ class StylesLoaderSpec extends ObjectBehavior
 
     public function it_loads_shared_strings()
     {
-        $this->load('path')->getPath()->shouldReturn('temp_path');
+        $this->open('path')->getPath()->shouldReturn('path');
     }
 }
 
