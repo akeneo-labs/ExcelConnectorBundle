@@ -22,11 +22,6 @@ abstract class AbstractXMLDictionnary extends AbstractXMLResource
     protected $values = [];
 
     /**
-     * @var int
-     */
-    protected $currentIndex;
-
-    /**
      * Returns a shared string by index
      *
      * @param int $index
