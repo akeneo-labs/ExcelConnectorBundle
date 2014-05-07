@@ -11,6 +11,13 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class SharedStringsLoader
 {
+
+    /**
+     *
+     * @var string
+     */
+    protected $sharedStringsClass;
+
     /**
      * Constructor
      *
@@ -18,7 +25,7 @@ class SharedStringsLoader
      */
     public function __construct($sharedStringsClass)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->sharedStringsClass = $sharedStringsClass;
     }
 
     /**
@@ -32,4 +39,5 @@ class SharedStringsLoader
     {
         throw new \Exception('NOT IMPLEMENTED');
     }
+
 }

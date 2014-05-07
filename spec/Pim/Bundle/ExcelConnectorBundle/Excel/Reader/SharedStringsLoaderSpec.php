@@ -18,7 +18,7 @@ class SharedStringsLoaderSpec extends ObjectBehavior
 
     public function it_loads_shared_strings()
     {
-        $this->load('path')->getPath()->shouldReturn('temp_path');
+        $this->open('path')->getPath()->shouldReturn('temp_path');
     }
 }
 

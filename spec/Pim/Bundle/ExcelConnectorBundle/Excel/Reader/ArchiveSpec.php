@@ -18,12 +18,12 @@ class ArchiveSpec extends ObjectBehavior
 
     public function it_extracts_files()
     {
-        $this->extract('file1')->shouldHaveFileContent('file1');
+        $this->extract('file1')->shouldHaveFileContent("file1\n");
     }
 
     public function it_extracts_files_from_subfolders()
     {
-        $this->extract('folder/file2')->shouldHaveFileContent('file2');
+        $this->extract('folder/file2')->shouldHaveFileContent("file2\n");
     }
 
     public function getMatchers()

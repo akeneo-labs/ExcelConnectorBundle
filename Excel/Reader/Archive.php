@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
+use Symfony\Component\Filesystem\Filesystem;
+
 /**
  * Represents an XLSX Archive
  *
@@ -11,6 +13,21 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class Archive
 {
+
+    const TEMP_SUBFOLDER = '/xlsx_extract/';
+
+    /**
+     *
+     * @var string
+     */
+    protected $tempPath;
+
+    /**
+     *
+     * @var string
+     */
+    protected $archivePath;
+
     /**
      * Constructor
      *
@@ -18,7 +35,8 @@ class Archive
      */
     public function __construct($archivePath)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->archivePath = $archivePath;
+        $this->tempPath = sys_get_temp_dir() . self::TEMP_SUBFOLDER;
     }
 
     /**
@@ -32,7 +50,18 @@ class Archive
      */
     public function extract($filePath)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $zip = new \ZipArchive();
+
+        if (true === $zip->open($this->archivePath)) {
+
+            $zip->extractTo($this->tempPath, $filePath);
+            $zip->close();
+        } else {
+
+            throw new \Exception('Error opening file');
+        }
+
+        return $this->tempPath . $filePath;
     }
 
     /**
@@ -40,5 +69,8 @@ class Archive
      */
     public function __destruct()
     {
+        $fs = new Filesystem();
+        $fs->remove($this->tempPath);
     }
+
 }
