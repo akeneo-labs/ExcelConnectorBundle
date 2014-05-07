@@ -11,11 +11,30 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class Relationships extends AbstractXMLResource
 {
+
     /**
      *
      * @var string
      */
     protected $relationshipsPath;
+
+    /**
+     *
+     * @var array
+     */
+    protected $workSheetPaths;
+
+    /**
+     *
+     * @var string
+     */
+    protected $stylePath;
+
+    /**
+     *
+     * @var string
+     */
+    protected $sharedStringPath;
 
     /**
      * Constructor
@@ -24,7 +43,10 @@ class Relationships extends AbstractXMLResource
      */
     public function __construct($relationshipsPath)
     {
+        parent::__construct($relationshipsPath);
         $this->relationshipsPath = $relationshipsPath;
+
+        $this->readRelationShips();
     }
 
     /**
@@ -36,7 +58,7 @@ class Relationships extends AbstractXMLResource
      */
     public function getWorksheetPath($id)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return $this->workSheetPaths[$id];
     }
 
     /**
@@ -46,7 +68,7 @@ class Relationships extends AbstractXMLResource
      */
     public function getSharedStringsPath()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return $this->sharedStringPath;
     }
 
     /**
@@ -56,6 +78,47 @@ class Relationships extends AbstractXMLResource
      */
     public function getStylesPath()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return $this->stylePath;
     }
+
+    /**
+     * Reads the entire relationShips file once
+     */
+    private function readRelationShips()
+    {
+        $xml = $this->getXMLReader($this->relationshipsPath);
+
+        while ($xml->read()) {
+            if (\XMLReader::ELEMENT === $xml->nodeType && 'Relationship' === $xml->name) {
+
+                $type = basename((string) $xml->getAttribute('Type'));
+                $this->storeRelationShipByType($type, (string) $xml->getAttribute('Id'), (string) $xml->getAttribute('Target'));
+            }
+        }
+
+        $this->closeXMLReader();
+    }
+
+    /**
+     * stores the relationShip into the right variable
+     *
+     * @param string $type
+     * @param string $id
+     * @param string $target
+     */
+    private function storeRelationShipByType($type, $id, $target)
+    {
+        switch ($type) {
+            case 'worksheet' :
+                $this->workSheetPaths[$id] = $target;
+                break;
+            case 'styles' :
+                $this->stylePath = $target;
+                break;
+            case 'sharedStrings' :
+                $this->sharedStringPath = $target;
+                break;
+        }
+    }
+
 }
