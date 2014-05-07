@@ -12,9 +12,9 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class SharedStrings
 {
     /**
-     * @var \XMLReader
+     * @var string
      */
-    protected $xml;
+    protected $path;
 
     /**
      * @var boolean
@@ -32,14 +32,18 @@ class SharedStrings
     protected $currentIndex = -1;
 
     /**
+     * @var \XMLReader
+     */
+    private $xml;
+
+    /**
      * Constructor
      *
      * @param string $path path to the extracted shared strings XML file
      */
     public function __construct($path)
     {
-        $this->xml = new \XMLReader();
-        $this->xml->open($path);
+        $this->path = $path;
     }
 
     /**
@@ -66,14 +70,15 @@ class SharedStrings
      */
     protected function readNext()
     {
-        while ($this->xml->read()) {
-            if (\XMLReader::ELEMENT === $this->xml->nodeType) {
-                switch ($this->xml->name) {
+        $xml = $this->getXMLReader();
+        while ($xml->read()) {
+            if (\XMLReader::ELEMENT === $xml->nodeType) {
+                switch ($xml->name) {
                     case 'si' :
                         $this->currentIndex++;
                         break;
                     case 't' :
-                        $this->values[$this->currentIndex] = $this->xml->readString();
+                        $this->values[$this->currentIndex] = $xml->readString();
 
                         return;
                 }
@@ -81,15 +86,40 @@ class SharedStrings
         }
 
         $this->valid = false;
+        $this->closeXMLReader();
     }
 
     /**
-     * Closes the XMLReader instance
+     * @inheritdoc
      */
     public function __destruct()
     {
         if ($this->xml) {
-            $this->xml->close();
+            $this->closeXMLReader();
         }
+    }
+
+    /**
+     * Returns the XML reader
+     *
+     * @return \XMLReader
+     */
+    protected function getXMLReader()
+    {
+        if (!$this->xml) {
+            $this->xml = new \XMLReader();
+            $this->xml->open($this->path);
+        }
+
+        return $this->xml;
+    }
+
+    /**
+     * Closes the XML reader
+     */
+    protected function closeXMLReader()
+    {
+        $this->xml->close();
+        $this->xml = null;
     }
 }
