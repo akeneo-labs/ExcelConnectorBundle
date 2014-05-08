@@ -72,8 +72,6 @@ class ValueTransformer
     /**
      * Formats a value
      *
-     * Only shared strings are transformed for this implementation
-     *
      * @param string $value The value which should be transformed
      * @param string $type  The type of the value
      * @param string $style The style of the value
