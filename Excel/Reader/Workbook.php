@@ -78,7 +78,7 @@ class Workbook
     /**
      * @var array
      */
-    private $worksheets;
+    private $worksheetPaths;
 
     /**
      * @var Styles
@@ -123,7 +123,7 @@ class Workbook
      */
     public function getWorksheets()
     {
-        return array_values($this->getWorksheetPaths());
+        return array_keys($this->getWorksheetPaths());
     }
 
     /**
@@ -135,7 +135,7 @@ class Workbook
      */
     public function createRowIterator($worksheetIndex)
     {
-        $paths = array_keys($this->getWorksheetPaths());
+        $paths = array_values($this->getWorksheetPaths());
 
         return $this->rowIteratorFactory->create($this->getValueTransformer(), $this->archive->extract($paths[$worksheetIndex]));
     }
@@ -198,12 +198,12 @@ class Workbook
      */
     protected function getWorksheetPaths()
     {
-        if (!$this->worksheets) {
+        if (!$this->worksheetPaths) {
             $path = $this->archive->extract(static::WORKBOOK_PATH);
-            $this->worksheets = $this->worksheetListReader->getWorksheets($this->getRelationships(), $path);
+            $this->worksheetPaths = $this->worksheetListReader->getWorksheetPaths($this->getRelationships(), $path);
         }
 
-        return $this->worksheets;
+        return $this->worksheetPaths;
     }
 
     /**

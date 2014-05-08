@@ -14,13 +14,13 @@ class WorksheetListReader
     /**
      * Returns the list of worksheets inside the archive
      *
-     * The keys of the array are the names of the XML worksheet files inside the archive
-     * The values of the array should be the titles of the worksheets
+     * The keys of the array should be the titles of the worksheets
+     * The values of the array are the names of the XML worksheet files inside the archive
      *
      * @param Relationships $relationships
      * @param string        $path
      */
-    public function getWorksheets(Relationships $relationships, $path)
+    public function getWorksheetPaths(Relationships $relationships, $path)
     {
         throw new  \Exception('NOT IMPLEMENTED');
     }

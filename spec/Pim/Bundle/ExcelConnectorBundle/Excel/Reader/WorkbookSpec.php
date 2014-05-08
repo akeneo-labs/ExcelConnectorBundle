@@ -72,9 +72,9 @@ class WorkbookSpec extends ObjectBehavior
         $stylesLoader->open(('temp_styles'))->willReturn($styles);
         $valueTransformerFactory->create($sharedStrings, $styles)->willReturn($valueTransformer);
 
-        $worksheetListReader->getWorksheets($relationships, 'temp_' . Workbook::WORKBOOK_PATH)
+        $worksheetListReader->getWorksheetPaths($relationships, 'temp_' . Workbook::WORKBOOK_PATH)
             ->should($beCalledAtMostOnce)
-            ->willReturn(['path1' => 'sheet1', 'path2' => 'sheet2']);
+            ->willReturn(['sheet1' => 'path1', 'sheet2' => 'path2']);
     }
 
     public function it_is_initializable()
