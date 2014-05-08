@@ -17,6 +17,13 @@ class DateTransformer
     protected $baseDate;
 
     /**
+     * Cached formats
+     *
+     * @var array
+     */
+    protected $dateFormats = [];
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -33,7 +40,11 @@ class DateTransformer
      */
     public function isDateFormat($format)
     {
-        return (bool) preg_match('{^(\[\$[[:alpha:]]*-[0-9A-F]*\])*[hmsdy]}i', $format);
+        if (!isset($this->dateFormats[$format])) {
+            $this->dateFormats[$format] = (bool) preg_match('{^(\[\$[[:alpha:]]*-[0-9A-F]*\])*[hmsdy]}i', $format);
+        }
+
+        return $this->dateFormats[$format];
     }
 
     /**
