@@ -4,18 +4,19 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Reader;
 
 use Akeneo\Bundle\BatchBundle\Entity\StepExecution;
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\ExcelConnectorBundle\Reader\AbstractIteratorReader;
 
 class AbstractIteratorReaderSpec extends ObjectBehavior
 {
     public function let()
     {
-        $this->beAnInstanceOf('Pim\Bundle\ExcelConnectorBundle\Tests\Stubs\Reader\ArrayIteratorReader');
+        $this->beAnInstanceOf('spec\Pim\Bundle\ExcelConnectorBundle\Reader\ArrayIteratorReader');
     }
 
     public function it_is_initializable()
     {
         $this->beConstructedWith(array());
-        $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Tests\Stubs\Reader\ArrayIteratorReader');
+        $this->shouldHaveType('spec\Pim\Bundle\ExcelConnectorBundle\Reader\ArrayIteratorReader');
     }
 
     public function it_iterates_through_values()
@@ -58,5 +59,29 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
         }
+    }
+}
+
+class ArrayIteratorReader extends AbstractIteratorReader
+{
+    /**
+     * @var array
+     */
+    protected $values;
+
+    public function __construct(array $values, $batchMode = false)
+    {
+        $this->values = $values;
+        parent::__construct($batchMode);
+    }
+
+    protected function createIterator()
+    {
+        return new \ArrayIterator($this->values);
+    }
+
+    public function getConfigurationFields()
+    {
+        return array();
     }
 }
