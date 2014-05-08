@@ -17,7 +17,7 @@ class WorkbookLoader
      * @param ArchiveLoader           $archiveReader
      * @param RelationshipsLoader     $relationshipsLoader
      * @param SharedStringsLoader     $sharedStringsLoader
-     * @param StylesReader            $stylesLoader
+     * @param StylesLoader            $stylesLoader
      * @param WorksheetListReader     $worksheetListReader
      * @param ValueTransformerFactory $valueTransformerFactory
      * @param RowIteratorFactory      $rowIteratorFactory
