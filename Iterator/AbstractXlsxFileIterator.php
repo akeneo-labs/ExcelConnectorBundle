@@ -216,7 +216,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      */
     protected function getWorkbookLoader()
     {
-        return $this->container->get('pim_excel_connector.spreadsheet_reader.workbook_reader');
+        return $this->container->get('pim_excel_connector.excel.reader.workbook_loader');
     }
 
         /**

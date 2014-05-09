@@ -31,6 +31,6 @@ class XlsxFileIteratorBehavior extends ObjectBehavior
             }
         );
         $container->get('pim_excel_connector.iterator.array_helper')->willReturn($arrayHelper);
-        $container->get('pim_excel_connector.spreadsheet_reader.workbook_reader')->willReturn($workbookReader);
+        $container->get('pim_excel_connector.excel.reader.workbook_loader')->willReturn($workbookReader);
     }
 }
