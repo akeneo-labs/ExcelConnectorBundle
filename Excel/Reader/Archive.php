@@ -49,8 +49,9 @@ class Archive
     public function extract($filePath)
     {
         $zip = new \ZipArchive();
+        $tempPath = sprintf('%s/%s', $this->tempPath, $filePath);
 
-        if (true === $zip->open($this->archivePath)) {
+        if (!file_exists($tempPath) && true === $zip->open($this->archivePath)) {
 
             $zip->extractTo($this->tempPath, $filePath);
             $zip->close();
@@ -59,7 +60,7 @@ class Archive
             throw new \Exception('Error opening file');
         }
 
-        return sprintf('%s/%s', $this->tempPath, $filePath);
+        return $tempPath;
     }
 
     /**
