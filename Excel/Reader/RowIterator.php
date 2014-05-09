@@ -95,11 +95,43 @@ class RowIterator implements \Iterator
     public function next()
     {
         $this->valid = false;
-        $this->currentValue = null;
-        $this->currentKey = null;
-        // Should set $this->currentKey, $this->currentValue and $this->valid
-        // According to the next found row tag in the xls file
-        throw new \Exception('NOT IMPLEMENTED');
+
+        while ($this->xml->read()) {
+            if (\XMLReader::ELEMENT === $this->xml->nodeType) {
+                switch ($this->xml->name) {
+                    case 'row' :
+                        $currentKey = (int) $this->xml->getAttribute('r');
+                        $rowBuilder = $this->rowBuilderFactory->create();
+                        break;
+                    case 'c' :
+                        $columnIndex = $this->columnIndexTransformer->transform($this->xml->getAttribute('r'));
+                        $style = $this->getValue($this->xml->getAttribute('s'));
+                        $type = $this->getValue($this->xml->getAttribute('t'));
+                        break;
+                    case 'v' :
+                        $rowBuilder->addValue(
+                            $columnIndex,
+                            $this->valueTransformer->transform($this->xml->readString(), $type, $style)
+                        );
+                        break;
+                }
+            } elseif (\XMLReader::END_ELEMENT === $this->xml->nodeType) {
+                switch ($this->xml->name) {
+                    case 'row' :
+                        $currentValue = $rowBuilder->getData();
+                        if (count($currentValue)) {
+                            $this->currentKey = $currentKey;
+                            $this->currentValue = $currentValue;
+                            $this->valid = true;
+
+                            return;
+                        }
+                        break;
+                    case 'sheetData' :
+                        break 2;
+                }
+            }
+        }
     }
 
     /**
@@ -110,7 +142,8 @@ class RowIterator implements \Iterator
         if ($this->xml) {
             $this->xml->close();
         }
-        $this->xml = new \XMLReader($this->path);
+        $this->xml = new \XMLReader();
+        $this->xml->open($this->path);
         $this->next();
     }
 
@@ -119,6 +152,18 @@ class RowIterator implements \Iterator
      */
     public function valid()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return $this->valid;
+    }
+
+    /**
+     * Returns a normalized attribute value
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function getValue($value)
+    {
+       return null === $value ? ''  : $value;
     }
 }

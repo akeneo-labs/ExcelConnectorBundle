@@ -12,6 +12,18 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class ValueTransformerFactory
 {
     /**
+     *
+     * @var string
+     */
+    protected $transformerClass;
+
+    /**
+     *
+     * @var DateTransformer
+     */
+    protected $dateTransformer;
+
+    /**
      * Constructor
      *
      * @param DateTransformer $dateTransformer
@@ -19,7 +31,8 @@ class ValueTransformerFactory
      */
     public function __construct(DateTransformer $dateTransformer, $transformerClass)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->dateTransformer = $dateTransformer;
+        $this->transformerClass = $transformerClass;
     }
 
     /**
@@ -31,6 +44,6 @@ class ValueTransformerFactory
      */
     public function create(SharedStrings $sharedStrings, Styles $styles)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return new $this->transformerClass($this->dateTransformer, $sharedStrings, $styles);
     }
 }

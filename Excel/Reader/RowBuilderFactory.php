@@ -12,14 +12,21 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 class RowBuilderFactory
 {
+
+    /**
+     *
+     * @var string
+     */
+    protected $rowBuilderClass;
+
     /**
      * Constructor
      *
      * @param string $className
      */
-    public function __construct($className)
+    public function __construct($rowBuilderClass)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->rowBuilderClass = $rowBuilderClass;
     }
 
     /**
@@ -29,6 +36,6 @@ class RowBuilderFactory
      */
     public function create()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return new $this->rowBuilderClass();
     }
 }

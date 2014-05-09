@@ -15,16 +15,16 @@ use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorksheetListReader;
 class WorkbookLoaderSpec extends ObjectBehavior
 {
     public function let(
-        ArchiveLoader $archiveReader,
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
         StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
-        RowIteratorFactory $rowIteratorFactory
+        RowIteratorFactory $rowIteratorFactory,
+        ArchiveLoader $archiveLoader
     ) {
         $this->beConstructedWith(
-            $archiveReader,
+            $archiveLoader,
             $relationshipsLoader,
             $sharedStringsLoader,
             $stylesLoader,
@@ -41,16 +41,16 @@ class WorkbookLoaderSpec extends ObjectBehavior
     }
 
     public function it_creates_workbook_objects(
-        ArchiveLoader $archiveReader,
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
         StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
         RowIteratorFactory $rowIteratorFactory,
+        ArchiveLoader $archiveLoader,
         Archive $archive
     ) {
-        $archiveReader->open('path')->willReturn($archive);
+        $archiveLoader->open('path')->willReturn($archive);
 
         $workbook = $this->open('path');
         $workbook->getArchive()->shouldReturn($archive);
@@ -59,17 +59,16 @@ class WorkbookLoaderSpec extends ObjectBehavior
         $workbook->getRowIteratorFactory()->shouldReturn($rowIteratorFactory);
         $workbook->getWorksheetListReader()->shouldReturn($worksheetListReader);
         $workbook->getValueTransformerFactory()->shouldReturn($valueTransformerFactory);
-        $workbook->getRelationshpsLoader()->shouldReturn($relationshipsLoader);
+        $workbook->getRelationshipsLoader()->shouldReturn($relationshipsLoader);
     }
 
     public function it_caches_workbook_objects(
-        ArchiveLoader $archiveReader,
+        ArchiveLoader $archiveLoader,
         Archive $archive
     ) {
-        $archiveReader->open('path')->shouldBeCalledTimes(1)->willReturn($archive);
+        $archiveLoader->open('path')->shouldBeCalledTimes(1)->willReturn($archive);
 
         $workbook = $this->open('path');
-        $workbook->getArchive()->shouldReturn($archive);
         $workbook->getArchive()->shouldReturn($archive);
     }
 }
@@ -85,21 +84,21 @@ class StubWorkbook
     protected $archive;
 
     public function __construct(
-        SharedStringsLoader $sharedStringsLoader,
+        Archive $archive,
         RelationshipsLoader $relationshipsLoader,
+        SharedStringsLoader $sharedStringsLoader,
         StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
-        RowIteratorFactory $rowIteratorFactory,
-        Archive $archive
+        RowIteratorFactory $rowIteratorFactory
     ) {
+        $this->archive = $archive;
         $this->sharedStringsLoader = $sharedStringsLoader;
         $this->relationshipsLoader = $relationshipsLoader;
         $this->stylesLoader = $stylesLoader;
         $this->worksheetListReader = $worksheetListReader;
         $this->valueTransformerFactory = $valueTransformerFactory;
         $this->rowIteratorFactory = $rowIteratorFactory;
-        $this->archive = $archive;
     }
 
     public function getSharedStringsLoader()

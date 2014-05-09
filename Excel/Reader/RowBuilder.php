@@ -9,9 +9,15 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 class RowBuilder
 {
+
+    /**
+     *
+     * @var array
+     */
+    protected $values = array();
+
     /**
      * Adds a value to the row
      *
@@ -20,7 +26,9 @@ class RowBuilder
      */
     public function addValue($columnIndex, $value)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        if ('' !== $value) {
+            $this->values[$columnIndex] = $value;
+        }
     }
 
     /**
@@ -30,6 +38,14 @@ class RowBuilder
      */
     public function getData()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $data = [];
+        foreach ($this->values as $columnIndex => $value) {
+            while (count($data) < $columnIndex) {
+                $data[] = '';
+            }
+            $data[] = $value;
+        }
+
+        return $data;
     }
 }
