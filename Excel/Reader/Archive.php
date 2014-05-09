@@ -2,8 +2,6 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
-use Symfony\Component\Filesystem\Filesystem;
-
 /**
  * Represents an XLSX Archive
  *
@@ -84,8 +82,8 @@ class Archive
             new \RecursiveDirectoryIterator($this->tempPath, \RecursiveDirectoryIterator::SKIP_DOTS),
             \RecursiveIteratorIterator::CHILD_FIRST
         );
-        foreach($files as $file) {
-            if ($file->isDir()){
+        foreach ($files as $file) {
+            if ($file->isDir()) {
                 rmdir($file->getRealPath());
             } else {
                 unlink($file->getRealPath());
