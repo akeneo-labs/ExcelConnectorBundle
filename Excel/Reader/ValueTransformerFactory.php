@@ -16,13 +16,13 @@ class ValueTransformerFactory
      * @var string
      */
     protected $transformerClass;
-    
+
     /**
      *
      * @var DateTransformer
      */
     protected $dateTransformer;
-    
+
     /**
      * Constructor
      *

@@ -14,7 +14,7 @@ class WorkbookLoader
 
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $workbookClass;
 
@@ -100,6 +100,7 @@ class WorkbookLoader
     public function open($path)
     {
         $archive = $this->archiveLoader->open($path);
+
         return new $this->workbookClass(
                 $this->relationshipsLoader, $this->sharedStringsLoader, $this->stylesLoader, $this->worksheetListReader,
                 $this->valueTransformerFactory, $this->rowIteratorFactory, $archive
