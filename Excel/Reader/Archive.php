@@ -49,8 +49,9 @@ class Archive
     public function extract($filePath)
     {
         $zip = new \ZipArchive();
+        $tempPath = sprintf('%s/%s', $this->tempPath, $filePath);
 
-        if (true === $zip->open($this->archivePath)) {
+        if (!file_exists($tempPath) && true === $zip->open($this->archivePath)) {
 
             $zip->extractTo($this->tempPath, $filePath);
             $zip->close();
@@ -59,7 +60,7 @@ class Archive
             throw new \Exception('Error opening file');
         }
 
-        return sprintf('%s/%s', $this->tempPath, $filePath);
+        return $tempPath;
     }
 
     /**
@@ -67,8 +68,29 @@ class Archive
      */
     public function __destruct()
     {
-        $fs = new Filesystem();
-        $fs->remove($this->tempPath);
+        $this->deleteTemp();
     }
 
+    /**
+     * Deletes temporary files
+     */
+    protected function deleteTemp()
+    {
+        if (!file_exists($this->tempPath)) {
+            return;
+        }
+
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($this->tempPath, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach($files as $file) {
+            if ($file->isDir()){
+                rmdir($file->getRealPath());
+            } else {
+                unlink($file->getRealPath());
+            }
+        }
+        rmdir($this->tempPath);
+    }
 }
