@@ -12,13 +12,13 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 class RowBuilderFactory
 {
-    
+
     /**
      *
      * @var string
      */
     protected $rowBuilderClass;
-    
+
     /**
      * Constructor
      *
