@@ -64,13 +64,13 @@ class WorkbookLoader
      * @param string                  $workbookClass
      */
     public function __construct(
+            ArchiveLoader $archiveLoader,
             RelationshipsLoader $relationshipsLoader,
             SharedStringsLoader $sharedStringsLoader,
             StylesLoader $stylesLoader,
             WorksheetListReader $worksheetListReader,
             ValueTransformerFactory $valueTransformerFactory,
             RowIteratorFactory $rowIteratorFactory,
-            ArchiveLoader $archiveLoader,
             $workbookClass
     )
     {
@@ -98,8 +98,13 @@ class WorkbookLoader
         $archive = $this->archiveLoader->open($path);
 
         return new $this->workbookClass(
-                $this->relationshipsLoader, $this->sharedStringsLoader, $this->stylesLoader, $this->worksheetListReader,
-                $this->valueTransformerFactory, $this->rowIteratorFactory, $archive
+            $archive,
+            $this->relationshipsLoader,
+            $this->sharedStringsLoader,
+            $this->stylesLoader,
+            $this->worksheetListReader,
+            $this->valueTransformerFactory,
+            $this->rowIteratorFactory
         );
     }
 

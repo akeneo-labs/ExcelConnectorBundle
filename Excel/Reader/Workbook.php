@@ -88,30 +88,30 @@ class Workbook
     /**
      * Constructor
      *
+     * @param Archive                 $archive
      * @param RelationshipsLoader     $relationshipsLoader
      * @param SharedStringsLoader     $sharedStringsLoader
      * @param StylesLoader            $stylesLoader
      * @param WorksheetListReader     $worksheetListReader
      * @param ValueTransformerFactory $valueTransformerFactory
      * @param RowIteratorFactory      $rowIteratorFactory
-     * @param Archive                 $archive
      */
     public function __construct(
+        Archive $archive,
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
         StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
-        RowIteratorFactory $rowIteratorFactory,
-        Archive $archive
+        RowIteratorFactory $rowIteratorFactory
     ) {
+        $this->archive = $archive;
         $this->relationshipsLoader = $relationshipsLoader;
         $this->sharedStringsLoader = $sharedStringsLoader;
         $this->stylesLoader = $stylesLoader;
         $this->worksheetListReader = $worksheetListReader;
         $this->valueTransformerFactory = $valueTransformerFactory;
         $this->rowIteratorFactory = $rowIteratorFactory;
-        $this->archive = $archive;
     }
 
     /**

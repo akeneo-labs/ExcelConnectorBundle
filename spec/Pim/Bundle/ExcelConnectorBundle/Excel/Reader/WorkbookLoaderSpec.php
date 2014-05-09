@@ -24,13 +24,13 @@ class WorkbookLoaderSpec extends ObjectBehavior
         ArchiveLoader $archiveLoader
     ) {
         $this->beConstructedWith(
+            $archiveLoader,
             $relationshipsLoader,
             $sharedStringsLoader,
             $stylesLoader,
             $worksheetListReader,
             $valueTransformerFactory,
             $rowIteratorFactory,
-            $archiveLoader,
             'spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubWorkbook'
         );
     }
@@ -84,21 +84,21 @@ class StubWorkbook
     protected $archive;
 
     public function __construct(
+        Archive $archive,
         RelationshipsLoader $relationshipsLoader,
         SharedStringsLoader $sharedStringsLoader,
         StylesLoader $stylesLoader,
         WorksheetListReader $worksheetListReader,
         ValueTransformerFactory $valueTransformerFactory,
-        RowIteratorFactory $rowIteratorFactory,
-        Archive $archive
+        RowIteratorFactory $rowIteratorFactory
     ) {
+        $this->archive = $archive;
         $this->sharedStringsLoader = $sharedStringsLoader;
         $this->relationshipsLoader = $relationshipsLoader;
         $this->stylesLoader = $stylesLoader;
         $this->worksheetListReader = $worksheetListReader;
         $this->valueTransformerFactory = $valueTransformerFactory;
         $this->rowIteratorFactory = $rowIteratorFactory;
-        $this->archive = $archive;
     }
 
     public function getSharedStringsLoader()

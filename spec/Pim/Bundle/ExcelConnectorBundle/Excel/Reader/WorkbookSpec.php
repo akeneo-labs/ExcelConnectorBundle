@@ -35,13 +35,13 @@ class WorkbookSpec extends ObjectBehavior
         Styles $styles
     ) {
         $this->beConstructedWith(
+            $archive,
             $relationshipsLoader,
             $sharedStringsLoader,
             $stylesLoader,
             $worksheetListReader,
             $valueTransformerFactory,
-            $rowIteratorFactory,
-            $archive
+            $rowIteratorFactory
         );
         $archive->extract(Argument::type('string'))->will(
             function ($args) {
