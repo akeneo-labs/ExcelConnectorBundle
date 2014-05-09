@@ -22,6 +22,19 @@ class WorksheetListReader
      */
     public function getWorksheetPaths(Relationships $relationships, $path)
     {
-        throw new  \Exception('NOT IMPLEMENTED');
+        $xml = new \XMLReader();
+        $xml->open($path);
+        $paths = [];
+        while ($xml->read()) {
+            if (\XMLReader::ELEMENT === $xml->nodeType && 'sheet' === $xml->name) {
+                $rId = $xml->getAttributeNs(
+                    'id',
+                    'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
+                );
+                $paths[$xml->getAttribute('name')] = $relationships->getWorksheetPath($rId);
+            }
+        }
+
+        return $paths;
     }
 }
