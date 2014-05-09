@@ -92,7 +92,7 @@ class Relationships extends AbstractXMLResource
             if (\XMLReader::ELEMENT === $xml->nodeType && 'Relationship' === $xml->name) {
 
                 $type = basename((string) $xml->getAttribute('Type'));
-                $this->storeRelationShipByType($type, (string) $xml->getAttribute('Id'), (string) $xml->getAttribute('Target'));
+                $this->storeRelationShipByType($type, $xml->getAttribute('Id'), 'xl/' . $xml->getAttribute('Target'));
             }
         }
 
