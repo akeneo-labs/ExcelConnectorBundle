@@ -86,9 +86,7 @@ class ValueTransformer
             case static::TYPE_SHARED_STRING :
                 return rtrim($this->sharedStrings->get($value));
             case static::TYPE_NUMBER :
-                $format = $this->styles->get($style);
-
-                return $this->dateTransformer->isDateFormat($format)
+                return Styles::FORMAT_DATE === $this->styles->get($style)
                     ? $this->dateTransformer->transform($value)
                     : $value * 1;
             default :

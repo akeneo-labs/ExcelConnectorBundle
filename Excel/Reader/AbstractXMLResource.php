@@ -49,11 +49,23 @@ abstract class AbstractXMLResource
     protected function getXMLReader()
     {
         if (!$this->xml) {
-            $this->xml = new \XMLReader();
-            $this->xml->open($this->path);
+            $this->xml = $this->createXMLReader();
         }
 
         return $this->xml;
+    }
+
+    /**
+     * Creates the XML Reader
+     *
+     * @return \XMLReader
+     */
+    protected function createXMLReader()
+    {
+        $xml = new \XMLReader();
+        $xml->open($this->path);
+
+        return $xml;
     }
 
     /**

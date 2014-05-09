@@ -11,13 +11,6 @@ class DateTransformerSpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\DateTransformer');
     }
 
-    public function it_recognizes_date_formats()
-    {
-        $this->isDateFormat('DD/MM/YY\ HH:MM')->shouldReturn(true);
-        $this->isDateFormat('DD/MM/YY')->shouldReturn(true);
-        $this->isDateFormat('GENERAL')->shouldReturn(false);
-    }
-
     public function it_transforms_dates()
     {
         $this->transform('42001')->shouldReturnDate('2014-12-28 00:00');

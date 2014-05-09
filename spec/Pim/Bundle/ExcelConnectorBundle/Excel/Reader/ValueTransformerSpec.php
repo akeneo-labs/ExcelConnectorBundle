@@ -16,10 +16,8 @@ class ValueTransformerSpec extends ObjectBehavior
         SharedStrings $sharedStrings,
         Styles $styles
     ) {
-        $styles->get('1')->willReturn('string');
-        $styles->get('2')->willReturn('date');
-        $dateTransformer->isDateFormat('string')->willReturn(false);
-        $dateTransformer->isDateFormat('date')->willReturn(true);
+        $styles->get('1')->willReturn(Styles::FORMAT_DEFAULT);
+        $styles->get('2')->willReturn(Styles::FORMAT_DATE);
         $dateTransformer->transform(Argument::type('string'))->will(
             function ($args) {
                 return 'date_' . $args[0];

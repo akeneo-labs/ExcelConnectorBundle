@@ -17,34 +17,11 @@ class DateTransformer
     protected $baseDate;
 
     /**
-     * Cached formats
-     *
-     * @var array
-     */
-    protected $dateFormats = [];
-
-    /**
      * Constructor
      */
     public function __construct()
     {
         $this->baseDate = new \DateTime('1900-01-00 00:00:00 UTC');
-    }
-
-    /**
-     * Returns true if the Excel format is a date format
-     *
-     * @param string $format
-     *
-     * @return boolean
-     */
-    public function isDateFormat($format)
-    {
-        if (!isset($this->dateFormats[$format])) {
-            $this->dateFormats[$format] = (bool) preg_match('{^(\[\$[[:alpha:]]*-[0-9A-F]*\])*[hmsdy]}i', $format);
-        }
-
-        return $this->dateFormats[$format];
     }
 
     /**

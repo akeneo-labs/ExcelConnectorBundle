@@ -3,6 +3,7 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Styles;
 
 class StylesSpec extends ObjectBehavior
 {
@@ -18,9 +19,11 @@ class StylesSpec extends ObjectBehavior
 
     public function it_returns_shared_strings()
     {
-        $this->get('164')->shouldReturn('GENERAL');
-        $this->get('165')->shouldReturn('DD/MM/YY\ HH:MM');
-        $this->get('166')->shouldReturn('DD/MM/YY');
+        $this->get(0)->shouldReturn(Styles::FORMAT_DEFAULT);
+        $this->get(1)->shouldReturn(Styles::FORMAT_DATE);
+        $this->get(2)->shouldReturn(Styles::FORMAT_DEFAULT);
+        $this->get(3)->shouldReturn(Styles::FORMAT_DATE);
+        $this->get(4)->shouldReturn(Styles::FORMAT_DATE);
     }
 
     public function it_throws_an_exception_if_there_is_no_style()
