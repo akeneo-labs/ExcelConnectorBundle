@@ -11,51 +11,42 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class WorkbookLoader
 {
-
     /**
-     *
      * @var string
      */
     protected $workbookClass;
 
     /**
-     *
      * @var RelationshipsLoader
      */
     protected $relationshipsLoader;
 
     /**
-     *
      * @var SharedStringsLoader
      */
     protected $sharedStringsLoader;
 
     /**
-     *
      * @var StyleLoader
      */
     protected $stylesLoader;
 
     /**
-     *
      * @var WorksheetListReader
      */
     protected $worksheetListReader;
 
     /**
-     *
      * @var ValueTransformerFactory
      */
     protected $valueTransformerFactory;
 
     /**
-     *
      * @var RowIteratorFactory
      */
     protected $rowIteratorFactory;
 
     /**
-     *
      * @var ArchiveLoader
      */
     protected $archiveLoader;
