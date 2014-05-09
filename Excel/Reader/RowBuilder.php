@@ -26,13 +26,9 @@ class RowBuilder
      */
     public function addValue($columnIndex, $value)
     {
-
-        for ($i = 0; $i <= $columnIndex; $i++) {
-            if (!array_key_exists($i, $this->values)) {
-                $this->values[$i] = '';
-            }
+        if ('' !== $value) {
+            $this->values[$columnIndex] = $value;
         }
-        $this->values[$columnIndex] = $value;
     }
 
     /**
@@ -42,18 +38,14 @@ class RowBuilder
      */
     public function getData()
     {
-        $arrayTemp = array_reverse($this->values, true);
-
-        foreach ($arrayTemp as $key => $value) {
-
-            if ('' === $value) {
-                unset($arrayTemp[$key]);
-            } else {
-                break;
+        $data = [];
+        foreach ($this->values as $columnIndex => $value) {
+            while (count($data) < $columnIndex) {
+                $data[] = '';
             }
+            $data[] = $value;
         }
 
-        return array_reverse($arrayTemp);
+        return $data;
     }
-
 }
