@@ -73,13 +73,13 @@ class WorkbookLoader
      * @param string                  $workbookClass
      */
     public function __construct(
-            RelationshipsLoader $relationshipsLoader, 
-            SharedStringsLoader $sharedStringsLoader, 
+            RelationshipsLoader $relationshipsLoader,
+            SharedStringsLoader $sharedStringsLoader,
             StylesLoader $stylesLoader,
-            WorksheetListReader $worksheetListReader, 
+            WorksheetListReader $worksheetListReader,
             ValueTransformerFactory $valueTransformerFactory,
-            RowIteratorFactory $rowIteratorFactory, 
-            ArchiveLoader $archiveLoader, 
+            RowIteratorFactory $rowIteratorFactory,
+            ArchiveLoader $archiveLoader,
             $workbookClass
     )
     {

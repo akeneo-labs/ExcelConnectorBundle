@@ -11,36 +11,35 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class RowIteratorFactory
 {
-    
+
     /**
      *
      * @var RowBuilderFactory
      */
     protected $rowBuilderFactory;
-    
+
     /**
      *
      * @var ColumnIndexTransformer
      */
     protected $columnIndexTransformer;
-    
+
     /**
      *
      * @var string
      */
     protected $iteratorClass;
-    
 
     /**
      * Constructor
      *
      * @param RowBuilderFactory      $rowBuilderFactory
      * @param ColumnIndexTransformer $columnIndexTransformer
-     * @param string                 $iteratorClass the class for row iterators
+     * @param string                 $iteratorClass          the class for row iterators
      */
     public function __construct(
-        RowBuilderFactory $rowBuilderFactory, 
-        ColumnIndexTransformer $columnIndexTransformer, 
+        RowBuilderFactory $rowBuilderFactory,
+        ColumnIndexTransformer $columnIndexTransformer,
         $iteratorClass
     )
     {
