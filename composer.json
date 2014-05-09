@@ -20,17 +20,12 @@
         {
             "type": "vcs",
             "url": "https://github.com/akeneo/platform.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/akeneo/spreadsheet-reader.git"
         }
     ],
     "minimum-stability": "dev",
     "require": {
         "akeneo/pim-community-dev": "~1.1",
-        "phpoffice/phpexcel": "1.8.0rc1",
-        "akeneo/spreadsheet-reader" : "dev-master"
+        "phpoffice/phpexcel": "1.8.0rc1"
     },
     "config": {
         "bin-dir": "bin"

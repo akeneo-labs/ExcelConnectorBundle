@@ -26,7 +26,6 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
      */
     protected function getChannelData()
     {
-        $helper = $this->getExcelHelper();
         $xls = $this->getExcelObject();
         $data = [ 'attributes' => [] ];
         $attributeLabels = [];
@@ -35,7 +34,9 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
         $codeColumn = null;
         $useAsLabelColumn = null;
         $channelColumn = null;
-        foreach ($helper->createRowIterator($xls) as $index => $row) {
+        $rowIterator = $xls->createRowIterator($this->worksheetIterator->key());
+
+        foreach ($rowIterator as $index => $row) {
             if ($index == $this->options['code_row']) {
                 $data['code'] = $row[$this->options['code_column']];
             }
@@ -54,7 +55,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                 $labelLocales = array_slice($row, $this->options['labels_column']);
             }
             if ($index == $this->options['labels_data_row']) {
-                $data['labels'] = $helper->combineArrays(
+                $data['labels'] = $this->getArrayHelper()->combineArrays(
                     $labelLocales,
                     array_slice($row, $this->options['labels_column'])
                 );

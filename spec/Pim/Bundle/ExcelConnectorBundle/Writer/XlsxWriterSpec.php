@@ -3,8 +3,8 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Writer;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\ExcelConnectorBundle\Excel\ExcelBuilderFactory;
-use Pim\Bundle\ExcelConnectorBundle\Excel\ExcelBuilderInterface;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ExcelBuilderFactory;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ExcelBuilderInterface;
 
 class XlsxWriterSpec extends ObjectBehavior
 {
