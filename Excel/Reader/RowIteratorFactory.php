@@ -11,6 +11,13 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class RowIteratorFactory
 {
+
+    /**
+     *
+     * @var string
+     */
+    protected $iteratorClass;
+
     /**
      * Constructor
      *
@@ -18,7 +25,7 @@ class RowIteratorFactory
      */
     public function __construct($iteratorClass)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $this->iteratorClass = $iteratorClass;
     }
 
     /**
@@ -31,6 +38,7 @@ class RowIteratorFactory
      */
     public function create(ValueTransformer $valueTransformer, $path)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return new $this->iteratorClass($valueTransformer, $path);
     }
+
 }

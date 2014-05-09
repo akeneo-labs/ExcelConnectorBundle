@@ -11,10 +11,59 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
  */
 class WorkbookLoader
 {
+
+    /**
+     *
+     * @var string 
+     */
+    protected $workbookClass;
+
+    /**
+     *
+     * @var RelationshipsLoader
+     */
+    protected $relationshipsLoader;
+
+    /**
+     *
+     * @var SharedStringsLoader
+     */
+    protected $sharedStringsLoader;
+
+    /**
+     *
+     * @var StyleLoader
+     */
+    protected $stylesLoader;
+
+    /**
+     *
+     * @var WorksheetListReader
+     */
+    protected $worksheetListReader;
+
+    /**
+     *
+     * @var ValueTransformerFactory
+     */
+    protected $valueTransformerFactory;
+
+    /**
+     *
+     * @var RowIteratorFactory
+     */
+    protected $rowIteratorFactory;
+
+    /**
+     *
+     * @var ArchiveLoader
+     */
+    protected $archiveLoader;
+
     /**
      * Constructor
      *
-     * @param ArchiveLoader           $archiveReader
+     * @param ArchiveLoader           $archiveLoader
      * @param RelationshipsLoader     $relationshipsLoader
      * @param SharedStringsLoader     $sharedStringsLoader
      * @param StylesLoader            $stylesLoader
@@ -24,16 +73,19 @@ class WorkbookLoader
      * @param string                  $workbookClass
      */
     public function __construct(
-        ArchiveLoader $archiveReader,
-        RelationshipsLoader $relationshipsLoader,
-        SharedStringsLoader $sharedStringsLoader,
-        StylesLoader $stylesLoader,
-        WorksheetListReader $worksheetListReader,
-        ValueTransformerFactory $valueTransformerFactory,
-        RowIteratorFactory $rowIteratorFactory,
-        $workbookClass
-    ) {
-        throw new \Exception('NOT IMPLEMENTED');
+    RelationshipsLoader $relationshipsLoader, SharedStringsLoader $sharedStringsLoader, StylesLoader $stylesLoader,
+            WorksheetListReader $worksheetListReader, ValueTransformerFactory $valueTransformerFactory,
+            RowIteratorFactory $rowIteratorFactory, ArchiveLoader $archiveLoader, $workbookClass
+    )
+    {
+        $this->relationshipsLoader = $relationshipsLoader;
+        $this->sharedStringsLoader = $sharedStringsLoader;
+        $this->stylesLoader = $stylesLoader;
+        $this->worksheetListReader = $worksheetListReader;
+        $this->valueTransformerFactory = $valueTransformerFactory;
+        $this->rowIteratorFactory = $rowIteratorFactory;
+        $this->archiveLoader = $archiveLoader;
+        $this->workbookClass = $workbookClass;
     }
 
     /**
@@ -47,6 +99,11 @@ class WorkbookLoader
      */
     public function open($path)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        $archive = $this->archiveLoader->open($path);
+        return new $this->workbookClass(
+                $this->relationshipsLoader, $this->sharedStringsLoader, $this->stylesLoader, $this->worksheetListReader,
+                $this->valueTransformerFactory, $this->rowIteratorFactory, $archive
+        );
     }
+
 }

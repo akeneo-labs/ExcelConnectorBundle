@@ -37,7 +37,7 @@ class SharedStringsLoader
      */
     public function open($path)
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return new $this->sharedStringsClass($path);
     }
 
 }

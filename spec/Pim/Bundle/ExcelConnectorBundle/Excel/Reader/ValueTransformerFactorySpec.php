@@ -24,7 +24,7 @@ class ValueTransformerFactorySpec extends ObjectBehavior
         SharedStrings $sharedStrings,
         Styles $styles
     ) {
-        $transformer = $this->create($dateTransformer, $sharedStrings, $styles);
+        $transformer = $this->create($sharedStrings, $styles);
         $transformer->getSharedStrings()->shouldReturn($sharedStrings);
         $transformer->getDateTransformer()->shouldReturn($dateTransformer);
         $transformer->getStyles()->shouldReturn($styles);
@@ -33,10 +33,10 @@ class ValueTransformerFactorySpec extends ObjectBehavior
 
 class StubValueTransformer
 {
-    protected $sharedStrings;
     protected $dateTransformer;
+    protected $sharedStrings;
     protected $styles;
-    public function __construct($sharedStrings, $dateTransformer, $styles)
+    public function __construct($dateTransformer, $sharedStrings, $styles)
     {
         $this->sharedStrings = $sharedStrings;
         $this->dateTransformer = $dateTransformer;
