@@ -3,17 +3,53 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 
 use PhpSpec\ObjectBehavior;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ColumnIndexTransformer;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowBuilder;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowBuilderFactory;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ValueTransformer;
 use Prophecy\Argument;
 
 class RowIteratorSpec extends ObjectBehavior
 {
-    public function let(ValueTransformer $valueTransformer)
-    {
-        $this->beConstructedWith($valueTransformer, __DIR__ . '/../../fixtures/sheet.xml');
-        $valueTransformer->transform(Argument::type('string'))->will(
+    public function let(
+        RowBuilderFactory $rowBuilderFactory,
+        ColumnIndexTransformer $columnIndexTransformer,
+        ValueTransformer $valueTransformer,
+        RowBuilder $rowBuilder
+    ) {
+        $startWith = function ($startString) {
+            return function ($string) use ($startString) {
+                return $startString === substr($string, 0, strlen($startString));
+            };
+        };
+        $columnIndexTransformer->transform(Argument::that($startWith('A')))->willReturn(0);
+        $columnIndexTransformer->transform(Argument::that($startWith('B')))->willReturn(1);
+        $columnIndexTransformer->transform(Argument::that($startWith('C')))->willReturn(2);
+        $columnIndexTransformer->transform(Argument::that($startWith('D')))->willReturn(3);
+
+        $row = null;
+        $rowBuilderFactory->create()->will(
+            function () use ($rowBuilder, &$row) {
+                $row = [];
+
+                return $rowBuilder;
+            }
+        );
+
+        $rowBuilder->addValue(Argument::type('int'), Argument::type('string'))->will(
+            function ($args) use (&$row) {
+                $row[$args[0]] = $args[1];
+            }
+        );
+        $this->beConstructedWith(
+            $rowBuilderFactory,
+            $columnIndexTransformer,
+            $valueTransformer,
+            __DIR__ . '/../../fixtures/sheet.xml'
+        );
+        $valueTransformer->transform(Argument::type('string'),Argument::type('string'),Argument::type('string'))->will(
             function ($args) {
-                return (trim($args[0])) ? 'transformed_' . trim($args[0]) : '';
+                return $args;
             }
         );
     }
@@ -23,13 +59,12 @@ class RowIteratorSpec extends ObjectBehavior
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIterator');
     }
 
-    public function it_iterates_through_worksheets()
+    public function it_iterates_through_rows()
     {
         $values = [
-            1 => ['transformed_0', 'transformed_1'],
-            2 => ['transformed_2', 'transformed_3', 'transformed_4'],
-            4 => ['transformed_5', '', 'transformed_6'],
-            6 => ['', 'transformed_1578', 'transformed_37235']
+            1 => [0 => ['0', 's','0'], 1 => ['1', 's','0'], 3 => ['', '','1']],
+            2 => [0 => ['2', 's','0'], 1 => ['3', 's','0'], 2 => ['4', 's','0']],
+            4 => [0 => ['5', 'n','0'], 2 => ['5', 'n','1']],
         ];
 
         $this->rewind();
@@ -47,12 +82,12 @@ class RowIteratorSpec extends ObjectBehavior
     {
         $this->rewind();
         $this->valid()->shouldReturn(true);
-        $this->current()->shouldReturn(['string_0', 'string_1']);
+        $this->current()->shouldReturn([0 => ['0', 's','0'], 1 => ['1', 's','0'], 3 => ['', '','1']]);
         $this->key()->shouldReturn(1);
         $this->next();
         $this->rewind();
         $this->valid()->shouldReturn(true);
-        $this->current()->shouldReturn(['string_0', 'string_1']);
+        $this->current()->shouldReturn([0 => ['0', 's','0'], 1 => ['1', 's','0'], 3 => ['', '','1']]);
         $this->key()->shouldReturn(1);
     }
 }

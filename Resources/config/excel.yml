@@ -20,6 +20,9 @@ parameters:
     pim_excel_connector.excel.reader.date_transformer.class:          Pim\Bundle\ExcelConnectorBundle\Excel\Reader\DateTransformer
     pim_excel_connector.excel.reader.workbook.class:                  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook
     pim_excel_connector.excel.reader.workbook_loader.class:           Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader
+    pim_excel_connector.excel.reader.column_index_transformer.class:  Pim\Bundle\ExcelConnectorBundle\Excel\Reader\ColumnIndexTransformer
+    pim_excel_connector.excel.reader.row_builder.class:               Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowBuilder
+    pim_excel_connector.excel.reader.row_builder_factory.class:       Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowBuilderFactory
 
 services:
     pim_excel_connector.excel.builder.factory:
@@ -53,15 +56,25 @@ services:
     pim_excel_connector.excel.reader.date_transformer:
         class: %pim_excel_connector.excel.reader.date_transformer.class%
 
+    pim_excel_connector.excel.reader.column_index_transformer:
+        class: %pim_excel_connector.excel.reader.column_index_transformer.class%
+
     pim_excel_connector.excel.reader.value_transformer_factory:
         class: %pim_excel_connector.excel.reader.value_transformer_factory.class%
         arguments:
             - @pim_excel_connector.excel.reader.date_transformer
             - %pim_excel_connector.excel.reader.value_transformer.class%
 
+    pim_excel_connector.excel.reader.row_builder_factory:
+        class: %pim_excel_connector.excel.reader.row_builder_factory.class%
+        arguments:
+            - %pim_excel_connector.excel.reader.row_builder.class%
+
     pim_excel_connector.excel.reader.row_iterator_factory:
         class: %pim_excel_connector.excel.reader.row_iterator_factory.class%
         arguments:
+            - @pim_excel_connector.excel.reader.row_builder_factory
+            - @pim_excel_connector.excel.reader.column_index_transformer
             - %pim_excel_connector.excel.reader.row_iterator.class%
 
     pim_excel_connector.excel.reader.workbook_loader:

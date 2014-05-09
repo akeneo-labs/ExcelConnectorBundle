@@ -13,9 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class Archive
 {
-
-    const TEMP_SUBFOLDER = '/xlsx_extract/';
-
     /**
      *
      * @var string
@@ -36,7 +33,8 @@ class Archive
     public function __construct($archivePath)
     {
         $this->archivePath = $archivePath;
-        $this->tempPath = sys_get_temp_dir() . self::TEMP_SUBFOLDER;
+        $this->tempPath = tempnam(sys_get_temp_dir(), 'xls_parser_archive');
+        unlink($this->tempPath);
     }
 
     /**
@@ -61,7 +59,7 @@ class Archive
             throw new \Exception('Error opening file');
         }
 
-        return $this->tempPath . $filePath;
+        return sprintf('%s/%s', $this->tempPath, $filePath);
     }
 
     /**

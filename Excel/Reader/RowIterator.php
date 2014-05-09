@@ -16,6 +16,16 @@ namespace Pim\Bundle\ExcelConnectorBundle\Excel\Reader;
 class RowIterator implements \Iterator
 {
     /**
+     * @var RowBuilderFactory
+     */
+    protected $rowBuilderFactory;
+
+    /**
+     * @var ColumnIndexTransformer
+     */
+    protected $columnIndexTransformer;
+
+    /**
      * @var ValueTransformer
      */
     protected $valueTransformer;
@@ -51,8 +61,14 @@ class RowIterator implements \Iterator
      * @param ValueTransformer $valueTransformer
      * @param string           $path
      */
-    public function __construct(ValueTransformer $valueTransformer, $path)
-    {
+    public function __construct(
+        RowBuilderFactory $rowBuilderFactory,
+        ColumnIndexTransformer $columnIndexTransformer,
+        ValueTransformer $valueTransformer,
+        $path
+    ) {
+        $this->rowBuilderFactory = $rowBuilderFactory;
+        $this->columnIndexTransformer = $columnIndexTransformer;
         $this->valueTransformer = $valueTransformer;
         $this->path = $path;
     }
