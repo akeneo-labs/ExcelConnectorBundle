@@ -95,29 +95,31 @@ class RowIterator implements \Iterator
     public function next()
     {
         $this->valid = false;
-        $currentKey = null;
-        $rowBuilder = null;
-        $columnIndex = null;
 
         while ($this->xml->read()) {
-            if (\XMLReader::ENTITY === $this->xml->nodeType) {
+            if (\XMLReader::ELEMENT === $this->xml->nodeType) {
                 switch ($this->xml->name) {
                     case 'row' :
-                        $currentKey = $this->xml->getAttribute('r');
+                        $currentKey = (int) $this->xml->getAttribute('r');
                         $rowBuilder = $this->rowBuilderFactory->create();
                         break;
                     case 'c' :
                         $columnIndex = $this->columnIndexTransformer->transform($this->xml->getAttribute('r'));
+                        $style = $this->getValue($this->xml->getAttribute('s'));
+                        $type = $this->getValue($this->xml->getAttribute('t'));
                         break;
                     case 'v' :
-                        $rowBuilder->addValue($columnIndex, $this->xml->readString());
+                        $rowBuilder->addValue(
+                            $columnIndex,
+                            $this->valueTransformer->transform($this->xml->readString(), $type, $style)
+                        );
                         break;
                 }
-            } elseif (\XMLReader::END_ENTITY === $this->xml->nodeType) {
+            } elseif (\XMLReader::END_ELEMENT === $this->xml->nodeType) {
                 switch ($this->xml->name) {
                     case 'row' :
                         $currentValue = $rowBuilder->getData();
-                        if (count($data)) {
+                        if (count($currentValue)) {
                             $this->currentKey = $currentKey;
                             $this->currentValue = $currentValue;
                             $this->valid = true;
@@ -150,6 +152,18 @@ class RowIterator implements \Iterator
      */
     public function valid()
     {
-        throw new \Exception('NOT IMPLEMENTED');
+        return $this->valid;
+    }
+
+    /**
+     * Returns a normalized attribute value
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function getValue($value)
+    {
+       return null === $value ? ''  : $value;
     }
 }

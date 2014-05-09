@@ -6,12 +6,12 @@ use PhpSpec\ObjectBehavior;
 
 class RowBuilderFactorySpec extends ObjectBehavior
 {
-    
+
     public function let()
     {
         $this->beConstructedWith('spec\Pim\Bundle\ExcelConnectorBundle\Excel\Reader\StubRowBuilder');
     }
-    
+
     public function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowBuilderFactory');
@@ -25,5 +25,5 @@ class RowBuilderFactorySpec extends ObjectBehavior
 
 class StubRowBuilder
 {
-    
+
 }
