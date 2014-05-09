@@ -22,6 +22,11 @@ class XlsxReader
     const RELATIONSHIPS_CLASS = 'Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Relationships';
 
     /**
+     * @staticvar string RowBuilder class
+     */
+    const ROw_BUILDER_CLASS = 'Pim\Bundle\ExcelConnectorBundle\Excel\RowBuilder';
+
+    /**
      * @staticvar string RowIterator class
      */
     const ROW_ITERATOR_CLASS = 'Pim\Bundle\ExcelConnectorBundle\Excel\Reader\RowIterator';
@@ -70,12 +75,12 @@ class XlsxReader
     {
         if (!isset(self::$workbookLoader)) {
             self::$workbookLoader = new WorkbookLoader(
-                $this->createArchiveLoader(),
-                $this->createRelationshipsLoader(),
-                $this->createStylesLoader(),
-                $this->createWorksheetListReader(),
-                $this->createValueTransformerFactory(),
-                $this->createRowIteratorFactory(),
+                static::createArchiveLoader(),
+                static::createRelationshipsLoader(),
+                static::createStylesLoader(),
+                static::createWorksheetListReader(),
+                static::createValueTransformerFactory(),
+                static::createRowIteratorFactory(),
                 static::WORKBOOK_CLASS
             );
         }
@@ -128,7 +133,7 @@ class XlsxReader
      */
     protected static function createValueTransformerFactory()
     {
-        return new ValueTransformerFactory($this->createDateTransformer(), static::VALUE_TRANSFORMER_CLASS);
+        return new ValueTransformerFactory(static::createDateTransformer(), static::VALUE_TRANSFORMER_CLASS);
     }
 
     /**
@@ -140,10 +145,30 @@ class XlsxReader
     }
 
     /**
+     * @return RowBuilderFactory
+     */
+    protected static function createRowBuilderFactory()
+    {
+        return new RowBuilderFactory(static::ROw_BUILDER_CLASS);
+    }
+
+    /**
+     * @return ColumnIndexTransformer
+     */
+    protected static function createColumnIndexTransformer()
+    {
+        return new ColumnIndexTransformer();
+    }
+
+    /**
      * @return RowIteratorFactory
      */
     protected static function createRowIteratorFactory()
     {
-        return new RowIteratorFactory(static::ROW_ITERATOR_CLASS);
+        return new RowIteratorFactory(
+            static::createRowBuilderFactory(),
+            static::createColumnIndexTransformer(),
+            static::ROW_ITERATOR_CLASS
+        );
     }
 }

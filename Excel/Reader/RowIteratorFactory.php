@@ -14,10 +14,15 @@ class RowIteratorFactory
     /**
      * Constructor
      *
-     * @param string $iteratorClass the class for row iterators
+     * @param RowBuilderFactory      $rowBuilderFactory
+     * @param ColumnIndexTransformer $columnIndexTransformer
+     * @param string                 $iteratorClass          the class for row iterators
      */
-    public function __construct($iteratorClass)
-    {
+    public function __construct(
+        RowBuilderFactory $rowBuilderFactory,
+        ColumnIndexTransformer $columnIndexTransformer,
+        $iteratorClass
+    ) {
         throw new \Exception('NOT IMPLEMENTED');
     }
 

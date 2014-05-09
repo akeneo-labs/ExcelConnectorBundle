@@ -50,6 +50,14 @@ class ValueTransformerSpec extends ObjectBehavior
         $this->transform('string', ValueTransformer::TYPE_ERROR, '1')->shouldReturn('string');
     }
 
+    public function it_right_trims_strings()
+    {
+        $this->transform(' string   ', ValueTransformer::TYPE_STRING, '1')->shouldReturn(' string');
+        $this->transform('string   ', ValueTransformer::TYPE_SHARED_STRING, '1')->shouldReturn('shared_string');
+        $this->transform(' string   ', ValueTransformer::TYPE_INLINE_STRING, '1')->shouldReturn(' string');
+        $this->transform(' string   ', ValueTransformer::TYPE_ERROR, '1')->shouldReturn(' string');
+    }
+
     public function it_transforms_numbers()
     {
         $this->transform('10.2', ValueTransformer::TYPE_NUMBER, '1')->shouldReturn(10.2);

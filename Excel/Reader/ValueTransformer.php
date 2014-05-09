@@ -84,7 +84,7 @@ class ValueTransformer
             case static::TYPE_BOOL :
                 return ('1' === $value);
             case static::TYPE_SHARED_STRING :
-                return $this->sharedStrings->get($value);
+                return rtrim($this->sharedStrings->get($value));
             case static::TYPE_NUMBER :
                 $format = $this->styles->get($style);
 
@@ -92,7 +92,7 @@ class ValueTransformer
                     ? $this->dateTransformer->transform($value)
                     : $value * 1;
             default :
-                return trim($value);
+                return rtrim($value);
         }
     }
 }
