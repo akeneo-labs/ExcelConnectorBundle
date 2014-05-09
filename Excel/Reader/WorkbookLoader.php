@@ -73,9 +73,14 @@ class WorkbookLoader
      * @param string                  $workbookClass
      */
     public function __construct(
-    RelationshipsLoader $relationshipsLoader, SharedStringsLoader $sharedStringsLoader, StylesLoader $stylesLoader,
-            WorksheetListReader $worksheetListReader, ValueTransformerFactory $valueTransformerFactory,
-            RowIteratorFactory $rowIteratorFactory, ArchiveLoader $archiveLoader, $workbookClass
+            RelationshipsLoader $relationshipsLoader, 
+            SharedStringsLoader $sharedStringsLoader, 
+            StylesLoader $stylesLoader,
+            WorksheetListReader $worksheetListReader, 
+            ValueTransformerFactory $valueTransformerFactory,
+            RowIteratorFactory $rowIteratorFactory, 
+            ArchiveLoader $archiveLoader, 
+            $workbookClass
     )
     {
         $this->relationshipsLoader = $relationshipsLoader;
