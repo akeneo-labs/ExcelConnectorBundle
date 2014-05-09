@@ -95,11 +95,41 @@ class RowIterator implements \Iterator
     public function next()
     {
         $this->valid = false;
-        $this->currentValue = null;
-        $this->currentKey = null;
-        // Should set $this->currentKey, $this->currentValue and $this->valid
-        // According to the next found row tag in the xls file
-        throw new \Exception('NOT IMPLEMENTED');
+        $currentKey = null;
+        $rowBuilder = null;
+        $columnIndex = null;
+
+        while ($this->xml->read()) {
+            if (\XMLReader::ENTITY === $this->xml->nodeType) {
+                switch ($this->xml->name) {
+                    case 'row' :
+                        $currentKey = $this->xml->getAttribute('r');
+                        $rowBuilder = $this->rowBuilderFactory->create();
+                        break;
+                    case 'c' :
+                        $columnIndex = $this->columnIndexTransformer->transform($this->xml->getAttribute('r'));
+                        break;
+                    case 'v' :
+                        $rowBuilder->addValue($columnIndex, $this->xml->readString());
+                        break;
+                }
+            } elseif (\XMLReader::END_ENTITY === $this->xml->nodeType) {
+                switch ($this->xml->name) {
+                    case 'row' :
+                        $currentValue = $rowBuilder->getData();
+                        if (count($data)) {
+                            $this->currentKey = $currentKey;
+                            $this->currentValue = $currentValue;
+                            $this->valid = true;
+
+                            return;
+                        }
+                        break;
+                    case 'sheetData' :
+                        break 2;
+                }
+            }
+        }
     }
 
     /**
@@ -110,7 +140,8 @@ class RowIterator implements \Iterator
         if ($this->xml) {
             $this->xml->close();
         }
-        $this->xml = new \XMLReader($this->path);
+        $this->xml = new \XMLReader();
+        $this->xml->open($this->path);
         $this->next();
     }
 
