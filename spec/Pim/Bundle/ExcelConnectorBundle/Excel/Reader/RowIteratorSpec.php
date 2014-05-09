@@ -36,9 +36,14 @@ class RowIteratorSpec extends ObjectBehavior
             }
         );
 
-        $rowBuilder->addValue(Argument::type('int'), Argument::type('string'))->will(
+        $rowBuilder->addValue(Argument::type('int'), Argument::type('array'))->will(
             function ($args) use (&$row) {
                 $row[$args[0]] = $args[1];
+            }
+        );
+        $rowBuilder->getData()->will(
+            function () use (&$row) {
+                return $row;
             }
         );
         $this->beConstructedWith(
@@ -64,7 +69,7 @@ class RowIteratorSpec extends ObjectBehavior
         $values = [
             1 => [0 => ['0', 's','0'], 1 => ['1', 's','0'], 3 => ['', '','1']],
             2 => [0 => ['2', 's','0'], 1 => ['3', 's','0'], 2 => ['4', 's','0']],
-            4 => [0 => ['5', 'n','0'], 2 => ['5', 'n','1']],
+            4 => [0 => ['5', 'n','0'], 2 => ['6', 'n','1']],
         ];
 
         $this->rewind();
@@ -75,7 +80,7 @@ class RowIteratorSpec extends ObjectBehavior
             $this->next();
         }
 
-        $this->valid->shouldReturn(false);
+        $this->valid()->shouldReturn(false);
     }
 
     public function it_can_be_rewinded()
