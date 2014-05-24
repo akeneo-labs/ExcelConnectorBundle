@@ -3,8 +3,8 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader;
+use Akeneo\Component\SpreadsheetParser\WorkbookInterface;
+use Akeneo\Component\SpreadsheetParser\WorkbookLoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
@@ -12,8 +12,8 @@ class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookLoader $workbookReader,
-        Workbook $workbook
+        WorkbookLoaderInterface $workbookReader,
+        WorkbookInterface $workbook
     )  {
         parent::let($container, $arrayHelper, $workbookReader, $workbook);
         $this->beConstructedWith('path', [ 'include_worksheets' => ['/tab/']]);

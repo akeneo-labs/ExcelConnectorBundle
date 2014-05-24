@@ -2,10 +2,9 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
-use ArrayIterator;
+use Akeneo\Component\SpreadsheetParser\WorkbookInterface;
+use Akeneo\Component\SpreadsheetParser\WorkbookLoaderInterface;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
@@ -13,12 +12,12 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookLoader $workbookReader,
-        Workbook $workbook
+        WorkbookLoaderInterface $workbookReader,
+        WorkbookInterface $workbook
     ) {
         parent::let($container, $arrayHelper, $workbookReader, $workbook);
         $workbook->createRowIterator(0)->willReturn(
-            new ArrayIterator(
+            new \ArrayIterator(
                 [
                     1 => ['tab1_column1', 'tab1_column2'],
                     2 => ['tab1_value1', 'tab1_value2'],
@@ -28,7 +27,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
             )
         );
         $workbook->createRowIterator(1)->willReturn(
-            new ArrayIterator(
+            new \ArrayIterator(
                 [
                     1 => ['tab2_column1', 'tab2_column2'],
                     2 => ['tab2_value1', 'tab2_value2'],
@@ -37,7 +36,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
             )
         );
         $workbook->createRowIterator(2)->willReturn(
-            new ArrayIterator(
+            new \ArrayIterator(
                 [
                     1 => ['tab3_column1', 'tab3_column2'],
                     2 => ['tab3_value1', 'tab3_value2'],
@@ -46,7 +45,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
             )
         );
         $workbook->createRowIterator(3)->willReturn(
-            new ArrayIterator(
+            new \ArrayIterator(
                 [
                     2 => ['tab4_column1', 'tab4_column2'],
                     4 => ['tab4_value1', 'tab4_value2'],
@@ -64,7 +63,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_read_multiple_tabs(
             ContainerInterface $container,
-            Workbook $workbook
+            WorkbookInterface $workbook
         ) {
         $this->beConstructedWith('path', array());
         $this->setContainer($container);
@@ -90,7 +89,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_filter_non_included_tabs(
         ContainerInterface $container,
-        Workbook $workbook
+        WorkbookInterface $workbook
     ) {
         $this->beConstructedWith('path', array('include_worksheets' => array('/included/')));
         $workbook->getWorksheets()->willReturn(['included1', 'included2', 'tab3']);
@@ -113,7 +112,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_filter_excluded_tabs(
         ContainerInterface $container,
-        Workbook $workbook
+        WorkbookInterface $workbook
     ) {
         $this->beConstructedWith('path', array('exclude_worksheets' => array('/excluded/')));
         $workbook->getWorksheets()->willReturn(['tab1', 'tab2', 'excluded']);
@@ -136,7 +135,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_filter_included_and_excluded_tabs(
         ContainerInterface $container,
-        Workbook $workbook
+        WorkbookInterface $workbook
     ) {
         $workbook->getWorksheets()->willReturn(['excluded', 'included excluded', 'included']);
         $this->beConstructedWith(
@@ -161,7 +160,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_use_a_different_data_range(
         ContainerInterface $container,
-        Workbook $workbook
+        WorkbookInterface $workbook
     ) {
         $workbook->getWorksheets()->willReturn(['tab1', 'tab2', 'tab3', 'included']);
         $this->beConstructedWith(
