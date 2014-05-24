@@ -212,11 +212,11 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * Returns the workbook reader
      *
-     * @return \Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader
+     * @return \Akeneo\Component\SpreadsheetParser\Xlsx\WorkbookLoader
      */
     protected function getWorkbookLoader()
     {
-        return $this->container->get('pim_excel_connector.excel.reader.workbook_loader');
+        return $this->container->get('akeneo_spreadsheet_parser.workbook_loader');
     }
 
         /**

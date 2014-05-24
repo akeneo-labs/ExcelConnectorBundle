@@ -2,9 +2,9 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use Akeneo\Component\SpreadsheetParser\WorkbookInterface;
+use Akeneo\Component\SpreadsheetParser\WorkbookLoaderInterface;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
@@ -12,8 +12,8 @@ class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookLoader $workbookReader,
-        Workbook $workbook
+        WorkbookLoaderInterface $workbookReader,
+        WorkbookInterface $workbook
     ) {
         parent::let($container, $arrayHelper, $workbookReader, $workbook);
         $workbook->getWorksheets()->willReturn(['bogus', 'family1', 'family2']);
