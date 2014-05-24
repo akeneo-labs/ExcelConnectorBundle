@@ -12,8 +12,9 @@ From your application root:
 
     $ php composer.phar require --prefer-dist "akeneo/excel-connector-bundle"
 
-Register the bundle by adding the following line inside the `app/AppKernel.php` file, just before the "return $bundles;" line:
+Register the bundle by adding the following lines inside the `app/AppKernel.php` file, just before the "return $bundles;" line:
 
+    $bundles[] = new Akeneo\Bundle\SpreadsheetParserBundle\SpreadsheetParserBundle();
     $bundles[] = new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle();
 
 
