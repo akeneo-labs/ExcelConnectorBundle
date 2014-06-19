@@ -14,7 +14,7 @@ From your application root:
 
 Register the bundle by adding the following lines inside the `app/AppKernel.php` file, just before the "return $bundles;" line:
 
-    $bundles[] = new Akeneo\Bundle\SpreadsheetParserBundle\SpreadsheetParserBundle();
+    $bundles[] = new Akeneo\Bundle\SpreadsheetParserBundle\AkeneoSpreadsheetParserBundle();
     $bundles[] = new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle();
 
 
