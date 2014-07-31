@@ -1,15 +1,15 @@
 parameters:
-    pim_excel_connector.reader.xls_init.class: Pim\Bundle\ExcelConnectorBundle\Reader\XlsxFileReader
+    pim_excel_connector.reader.xls.class: Pim\Bundle\ExcelConnectorBundle\Reader\XlsxFileReader
 
 services:
-    pim_excel_connector.reader.xls_init:
-        class: %pim_excel_connector.reader.xls_init.class%
+    pim_excel_connector.reader.xls:
+        class: %pim_excel_connector.reader.xls.class%
         abstract: true
         arguments:
             - '@pim_excel_connector.iterator.file.factory'
 
     pim_excel_connector.reader.xls_init.attribute_group:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.class%
             - label_row: 3
@@ -17,7 +17,7 @@ services:
               include_worksheets: [ '/^attribute_groups/' ]
 
     pim_excel_connector.reader.xls_init.channel:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.class%
             - label_row: 3
@@ -25,7 +25,7 @@ services:
               include_worksheets: [ '/^channels/' ]
 
     pim_excel_connector.reader.xls_init.category:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.class%
             - label_row: 3
@@ -34,7 +34,7 @@ services:
             - true
 
     pim_excel_connector.reader.xls_init.option:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.class%
             - label_row: 3
@@ -42,7 +42,7 @@ services:
               include_worksheets: [ '/^options/' ]
 
     pim_excel_connector.reader.xls_init.group_type:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.class%
             - label_row: 3
@@ -50,7 +50,7 @@ services:
               include_worksheets: [ '/^group_types/' ]
 
     pim_excel_connector.reader.xls_init.association_type:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.class%
             - label_row: 3
@@ -58,7 +58,7 @@ services:
               include_worksheets: [ '/^association_types/' ]
 
     pim_excel_connector.reader.xls_init.attribute:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.attribute.class%
             - label_row: 6
@@ -66,7 +66,7 @@ services:
               include_worksheets: [ '/^family/', '/^attributes/' ]
 
     pim_excel_connector.reader.xls_init.attribute_option:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.class%
             - label_row: 3
@@ -74,7 +74,7 @@ services:
               include_worksheets: [ '/^options/' ]
 
     pim_excel_connector.reader.xls_init.family:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
             - %pim_excel_connector.iterator.file.xlsx.family.class%
             - channel_label_row:   5
@@ -88,6 +88,6 @@ services:
               include_worksheets: [ '/^family/' ]
 
     pim_excel_connector.reader.xls.product:
-        parent: pim_excel_connector.reader.xls_init
+        parent: pim_excel_connector.reader.xls
         arguments:
           - %pim_excel_connector.iterator.file.xlsx.class%
