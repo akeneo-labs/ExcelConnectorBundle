@@ -18,7 +18,7 @@ class XlsxFileReader extends FileIteratorReader
      * @Assert\NotBlank(groups={"Execution"})
      * @AssertFile(
      *     groups={"Execution"},
-     *     allowedExtensions={"xlsx"},
+     *     allowedExtensions={"xlsx", "xlsm"},
      *     mimeTypes={
      *         "application/zip",
      *         "application/vnd.ms-excel",
@@ -37,7 +37,7 @@ class XlsxFileReader extends FileIteratorReader
             new Assert\NotBlank(),
             new AssertFile(
                 array(
-                    'allowedExtensions' => array('xlsx'),
+                    'allowedExtensions' => array('xlsx', 'xlsm'),
                     'mimeTypes'         => array(
                         'application/vnd.ms-excel',
                         'application/zip',
