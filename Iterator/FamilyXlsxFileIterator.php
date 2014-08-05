@@ -34,7 +34,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
         $codeColumn = null;
         $useAsLabelColumn = null;
         $channelColumn = null;
-        $rowIterator = $xls->createRowIterator($this->worksheetIterator->key());
+        $rowIterator = $xls->createRowIterator($this->worksheetIterator->key(), $this->options['parser_options']);
 
         foreach ($rowIterator as $index => $row) {
             if ($index == $this->options['code_row']) {

@@ -20,6 +20,11 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     protected $attributeTypes;
 
     /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * @var XlsxFileIterator
      */
     private $innerIterator;
@@ -34,6 +39,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     {
         $options['skip_empty'] = true;
         $this->innerIterator = new XlsxFileIterator($filePath, $options);
+        $this->options = $options;
 
         parent::__construct($this->innerIterator);
     }
@@ -98,12 +104,13 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
     protected function initializeAttributeTypes()
     {
         $xls = $this->getInnerIterator()->getExcelObject();
+        $parserOptions = isset($this->options['parser_options']) ? $this->options['parser_options'] : [] ;
         $this->attributeTypes = array();
         $attributeWorkseet = $xls->getWorksheetIndex('attribute_types');
         if (!$attributeWorkseet) {
             throw new \RuntimeException('No attribute_types worksheet in the excel file');
         }
-        $iterator = $xls->createRowIterator($attributeWorkseet);
+        $iterator = $xls->createRowIterator($attributeWorkseet, $parserOptions);
 
         foreach ($iterator as $key => $row) {
             if ($key >= 2) {

@@ -91,7 +91,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * Returns the associated Excel object
      *
-     * @return Workbook
+     * @return \Akeneo\Component\SpreadsheetParser\SpreadsheetInterface
      */
     public function getExcelObject()
     {
@@ -193,7 +193,8 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     {
         $resolver->setDefaults(
             array(
-                'exclude_worksheets'  => array()
+                'exclude_worksheets' => array(),
+                'parser_options'     => array()
             )
         );
         $resolver->setOptional(array('include_worksheets'));
@@ -216,10 +217,22 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
      */
     protected function getWorkbookLoader()
     {
-        return $this->container->get('akeneo_spreadsheet_parser.workbook_loader');
+        return $this->container->get('akeneo_spreadsheet_parser.spreadsheet_loader');
     }
 
-        /**
+    /**
+     * Returns an iterator for the specified worksheet
+     * 
+     * @param int $worksheetIndex
+     * 
+     * @return \Iterator
+     */
+    protected function createIterator($worksheetIndex)
+    {
+       return $this->getExcelObject()->createRowIterator($worksheetIndex, $this->options['parser_options']);
+    }
+
+    /**
      * Creates the value iterator
      *
      * @return Iterator

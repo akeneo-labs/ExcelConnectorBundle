@@ -41,7 +41,10 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
      */
     protected function createValuesIterator()
     {
-        $iterator = $this->getExcelObject()->createRowIterator($this->worksheetIterator->key());
+        $iterator = $this->getExcelObject()->createRowIterator(
+            $this->worksheetIterator->key(),
+            $this->options['parser_options']
+        );
         $iterator->rewind();
         while ($iterator->valid() && ((int) $this->options['label_row'] > $iterator->key())) {
             $iterator->next();
@@ -64,7 +67,7 @@ class XlsxFileIterator extends AbstractXlsxFileIterator
             array(
                 'skip_empty' => false,
                 'label_row'  => 1,
-                'data_row'   => 2
+                'data_row'   => 2,
             )
         );
     }

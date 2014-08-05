@@ -24,9 +24,9 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "akeneo/pim-community-dev": "dev-maintenance/1.1_backports | 1.2.*",
+        "akeneo/pim-community-dev": "1.2.*",
         "phpoffice/phpexcel": "1.8.0rc1",
-        "akeneo/spreadsheet-parser-bundle": "1.0.*"
+        "akeneo/spreadsheet-parser-bundle": "1.1.*"
     },
     "config": {
         "bin-dir": "bin"
