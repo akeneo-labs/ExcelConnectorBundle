@@ -41,7 +41,7 @@ connector:
                 import:
                     title:     pim_excel_connector.jobs.product.import.title
                     services:
-                        reader:    pim_excel_connector.reader.xls.product
+                        reader:    pim_excel_connector.reader.spreadsheet
                         processor: pim_base_connector.processor.product
                         writer:    pim_base_connector.writer.doctrine.product
                 import_associations:
@@ -103,6 +103,7 @@ connector:
                         reader:    pim_excel_connector.reader.xls_init.family
                         processor: pim_base_connector.processor.family
                         writer:    pim_excel_connector.writer.doctrine.family
+
         fixtures_excel_init_import:
             title: pim_excel_connector.jobs.init_import.import.title
             type: fixtures

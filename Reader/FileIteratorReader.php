@@ -170,6 +170,16 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      */
     protected function createIterator()
     {
-        return $this->iteratorFactory->create($this->iteratorClass, $this->filePath, $this->iteratorOptions);
+        return $this->iteratorFactory->create($this->iteratorClass, $this->filePath, $this->getIteratorOptions());
+    }
+
+    /**
+     * Returns the options for the iterator
+     * 
+     * @return array
+     */
+    protected function getIteratorOptions()
+    {
+        return $this->iteratorOptions;
     }
 }
