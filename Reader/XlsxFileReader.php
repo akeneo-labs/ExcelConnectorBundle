@@ -32,13 +32,7 @@ class XlsxFileReader extends FileIteratorReader
             new Assert\NotBlank(),
             new AssertFile(
                 array(
-                    'allowedExtensions' => array('xlsx', 'xlsm', 'csv'),
-                    'mimeTypes'         => array(
-                        'text/csv',
-                        'application/vnd.ms-excel',
-                        'application/zip',
-                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    )
+                    'allowedExtensions' => array('xlsx', 'xlsm')
                 )
             )
         );
