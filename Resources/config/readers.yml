@@ -9,7 +9,7 @@ services:
             - '@pim_excel_connector.iterator.file.factory'
 
     pim_excel_connector.reader.xls:
-        parent: pim_excel_connector.reader.xls
+        parent: pim_excel_connector.reader.file
         arguments:
           - %pim_excel_connector.iterator.file.xlsx.class%
 
