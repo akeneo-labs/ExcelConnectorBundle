@@ -1,7 +1,7 @@
 parameters:
     pim_excel_connector.reader.xls.class:         Pim\Bundle\ExcelConnectorBundle\Reader\XlsxFileReader
     pim_excel_connector.reader.spreadsheet.class: Pim\Bundle\ExcelConnectorBundle\Reader\SpreadsheetReader
-
+    
 services:
     pim_excel_connector.reader.file:
         class: %pim_excel_connector.reader.xls.class%
@@ -15,9 +15,8 @@ services:
           - %pim_excel_connector.iterator.file.xlsx.class%
 
     pim_excel_connector.reader.spreadsheet:
-        parent: pim_excel_connector.reader.file
-        arguments:
-          - %pim_excel_connector.iterator.file.spreadsheet.class%
+        class: %pim_excel_connector.reader.spreadsheet.class%
+        parent: pim_excel_connector.reader.xls
 
     pim_excel_connector.reader.xls_init.attribute_group:
         parent: pim_excel_connector.reader.xls
