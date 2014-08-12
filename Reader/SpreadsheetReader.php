@@ -3,6 +3,7 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
 
 /**
  * XLSX file reader
@@ -38,18 +39,6 @@ class SpreadsheetReader extends FileIteratorReader
      * @Assert\NotBlank
      */
     protected $escape = '\\';
-
-    /**
-     * @Assert\NotBlank
-     * @Assert\Choice(choices={",", ";", "|"}, message="The value must be one of , or ; or |")
-     */
-    protected $delimiter = ';';
-
-    /**
-     * @Assert\NotBlank
-     * @Assert\Choice(choices={"""", "'"}, message="The value must be one of "" or '")
-     */
-    protected $enclosure = '"';
 
     /**
      * @Assert\NotBlank
@@ -195,5 +184,51 @@ class SpreadsheetReader extends FileIteratorReader
         }
 
         return $options;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigurationFields()
+    {
+        return array(
+            'filePath' => array(
+                'options' => array(
+                    'label' => 'pim_base_connector.import.filePath.label',
+                    'help'  => 'pim_base_connector.import.filePath.help'
+                )
+            ),
+            'uploadAllowed' => array(
+                'type'    => 'switch',
+                'options' => array(
+                    'label' => 'pim_base_connector.import.uploadAllowed.label',
+                    'help'  => 'pim_base_connector.import.uploadAllowed.help'
+                )
+            ),
+            'delimiter' => array(
+                'options' => array(
+                    'label' => 'pim_base_connector.import.delimiter.label',
+                    'help'  => 'pim_base_connector.import.delimiter.help'
+                )
+            ),
+            'enclosure' => array(
+                'options' => array(
+                    'label' => 'pim_base_connector.import.enclosure.label',
+                    'help'  => 'pim_base_connector.import.enclosure.help'
+                )
+            ),
+            'escape' => array(
+                'options' => array(
+                    'label' => 'pim_base_connector.import.escape.label',
+                    'help'  => 'pim_base_connector.import.escape.help'
+                )
+            ),
+            'encoding' => array(
+                'options' => array(
+                    'label' => 'pim_excel_connector.import.encoding.label',
+                    'help'  => 'pim_excel_connector.import.encoding.help'
+                )
+            ),
+        );
     }
 }
