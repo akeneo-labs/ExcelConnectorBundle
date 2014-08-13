@@ -1,8 +1,10 @@
 # CHANGELOG
 
 ## 1.3.X
- - Added SpreadsheetReader, for comatibility with all formats supported by Akeneo Spreadsheet parser
- - Compatibility with version 1.2 of Akeneo PIM
+ - Added SpreadsheetReader, for compatibility with all formats supported by Akeneo Spreadsheet parser
+ - Compatibility with version 1.2 of Akeneo PIM CE
+ - Removed content type constraint on readers
+ - pim_excel_connector.reader.xls_init service was renamed pim_excel_connector.reader.xls
 
 ## 1.2.x
 - Added support for Akeneo Spreadsheet parser
