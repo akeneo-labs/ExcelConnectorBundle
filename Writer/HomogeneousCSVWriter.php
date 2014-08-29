@@ -99,7 +99,6 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
         $this->file = fopen($this->get, 'w');
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -108,6 +107,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
         $this->headers = null;
         fclose($this->file);
     }
+
     /**
      * {@inheritdoc}
      */
