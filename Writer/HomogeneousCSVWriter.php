@@ -176,7 +176,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * Writes a CSV in the line
+     * Writes a CSV line in the file
      * 
      * @param array $csv
      */
