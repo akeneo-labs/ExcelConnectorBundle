@@ -10,7 +10,7 @@ connector:
                     services:
                         reader:    pim_base_connector.reader.doctrine.product
                         processor: pim_excel_connector.processor.normalizer.product_csv
-                        writer:    pim_base_connector.writer.xlsx.product
+                        writer:    pim_excel_connector.writer.xlsx.product
 
         excel_product_family_export:
             title: pim_excel_connector.jobs.xlsx.product_family.export.title
@@ -21,7 +21,7 @@ connector:
                     services:
                         reader:    pim_base_connector.reader.doctrine.product
                         processor: pim_excel_connector.processor.normalizer.product_csv
-                        writer:    pim_base_connector.writer.xlsx.product_family
+                        writer:    pim_excel_connector.writer.xlsx.product_family
 
         excel_2003_xml_product_export:
             title: pim_excel_connector.jobs.excel_2003_xml.product.export.title
