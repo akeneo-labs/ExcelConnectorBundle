@@ -107,7 +107,7 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
         $parserOptions = isset($this->options['parser_options']) ? $this->options['parser_options'] : [] ;
         $this->attributeTypes = array();
         $attributeWorkseet = $xls->getWorksheetIndex('attribute_types');
-        if (!$attributeWorkseet) {
+        if (false === $attributeWorkseet) {
             throw new \RuntimeException('No attribute_types worksheet in the excel file');
         }
         $iterator = $xls->createRowIterator($attributeWorkseet, $parserOptions);
