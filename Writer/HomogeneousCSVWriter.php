@@ -122,7 +122,8 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
      */
     public function initialize()
     {
-        $this->file = fopen($this->get, 'w');
+        $this->writtenFiles[$this->getPath()] = basename($this->getPath());
+        $this->file = fopen($this->getPath(), 'w');
     }
 
     /**
@@ -181,7 +182,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
         }
 
         foreach ($items as $item) {
-            $this->writeItem($row);
+            $this->writeItem($item);
         }
     }
 

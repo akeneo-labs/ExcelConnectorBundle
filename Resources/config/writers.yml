@@ -33,14 +33,14 @@ services:
     pim_excel_connector.writer.homogeneous_csv:
         class: %pim_excel_connector.writer.homogeneous_csv.class%
 
-    pim_base_connector.writer.xlsx.product:
-        parent: pim_base_connector.writer.xlsx
+    pim_excel_connector.writer.xlsx.product:
+        parent: pim_excel_connector.writer.xlsx
         arguments:
             - '%pim_excel_connector.excel.builder.class%'
             - { worksheet_name: PRODUCTS }
 
     pim_excel_connector.writer.xlsx.product_family:
-        parent: pim_base_connector.writer.xlsx
+        parent: pim_excel_connector.writer.xlsx
         arguments:
             - '%pim_excel_connector.excel.builder.product_family.class%'
 
