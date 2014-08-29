@@ -29,14 +29,9 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     protected $enclosure = '"';
 
     /**
-     * @var boolean
-     */
-    protected $withHeader = true;
-
-    /**
      * @var array
      */
-    private $writtenFiles;
+    private $writtenFiles = [];
 
     /**
      * @var array
@@ -89,26 +84,6 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * Set whether or not to print a header row into the csv
-     *
-     * @param boolean $withHeader
-     */
-    public function setWithHeader($withHeader)
-    {
-        $this->withHeader = $withHeader;
-    }
-
-    /**
-     * Get whether or not to print a header row into the csv
-     *
-     * @return boolean
-     */
-    public function isWithHeader()
-    {
-        return $this->withHeader;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getWrittenFiles()
@@ -121,7 +96,6 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
      */
     public function initialize()
     {
-        $this->writtenFiles = [];
         $this->file = fopen($this->get, 'w');
     }
 
@@ -132,7 +106,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     public function flush()
     {
         $this->headers = null;
-        $this->file = fopen($this->get, 'w');
+        fclose($this->file);
     }
     /**
      * {@inheritdoc}
@@ -154,14 +128,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
                             'label' => 'pim_base_connector.export.enclosure.label',
                             'help'  => 'pim_base_connector.export.enclosure.help'
                         )
-                    ),
-                    'withHeader' => array(
-                        'type' => 'switch',
-                        'options' => array(
-                            'label' => 'pim_base_connector.export.withHeader.label',
-                            'help'  => 'pim_base_connector.export.withHeader.help'
-                        )
-                    ),
+                    )
                 )
             );
     }
@@ -175,7 +142,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
             return;
         }
 
-        if (true === $this->withHeader && null === $this->headers) {
+        if (null === $this->headers) {
             $this->headers = array_keys(array_shift($items));
             $this->writeHeaders();
         }
