@@ -215,6 +215,6 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
      */
     protected function writeLine(array $csv)
     {
-        fputcsv($this->file, $row, $this->delimiter, $this->enclosure);
+        fputcsv($this->file, $csv, $this->delimiter, $this->enclosure);
     }
 }
