@@ -4,6 +4,7 @@ namespace Pim\Bundle\ExcelConnectorBundle\Writer;
 
 use Pim\Bundle\BaseConnectorBundle\Writer\File\FileWriter;
 use Pim\Bundle\BaseConnectorBundle\Writer\File\ArchivableWriterInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Writes normalized array in an homogeneous CSV file
