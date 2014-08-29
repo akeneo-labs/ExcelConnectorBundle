@@ -1,6 +1,6 @@
 parameters:
     pim_excel_connector.writer.xlsx.class:            Pim\Bundle\ExcelConnectorBundle\Writer\XlsxWriter
-    pim_excel_connector.writer.homogeneous_csv.class: Pim\Bundle\ExcelConnectorBundle\Writer\XlsxWriter
+    pim_excel_connector.writer.homogeneous_csv.class: Pim\Bundle\ExcelConnectorBundle\Writer\HomogeneousCSVWriter
     pim_excel_connector.writer.excel_2003_xml.class:  Pim\Bundle\ExcelConnectorBundle\Writer\Excel2003XmlWriter
 
 services:
