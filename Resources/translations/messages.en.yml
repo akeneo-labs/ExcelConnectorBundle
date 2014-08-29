@@ -41,3 +41,7 @@ pim_excel_connector:
             product:
                 export:
                     title: Excel 2003 XML Product export
+
+pim_import_export:
+    download_archive:
+        excel_input: Download the imported file

@@ -1,0 +1,47 @@
+pim_excel_connector:
+    jobs:
+        init_import:
+            import:
+                title: Importation initialisation
+        attribute_group:
+            import:
+                title: Importation groupes
+        group_type:
+            import:
+                title: Importation types de groupes
+        association_type:
+            import:
+                title: Importations associations
+        category:
+            import:
+                title: Importation catégories
+        channel:
+            import:
+                title: Importation canaux
+        attribute:
+            import:
+                title: Importation attributs
+        attribute_option:
+            import:
+                title: Importation options d'attributs
+        family:
+            import:
+                title: Importations familles
+        xlsx:
+            product:
+                import:
+                    title: Importation CSV/XLSX produits
+                export:
+                    title: Exportation XLSX produits
+            product_family:
+                export:
+                    title: Exportation XLSX produits (par famille)
+
+        excel_2003_xml:
+            product:
+                export:
+                    title: Exportation produits Excel 2003 
+
+pim_import_export:
+    download_archive:
+        excel_input: Télécharger le fichier importé
