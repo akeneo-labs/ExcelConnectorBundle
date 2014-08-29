@@ -6,7 +6,7 @@ use Pim\Bundle\BaseConnectorBundle\Writer\File\FileWriter;
 use Pim\Bundle\BaseConnectorBundle\Writer\File\ArchivableWriterInterface;
 
 /**
- * Writes normalized array in an homogeneous file
+ * Writes normalized array in an homogeneous CSV file
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2014 Akeneo SAS (http://www.akeneo.com)
@@ -27,6 +27,11 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
      * @var string
      */
     protected $enclosure = '"';
+
+    /**
+     * @var boolean
+     */
+    protected $withHeader = true;
 
     /**
      * @var array
@@ -84,6 +89,26 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
+     * Set whether or not to print a header row into the csv
+     *
+     * @param boolean $withHeader
+     */
+    public function setWithHeader($withHeader)
+    {
+        $this->withHeader = $withHeader;
+    }
+
+    /**
+     * Get whether or not to print a header row into the csv
+     *
+     * @return boolean
+     */
+    public function isWithHeader()
+    {
+        return $this->withHeader;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getWrittenFiles()
@@ -128,6 +153,13 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
                             'label' => 'pim_base_connector.export.enclosure.label',
                             'help'  => 'pim_base_connector.export.enclosure.help'
                         )
+                    ),
+                    'withHeader' => array(
+                        'type' => 'switch',
+                        'options' => array(
+                            'label' => 'pim_base_connector.export.withHeader.label',
+                            'help'  => 'pim_base_connector.export.withHeader.help'
+                        )
                     )
                 )
             );
@@ -153,7 +185,9 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * Writes an item in the file
+     *
+     * @param array $item
      */
     protected function writeItem(array $item)
     {
@@ -168,11 +202,15 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * Writes the headers
+     *
+     * @param array $csv
      */
     protected function writeHeaders()
     {
-        $this->writeLine($this->headers);
+        if ($this->withHeader) {
+            $this->writeLine($this->headers);
+        }
     }
 
     /**
