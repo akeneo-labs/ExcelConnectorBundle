@@ -2,8 +2,8 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
-use Akeneo\Component\SpreadsheetParser\WorkbookInterface;
-use Akeneo\Component\SpreadsheetParser\WorkbookLoaderInterface;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetInterface;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetLoaderInterface;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -12,11 +12,11 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookLoaderInterface $workbookReader,
-        WorkbookInterface $workbook
+        SpreadsheetLoaderInterface $spreadsheetReader,
+        SpreadsheetInterface $spreadsheet
     ) {
-        parent::let($container, $arrayHelper, $workbookReader, $workbook);
-        $workbook->createRowIterator(0)->willReturn(
+        parent::let($container, $arrayHelper, $spreadsheetReader, $spreadsheet);
+        $spreadsheet->createRowIterator(0, [])->willReturn(
             new \ArrayIterator(
                 [
                     1 => ['tab1_column1', 'tab1_column2'],
@@ -26,7 +26,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
                 ]
             )
         );
-        $workbook->createRowIterator(1)->willReturn(
+        $spreadsheet->createRowIterator(1, [])->willReturn(
             new \ArrayIterator(
                 [
                     1 => ['tab2_column1', 'tab2_column2'],
@@ -35,7 +35,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
                 ]
             )
         );
-        $workbook->createRowIterator(2)->willReturn(
+        $spreadsheet->createRowIterator(2, [])->willReturn(
             new \ArrayIterator(
                 [
                     1 => ['tab3_column1', 'tab3_column2'],
@@ -44,7 +44,7 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
                 ]
             )
         );
-        $workbook->createRowIterator(3)->willReturn(
+        $spreadsheet->createRowIterator(3, [])->willReturn(
             new \ArrayIterator(
                 [
                     2 => ['tab4_column1', 'tab4_column2'],
@@ -63,12 +63,12 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_read_multiple_tabs(
             ContainerInterface $container,
-            WorkbookInterface $workbook
+            SpreadsheetInterface $spreadsheet
         ) {
         $this->beConstructedWith('path', array());
         $this->setContainer($container);
 
-        $workbook->getWorksheets()->willReturn(['tab1', 'tab2', 'tab3']);
+        $spreadsheet->getWorksheets()->willReturn(['tab1', 'tab2', 'tab3']);
 
         $this->rewind();
         $values = array(
@@ -89,10 +89,10 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_filter_non_included_tabs(
         ContainerInterface $container,
-        WorkbookInterface $workbook
+        SpreadsheetInterface $spreadsheet
     ) {
         $this->beConstructedWith('path', array('include_worksheets' => array('/included/')));
-        $workbook->getWorksheets()->willReturn(['included1', 'included2', 'tab3']);
+        $spreadsheet->getWorksheets()->willReturn(['included1', 'included2', 'tab3']);
 
         $this->setContainer($container);
         $this->rewind();
@@ -112,10 +112,10 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_filter_excluded_tabs(
         ContainerInterface $container,
-        WorkbookInterface $workbook
+        SpreadsheetInterface $spreadsheet
     ) {
         $this->beConstructedWith('path', array('exclude_worksheets' => array('/excluded/')));
-        $workbook->getWorksheets()->willReturn(['tab1', 'tab2', 'excluded']);
+        $spreadsheet->getWorksheets()->willReturn(['tab1', 'tab2', 'excluded']);
 
         $this->setContainer($container);
         $this->rewind();
@@ -135,9 +135,9 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_filter_included_and_excluded_tabs(
         ContainerInterface $container,
-        WorkbookInterface $workbook
+        SpreadsheetInterface $spreadsheet
     ) {
-        $workbook->getWorksheets()->willReturn(['excluded', 'included excluded', 'included']);
+        $spreadsheet->getWorksheets()->willReturn(['excluded', 'included excluded', 'included']);
         $this->beConstructedWith(
             'path',
             array(
@@ -160,9 +160,9 @@ class XlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 
     public function it_can_use_a_different_data_range(
         ContainerInterface $container,
-        WorkbookInterface $workbook
+        SpreadsheetInterface $spreadsheet
     ) {
-        $workbook->getWorksheets()->willReturn(['tab1', 'tab2', 'tab3', 'included']);
+        $spreadsheet->getWorksheets()->willReturn(['tab1', 'tab2', 'tab3', 'included']);
         $this->beConstructedWith(
             'path',
             array(

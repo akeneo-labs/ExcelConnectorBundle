@@ -2,8 +2,8 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
-use Akeneo\Component\SpreadsheetParser\WorkbookInterface;
-use Akeneo\Component\SpreadsheetParser\WorkbookLoaderInterface;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetInterface;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetLoaderInterface;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -12,12 +12,12 @@ class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookLoaderInterface $workbookReader,
-        WorkbookInterface $workbook
+        SpreadsheetLoaderInterface $spreadsheetReader,
+        SpreadsheetInterface $spreadsheet
     ) {
-        parent::let($container, $arrayHelper, $workbookReader, $workbook);
-        $workbook->getWorksheets()->willReturn(['bogus', 'family1', 'family2']);
-        $workbook->createRowIterator(1)->willReturn(
+        parent::let($container, $arrayHelper, $spreadsheetReader, $spreadsheet);
+        $spreadsheet->getWorksheets()->willReturn(['bogus', 'family1', 'family2']);
+        $spreadsheet->createRowIterator(1, [])->willReturn(
             new \ArrayIterator(
                 [
                     1  => ['', '', '', '', 'locale1', 'locale2'],
@@ -31,7 +31,7 @@ class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
                 ]
             )
         );
-        $workbook->createRowIterator(2)->willReturn(
+        $spreadsheet->createRowIterator(2, [])->willReturn(
             new \ArrayIterator(
                 [
                     1  => ['', '', '', '', 'locale1', 'locale2'],

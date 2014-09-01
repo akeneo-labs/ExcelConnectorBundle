@@ -4,8 +4,8 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\WorkbookLoader;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Spreadsheet;
+use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SpreadsheetLoader;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -21,16 +21,16 @@ class XlsxFileIteratorBehavior extends ObjectBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookLoader $workbookReader,
-        Workbook $workbook
+        SpreadsheetLoader $spreadsheetReader,
+        Spreadsheet $spreadsheet
     ) {
-        $workbookReader->open('path')->willReturn($workbook);
+        $spreadsheetReader->open('path')->willReturn($spreadsheet);
         $arrayHelper->combineArrays(Argument::type('array'), Argument::type('array'))->will(
             function ($args) {
                 return array_combine($args[0], $args[1]);
             }
         );
         $container->get('pim_excel_connector.iterator.array_helper')->willReturn($arrayHelper);
-        $container->get('akeneo_spreadsheet_parser.workbook_loader')->willReturn($workbookReader);
+        $container->get('akeneo_spreadsheet_parser.spreadsheet_loader')->willReturn($spreadsheetReader);
     }
 }

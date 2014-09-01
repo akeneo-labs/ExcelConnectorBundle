@@ -3,8 +3,8 @@
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
-use Akeneo\Component\SpreadsheetParser\WorkbookInterface;
-use Akeneo\Component\SpreadsheetParser\WorkbookLoaderInterface;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetInterface;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetLoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
@@ -12,14 +12,14 @@ class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        WorkbookLoaderInterface $workbookReader,
-        WorkbookInterface $workbook
+        SpreadsheetLoaderInterface $spreadsheetReader,
+        SpreadsheetInterface $spreadsheet
     )  {
-        parent::let($container, $arrayHelper, $workbookReader, $workbook);
+        parent::let($container, $arrayHelper, $spreadsheetReader, $spreadsheet);
         $this->beConstructedWith('path', [ 'include_worksheets' => ['/tab/']]);
-        $workbook->getWorksheets()->willReturn(['tab1', 'tab2', 'attribute_types']);
-        $workbook->getWorksheetIndex('attribute_types')->willReturn(2);
-        $workbook->createRowIterator(0)->willReturn(
+        $spreadsheet->getWorksheets()->willReturn(['tab1', 'tab2', 'attribute_types']);
+        $spreadsheet->getWorksheetIndex('attribute_types')->willReturn(2);
+        $spreadsheet->createRowIterator(0, [])->willReturn(
             new \ArrayIterator(
                 [
                     1 => ['code', 'use_as_label', 'type','key1', 'key2', 'key3'],
@@ -29,7 +29,7 @@ class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
                 ]
             )
         );
-        $workbook->createRowIterator(1)->willReturn(
+        $spreadsheet->createRowIterator(1, [])->willReturn(
             new \ArrayIterator(
                 [
                     1 => ['code', 'use_as_label', 'type', 'key4', 'key1', 'key2'],
@@ -38,7 +38,7 @@ class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
                 ]
             )
         );
-        $workbook->createRowIterator(2)->willReturn(
+        $spreadsheet->createRowIterator(2, [])->willReturn(
             new \ArrayIterator(
                 [
                     1 => ['code', 'title'],

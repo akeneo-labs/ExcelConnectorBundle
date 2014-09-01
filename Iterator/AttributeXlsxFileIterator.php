@@ -118,4 +118,12 @@ class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwar
             }
         }
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __clone()
+    {
+        return clone $this;
+    }
 }
