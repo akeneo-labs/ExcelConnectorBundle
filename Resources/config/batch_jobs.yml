@@ -60,13 +60,13 @@ connector:
                     services:
                         reader:    pim_excel_connector.reader.xls_init.attribute_group
                         processor: pim_base_connector.processor.attribute_group
-                        writer:    pim_excel_connector.writer.doctrine.attribute_group
+                        writer:    pim_base_connector.writer.doctrine
                 group_types:
                     title: pim_excel_connector.jobs.group_type.import.title
                     services:
                         reader:    pim_excel_connector.reader.xls_init.group_type
                         processor: pim_base_connector.processor.group_type
-                        writer:    pim_excel_connector.writer.doctrine.group_type
+                        writer:    pim_base_connector.writer.doctrine
                 association_types:
                     title: pim_excel_connector.jobs.association_type.import.title
                     services:
@@ -84,7 +84,7 @@ connector:
                     services:
                         reader:    pim_excel_connector.reader.xls_init.channel
                         processor: pim_base_connector.processor.channel
-                        writer:    pim_excel_connector.writer.doctrine.channel
+                        writer:    pim_base_connector.writer.doctrine
                 attributes:
                     title: pim_excel_connector.jobs.attribute.import.title
                     services:
@@ -102,7 +102,7 @@ connector:
                     services:
                         reader:    pim_excel_connector.reader.xls_init.family
                         processor: pim_base_connector.processor.family
-                        writer:    pim_excel_connector.writer.doctrine.family
+                        writer:    pim_base_connector.writer.doctrine
 
         fixtures_excel_init_import:
             title: pim_excel_connector.jobs.init_import.import.title
@@ -113,13 +113,13 @@ connector:
                     services:
                         reader:    pim_excel_connector.reader.xls_init.attribute_group
                         processor: pim_base_connector.processor.attribute_group
-                        writer:    pim_excel_connector.writer.doctrine.attribute_group
+                        writer:    pim_base_connector.writer.doctrine
                 group_types:
                     title: pim_excel_connector.jobs.group_type.import.title
                     services:
                         reader:    pim_excel_connector.reader.xls_init.group_type
                         processor: pim_base_connector.processor.group_type
-                        writer:    pim_excel_connector.writer.doctrine.group_type
+                        writer:    pim_base_connector.writer.doctrine
                 association_types:
                     title: pim_excel_connector.jobs.association_type.import.title
                     services:
@@ -137,7 +137,7 @@ connector:
                     services:
                         reader:    pim_excel_connector.reader.xls_init.channel
                         processor: pim_base_connector.processor.channel
-                        writer:    pim_excel_connector.writer.doctrine.channel
+                        writer:    pim_base_connector.writer.doctrine
                 attributes:
                     title: pim_excel_connector.jobs.attribute.import.title
                     services:
@@ -155,4 +155,4 @@ connector:
                     services:
                         reader:    pim_excel_connector.reader.xls_init.family
                         processor: pim_base_connector.processor.family
-                        writer:    pim_excel_connector.writer.doctrine.family
+                        writer:    pim_base_connector.writer.doctrine
