@@ -41,11 +41,6 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     protected $filePath;
 
     /**
-     * @var string
-     */
-    protected $uploadedFilePath;
-
-    /**
      * @var boolean
      *
      * @Assert\Type(type="bool")
@@ -115,7 +110,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      */
     public function setUploadedFile(File $uploadedFile)
     {
-        $this->uploadedFilePath = $uploadedFile->getRealPath();
+        $this->filePath = $uploadedFile->getRealPath();
         $this->reset();
 
         return $this;
@@ -175,21 +170,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      */
     protected function createIterator()
     {
-        return $this->iteratorFactory->create(
-            $this->iteratorClass,
-            $this->getImportedFilePath(),
-            $this->getIteratorOptions()
-        );
-    }
-
-    /**
-     * Returns the path of the uploaded file
-     * 
-     * @return string
-     */
-    protected function getImportedFilePath()
-    {
-        return $this->uploadedFilePath ?: $this->filePath;
+        return $this->iteratorFactory->create($this->iteratorClass, $this->filePath, $this->getIteratorOptions());
     }
 
     /**
@@ -200,13 +181,5 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     protected function getIteratorOptions()
     {
         return $this->iteratorOptions;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function initialize()
-    {
-        parent::initialize();
     }
 }
