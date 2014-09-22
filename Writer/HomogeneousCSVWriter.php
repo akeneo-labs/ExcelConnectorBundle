@@ -177,7 +177,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
         }
 
         if (null === $this->headers) {
-            $this->headers = array_keys(array_shift($items));
+            $this->headers = array_keys(current($items));
             $this->writeHeaders();
         }
 
@@ -193,13 +193,27 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
      */
     protected function writeItem(array $item)
     {
-        $this->writeLine(
-            array_map(
-                function ($key) use ($item) {
-                    return isset($item[$key]) ? $item[$key] : '';
-                },
-                $this->headers
-            )
+        $this->writeLine($this->getItemRow($item));
+
+        if ($this->stepExecution) {
+            $this->stepExecution->incrementSummaryInfo('write');
+        }
+    }
+
+    /**
+     * Returns a CSV row for an item
+     *
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function getItemRow(array $item)
+    {
+        return array_map(
+            function ($key) use ($item) {
+                return isset($item[$key]) ? $item[$key] : '';
+            },
+            $this->headers
         );
     }
 
@@ -217,7 +231,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
 
     /**
      * Writes a CSV line in the file
-     * 
+     *
      * @param array $csv
      */
     protected function writeLine(array $csv)
