@@ -26,6 +26,14 @@ class FileIteratorReaderArchiver extends AbstractFilesystemArchiver
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function supports(JobExecution $jobExecution)
+    {
+        return true;
+    }
+
+    /**
      * Archive files used by job execution (input / output)
      *
      * @param JobExecution $jobExecution

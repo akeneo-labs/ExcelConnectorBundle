@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.3.2
+ - Added compatibility with PIM CE 1.2.6
+
 ## 1.3.1
  - Fixed write count for homogeneous CSV writer
 
