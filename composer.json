@@ -22,11 +22,11 @@
             "url": "https://github.com/akeneo/platform.git"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "akeneo/pim-community-dev": "1.2.*",
-        "phpoffice/phpexcel": "1.8.*@stable",
-        "akeneo/spreadsheet-parser-bundle": "1.1.*@stable"
+        "phpoffice/phpexcel": "1.8.*",
+        "akeneo/spreadsheet-parser-bundle": "1.1.*"
     },
     "config": {
         "bin-dir": "bin"
