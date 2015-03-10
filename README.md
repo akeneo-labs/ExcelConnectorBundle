@@ -6,7 +6,7 @@ This bundle adds support of Excel XSLX files as a source for initialization and 
 
 # Documentation
 
-See [Resources/doc folder](./Resources/doc/Home.md) for more details on how to set your catalog structure
+See [Resources/doc folder](./Resources/doc/Home.rst) for more details on how to set your catalog structure
 using the [init.xslx](./Resources/fixtures/minimal/init.xlsx) file.
 
 # Supported file
@@ -22,4 +22,4 @@ in the UI through Import > Import jobs.
 
 # Dependencies
 
-This bundles uses phpoffice/phpexcel and akeneo/spreadsheet-parser-bundle.
+This bundles uses [phpoffice/phpexcel](https://github.com/PHPOffice/PHPExcel) and [akeneo/spreadsheet-parser-bundle](https://github.com/akeneo/spreadsheet-parser).
