@@ -43,3 +43,9 @@ Define system element (for integrators)
 
 Troubleshooting
 ---------------
+
+The import fails when importing families
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Check that your channels names are correct in both family and channel tabs. You might have a typo in the channels tab
+and not in the family tab. You will have to remove the mispelled channel once you corrected this.
+

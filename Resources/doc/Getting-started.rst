@@ -34,7 +34,7 @@ Create an InstallerBundle
 
 You can create your own InstallerBundle by following the instructions
 from the documentation :
-http://docs.akeneo.com/1.3/cookbook/setup\_data/customize\_installer.html
+http://docs.akeneo.com/1.3/cookbook/setup_data/customize_installer.html
 
 Copy the fixtures
 ~~~~~~~~~~~~~~~~~
@@ -68,7 +68,7 @@ CE edition
 +------------------------+-------------------------------------------------------------------------+
 
 You can still have a look on the `Akeneo PIM minimal
-fixtures <https://github.com/akeneo/pim-community-dev/tree/master/src/Pim/Bundle/InstallerBundle/Resources/fixtures/minimal>`__
+fixtures <https://github.com/akeneo/pim-community-dev/tree/1.3/src/Pim/Bundle/InstallerBundle/Resources/fixtures/minimal>`__
 set to get a full list of the files and their expected format.
 
 EE edition (incl. CE files)
@@ -87,6 +87,8 @@ will have to define them in seperatly
 | **category\_accesses.yml**            | Contains ACL for categories         |
 +---------------------------------------+-------------------------------------+
 | **locale\_accesses.yml**              | Contains ACL for locales            |
++---------------------------------------+-------------------------------------+
+| **jobs\_accesses.yml**                | Contains ACL for jobs               |
 +---------------------------------------+-------------------------------------+
 
 Customize init.xslx !
@@ -111,6 +113,39 @@ details on how to customize the init.xslx file.
 
 Change PIM parameter to use your custom installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You have to override ``pim_installer.fixture_loader.job_loader.config_file``. To do so, add the following lines in the ``parameters.yml``. If this file
+does not exist, create it in ``Acme/Bundle/InstallerBundle/Resources/config/parameters.yml`` and check that the following code is inside 
+``DependencyInjection/AcmeBundleInsallerExtension.php`` :
+
+.. code:: php
+    <?php
+
+    namespace Acme\Bundle\InstallerBundle\DependencyInjection;
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+    use Symfony\Component\DependencyInjection\Loader;
+
+    /**
+     * This is the class that loads and manages your bundle configuration
+     *
+     * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+     */
+    class HermesInstallConnectorExtension extends Extension
+    {
+        /**
+         * {@inheritDoc}
+         */
+        public function load(array $configs, ContainerBuilder $container)
+        {
+            $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+            // ... 
+            $loader->load('parameters.yml');
+        }
+    }
+
 
 .. code:: yml
 

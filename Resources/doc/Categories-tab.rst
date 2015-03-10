@@ -4,7 +4,7 @@ Categories tab
 Category code
 -------------
 
-Attribute code must be only composed of letters, numbers, spaces and
+Category code must be only composed of letters, numbers, spaces and
 underscores. No other character will be accepted.
 
 Parent category code
