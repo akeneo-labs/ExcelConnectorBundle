@@ -14,3 +14,6 @@ Currently, options are:
 - ``Temperature``
 - ``Volume`` 
 - ``Weight``
+- ``Voltage``
+- ``Intensity``
+- ``Resistance``
