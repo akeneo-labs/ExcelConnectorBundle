@@ -1,38 +1,25 @@
-Akeneo Excel Connector Bundle
-=============================
+# Akeneo Excel Connector Bundle
 
-This bundle contains utility classes used to create Excel connectors.
-It also provides a method to initiate the PIM with a single Excel file.
+This bundle adds support of Excel XSLX files as a source for initialization and importation of catalog structure for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
 
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/badges/quality-score.png?s=9732bdac97b997021b1c925f923ecbf405a509d4)](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/)
 
-Installing the bundle
----------------------
-From your application root:
+# Documentation
 
-    $ php composer.phar require --prefer-dist "akeneo/excel-connector-bundle"
+See [Resources/doc folder](./Resources/doc/Home.rst) for more details on how to set your catalog structure
+using the [init.xslx](./Resources/fixtures/minimal/init.xlsx) file.
 
-Register the bundle by adding the following lines inside the `app/AppKernel.php` file, just before the "return $bundles;" line:
+# Supported file
 
-    $bundles[] = new Akeneo\Bundle\SpreadsheetParserBundle\AkeneoSpreadsheetParserBundle();
-    $bundles[] = new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle();
+Input file must follow [init.xslx](./Resources/fixtures/minimal/init.xlsx) structure.
+Note that the file must be opened with Excel. LibreOffice/OpenOffice are not in compliance with validations data 
+that are available in the spreadsheet.
 
+# Importation job
 
-Initializing the PIM with an Excel file
----------------------------------------
+This bundle allows you to import the [init.xslx](./Resources/fixtures/minimal/init.xlsx) file directly
+in the UI through Import > Import jobs.
 
-To initialize the PIM with an Excel file, use the following steps :
+# Dependencies
 
- * Copy the Resources/fixtures/minimal folder inside the Resources/fixtures folder of one of your bundles.
- * Edit the init.xlsx file to your needs
- * Define the following parameter in the DI files of one of your bundles
-
-    parameters:
-        pim_installer.fixture_loader.job_loader.config_file:       'PimExcelConnectorBundle/Resources/config/fixtures_jobs.yml'
-
- * Define the data used by the installer in the parameters.yml file:
-
-    installer_data: 'AcmeDemoBundle:minimal'
-
-The init.xlsx file can also be loaded by using the "Initialisation import" from the "Akeneo Excel Connector"
-
+This bundles uses [phpoffice/phpexcel](https://github.com/PHPOffice/PHPExcel) and [akeneo/spreadsheet-parser-bundle](https://github.com/akeneo/spreadsheet-parser).
