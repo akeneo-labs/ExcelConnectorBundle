@@ -1,4 +1,4 @@
-# Akeneo Excel Connector Bundle
+# Akeneo Excel Initializer Bundle
 
 This bundle adds support of Excel XSLX files as a source for initialization and importation of catalog structure for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
 
