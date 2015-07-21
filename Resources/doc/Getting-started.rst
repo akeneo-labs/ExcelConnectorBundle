@@ -116,7 +116,7 @@ Change PIM parameter to use your custom installation
 
 You have to override ``pim_installer.fixture_loader.job_loader.config_file``. To do so, add the following lines in the ``parameters.yml``. If this file
 does not exist, create it in ``Acme/Bundle/InstallerBundle/Resources/config/parameters.yml`` and check that the following code is inside 
-``DependencyInjection/AcmeBundleInsallerExtension.php`` :
+``DependencyInjection/AcmeBundleInstallerExtension.php`` :
 
 .. code:: php
     <?php
