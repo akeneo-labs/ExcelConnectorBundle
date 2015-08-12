@@ -54,20 +54,20 @@ CE edition
 +------------------------+-------------------------------------------------------------------------+
 | File                   | Description                                                             |
 +========================+=========================================================================+
-| **currencies.yml**     | Contains all curencies used (and the ones that are removed)             |
+| **currencies.yml**     | Contains all currencies used (and the ones that are removed)             |
 +------------------------+-------------------------------------------------------------------------+
 | **init.xslx**          | Contains the whole Catalog description, see init.xslx structure below   |
 +------------------------+-------------------------------------------------------------------------+
-| **locales.yml**        | Define the used locales and their currency                              |
+| **locales.yml**        | Defines the used locales and their currency                              |
 +------------------------+-------------------------------------------------------------------------+
-| **user\_groups.yml**   | Define all user groups (code + label)                                   |
+| **user\_groups.yml**   | Defines all user groups (code + label)                                   |
 +------------------------+-------------------------------------------------------------------------+
-| **user\_roles.yml**    | Define all user roles (code + label)                                    |
+| **user\_roles.yml**    | Defines all user roles (code + label)                                    |
 +------------------------+-------------------------------------------------------------------------+
-| **users.yml**          | Define users list                                                       |
+| **users.yml**          | Defines users list                                                       |
 +------------------------+-------------------------------------------------------------------------+
 
-You can still have a look on the `Akeneo PIM minimal
+You can still have a look at the `Akeneo PIM minimal
 fixtures <https://github.com/akeneo/pim-community-dev/tree/1.3/src/Pim/Bundle/InstallerBundle/Resources/fixtures/minimal>`__
 set to get a full list of the files and their expected format.
 
@@ -77,7 +77,7 @@ EE edition (incl. CE files)
 EE edition adds support of ACL, please refer to the minimal fixtures set
 located in the InstallerBundle to see the structure and the content of
 the files. Note that you cannot define ACL in the init.xslx file and
-will have to define them in seperatly
+will have to define them separately.
 
 +---------------------------------------+-------------------------------------+
 | File                                  | Description                         |
@@ -94,15 +94,15 @@ will have to define them in seperatly
 Customize init.xslx !
 ~~~~~~~~~~~~~~~~~~~~~
 
-Edit the init.xlsx file to your needs following the instructions inside
+Edit the init.xlsx file to match your needs following the instructions inside
 the file itself. The file is composed of various tabs that allow you to
-set your catalog structures : 
+set your catalog structure:
 
-- channels 
+- channels
 - categories
-- group types 
+- group types
 - association types
-- attributes 
+- attributes
 - attribute groups
 - attribute options
 - families (as many tabs as required)
@@ -115,7 +115,7 @@ Change PIM parameter to use your custom installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You have to override ``pim_installer.fixture_loader.job_loader.config_file``. To do so, add the following lines in the ``parameters.yml``. If this file
-does not exist, create it in ``Acme/Bundle/InstallerBundle/Resources/config/parameters.yml`` and check that the following code is inside 
+does not exist, create it in ``Acme/Bundle/InstallerBundle/Resources/config/parameters.yml`` and make sure that the file is loaded inside
 ``DependencyInjection/AcmeBundleInstallerExtension.php`` :
 
 .. code:: php
@@ -141,7 +141,7 @@ does not exist, create it in ``Acme/Bundle/InstallerBundle/Resources/config/para
         public function load(array $configs, ContainerBuilder $container)
         {
             $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-            // ... 
+            // ...
             $loader->load('parameters.yml');
         }
     }

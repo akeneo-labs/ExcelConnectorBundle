@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Builder;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Excel builder for single tabbed files
@@ -24,7 +24,7 @@ class ExcelBuilder extends AbstractExcelBuilder
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
         $resolver->setDefaults(['worksheet_name' => 'EXPORT']);

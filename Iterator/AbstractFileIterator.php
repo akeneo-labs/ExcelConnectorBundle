@@ -3,7 +3,6 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Abstract file iterator
@@ -41,9 +40,9 @@ abstract class AbstractFileIterator implements \Iterator
     /**
      * Sets the default options
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
     }
 }

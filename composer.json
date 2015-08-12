@@ -23,7 +23,11 @@
         }
     ],
     "require": {
-        "akeneo/pim-community-dev": "1.3.*",
+        "akeneo/pim-community-standard": "1.4.*@dev",
+        "akeneo/pim-community-dev": "1.4.0-BETA1",
+        "akeneo/batch-bundle": "0.4.x-dev",
+        "akeneo/measure-bundle": "0.4.x-dev",
+        "oro/platform": "dev-pim-1.4",
         "doctrine/migrations": "1.0.*@dev",
         "phpoffice/phpexcel": "1.8.*",
         "akeneo/spreadsheet-parser-bundle": "1.1.*"
@@ -37,7 +41,7 @@
     "target-dir": "Pim/Bundle/ExcelConnectorBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.4.x-dev"
+            "dev-master": "1.5.x-dev"
         }
     }
 }

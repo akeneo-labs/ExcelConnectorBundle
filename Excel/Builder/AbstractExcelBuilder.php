@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Builder;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -168,9 +167,9 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     /**
      * Sets the default options
      *
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
