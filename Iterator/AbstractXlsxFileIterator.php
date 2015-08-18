@@ -5,7 +5,7 @@ namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * XLSX File iterator
@@ -189,7 +189,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
@@ -222,9 +222,9 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
 
     /**
      * Returns an iterator for the specified worksheet
-     * 
+     *
      * @param int $worksheetIndex
-     * 
+     *
      * @return \Iterator
      */
     protected function createIterator($worksheetIndex)

@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Channel Xls File Iterator
@@ -81,7 +81,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
         $resolver->setRequired(
