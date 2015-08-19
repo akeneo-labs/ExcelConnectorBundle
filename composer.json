@@ -37,6 +37,7 @@
     "autoload": {
         "psr-0": { "Pim\\Bundle\\ExcelConnectorBundle\\": "" }
     },
+    "minimum-stability": "dev",
     "target-dir": "Pim/Bundle/ExcelConnectorBundle",
     "extra": {
         "branch-alias": {
