@@ -24,10 +24,6 @@
     ],
     "require": {
         "akeneo/pim-community-dev": "1.4.*",
-        "akeneo/batch-bundle": "0.4.x-dev",
-        "akeneo/measure-bundle": "0.4.x-dev",
-        "oro/platform": "dev-pim-1.4",
-        "doctrine/migrations": "1.0.*@dev",
         "phpoffice/phpexcel": "1.8.*",
         "akeneo/spreadsheet-parser-bundle": "1.1.*"
     },
