@@ -10,7 +10,7 @@ From your application root:
 
     $ php composer.phar require --prefer-dist akeneo-labs/excel-connector-bundle:1.5.*
 
-If you want to use the development version (only for test purpose, do not use it in production), replace 1.0 5.* by dev-master in the previous command.
+If you want to use the development version (only for test purpose, do not use it in production), replace "1.5.*" by "dev-master" in the previous command.
 
 Register the bundle by adding the following lines:
 
