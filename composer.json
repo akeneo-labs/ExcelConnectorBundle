@@ -1,5 +1,5 @@
 {
-    "name": "akeneo/excel-connector-bundle",
+    "name": "akeneo-labs/excel-connector-bundle",
     "type": "symfony-bundle",
     "description": "Akeneo PIM Excel connector bundle",
     "keywords": ["pim", "akeneo", "ecommerce", "e-commerce", "excel", "connector"],

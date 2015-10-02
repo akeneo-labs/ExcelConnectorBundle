@@ -8,7 +8,9 @@ From your application root:
 
 .. code:: console
 
-    $ php composer.phar require --prefer-dist "akeneo/excel-connector-bundle"
+    $ php composer.phar require --prefer-dist akeneo-labs/excel-connector-bundle:1.5.*
+
+If you want to use the development version (only for test purpose, do not use it in production), replace 1.0 5.* by dev-master in the previous command.
 
 Register the bundle by adding the following lines:
 
@@ -34,7 +36,7 @@ Create an InstallerBundle
 
 You can create your own InstallerBundle by following the instructions
 from the documentation :
-http://docs.akeneo.com/1.3/cookbook/setup_data/customize_installer.html
+http://docs.akeneo.com/1.4/cookbook/setup_data/customize_installer.html
 
 Copy the fixtures
 ~~~~~~~~~~~~~~~~~
@@ -68,7 +70,7 @@ CE edition
 +------------------------+-------------------------------------------------------------------------+
 
 You can still have a look at the `Akeneo PIM minimal
-fixtures <https://github.com/akeneo/pim-community-dev/tree/1.3/src/Pim/Bundle/InstallerBundle/Resources/fixtures/minimal>`__
+fixtures <https://github.com/akeneo/pim-community-dev/tree/1.4/src/Pim/Bundle/InstallerBundle/Resources/fixtures/minimal>`__
 set to get a full list of the files and their expected format.
 
 EE edition (incl. CE files)
