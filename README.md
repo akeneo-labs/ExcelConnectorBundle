@@ -22,4 +22,4 @@ in the UI through Import > Import jobs.
 
 # Dependencies
 
-This bundles uses [phpoffice/phpexcel](https://github.com/PHPOffice/PHPExcel) and [akeneo/spreadsheet-parser-bundle](https://github.com/akeneo/spreadsheet-parser).
+This bundles uses [phpoffice/phpexcel](https://github.com/PHPOffice/PHPExcel) and [akeneo-labs/spreadsheet-parser-bundle](https://github.com/akeneo-labs/spreadsheet-parser).
