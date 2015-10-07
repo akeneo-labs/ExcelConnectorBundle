@@ -4,7 +4,7 @@ namespace Pim\Bundle\ExcelConnectorBundle\Archiver;
 
 use Akeneo\Bundle\BatchBundle\Entity\JobExecution;
 use Akeneo\Bundle\BatchBundle\Step\ItemStep;
-use Gaufrette\Filesystem;
+use League\Flysystem\Filesystem;
 use Pim\Bundle\BaseConnectorBundle\Archiver\AbstractFilesystemArchiver;
 use Pim\Bundle\ExcelConnectorBundle\Reader\FileIteratorReader;
 
@@ -49,11 +49,11 @@ class FileIteratorReaderArchiver extends AbstractFilesystemArchiver
             if ($reader instanceof FileIteratorReader) {
                 $key = strtr(
                     $this->getRelativeArchivePath($jobExecution),
-                    array(
+                    [
                         '%filename%' => basename($reader->getFilePath()),
-                    )
+                    ]
                 );
-                $this->filesystem->write($key, file_get_contents($reader->getFilePath()), true);
+                $this->filesystem->put($key, file_get_contents($reader->getFilePath()));
             }
         }
     }
