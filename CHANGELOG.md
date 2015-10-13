@@ -2,6 +2,9 @@
 
 ## 1.5.0 (2015-10-xx)
  - Migrate bundle to AkeneoLabs
+ 
+## 1.4.1
+ - Allow init import and product import having numeric identifier
 
 ## 1.4.0 (2015-03-17)
  - Made compatible with PIM CE 1.3.x

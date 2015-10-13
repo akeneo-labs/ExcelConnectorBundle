@@ -69,7 +69,7 @@ class SpreadsheetReader extends FileIteratorReader
      *
      * @param string $delimiter
      *
-     * @return CsvReader
+     * @return SpreadsheetReader
      */
     public function setDelimiter($delimiter)
     {
@@ -93,7 +93,7 @@ class SpreadsheetReader extends FileIteratorReader
      *
      * @param string $enclosure
      *
-     * @return CsvReader
+     * @return SpreadsheetReader
      */
     public function setEnclosure($enclosure)
     {
@@ -117,7 +117,7 @@ class SpreadsheetReader extends FileIteratorReader
      *
      * @param string $escape
      *
-     * @return CsvReader
+     * @return SpreadsheetReader
      */
     public function setEscape($escape)
     {
@@ -128,7 +128,7 @@ class SpreadsheetReader extends FileIteratorReader
 
     /**
      * Get escape
-     * 
+     *
      * @return string $escape
      */
     public function getEscape()
@@ -138,7 +138,7 @@ class SpreadsheetReader extends FileIteratorReader
 
     /**
      * Returns the encoding
-     * 
+     *
      * @return string
      */
     public function getEncoding()
@@ -148,42 +148,16 @@ class SpreadsheetReader extends FileIteratorReader
 
     /**
      * Sets the encoding
-     * 
+     *
      * @param string $encoding
+     *
+     * @return SpreadsheetReader
      */
     public function setEncoding($encoding)
     {
         $this->encoding = $encoding;
 
         return $this;
-    }
-
-    /**
-     * Returns the extension of the read file
-     * 
-     * @return string
-     */
-    protected function getExtension()
-    {
-        return pathinfo($this->getFilePath(), PATHINFO_EXTENSION);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getIteratorOptions()
-    {
-        $options = parent::getIteratorOptions();
-        if ('csv' === $this->getExtension()) {
-            $options['parser_options'] = [
-                'delimiter' => $this->delimiter,
-                'escape'    => $this->escape,
-                'enclosure' => $this->enclosure,
-                'encoding'  => $this->encoding
-            ];
-        }
-
-        return $options;
     }
 
     /**
@@ -230,5 +204,47 @@ class SpreadsheetReader extends FileIteratorReader
                 )
             ),
         );
+    }
+
+    /**
+     * Returns the extension of the read file
+     *
+     * @return string
+     */
+    protected function getExtension()
+    {
+        return pathinfo($this->getFilePath(), PATHINFO_EXTENSION);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getIteratorOptions()
+    {
+        $options = parent::getIteratorOptions();
+        if ('csv' === $this->getExtension()) {
+            $options['parser_options'] = [
+                'delimiter' => $this->delimiter,
+                'escape'    => $this->escape,
+                'enclosure' => $this->enclosure,
+                'encoding'  => $this->encoding
+            ];
+        }
+
+        return $options;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function convertNumericIdentifierToString(array $item)
+    {
+        $item = parent::convertNumericIdentifierToString($item);
+
+        if (isset($item['sku']) && is_int($item['sku'])) {
+            $item['sku'] = (string) $item['sku'];
+        }
+
+        return $item;
     }
 }

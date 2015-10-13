@@ -54,6 +54,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      * @param FileIteratorFactory $iteratorFactory
      * @param string              $iteratorClass
      * @param array               $iteratorOptions
+     * @param bool                $batchMode
      */
     public function __construct(
         FileIteratorFactory $iteratorFactory,
@@ -174,12 +175,24 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     }
 
     /**
-     * Returns the options for the iterator
-     * 
+     * Returns options of the iterator
+     *
      * @return array
      */
     protected function getIteratorOptions()
     {
         return $this->iteratorOptions;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function convertNumericIdentifierToString(array $item)
+    {
+        if (isset($item['code']) && is_int($item['code'])) {
+            $item['code'] = (string) $item['code'];
+        }
+
+        return $item;
     }
 }

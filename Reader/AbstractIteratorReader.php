@@ -63,7 +63,28 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
         }
         $this->iterator->next();
 
-        return $current;
+        return $this->convertNumericIdentifierToString($current);
+    }
+
+    /**
+     * Resets the state of the reader
+     */
+    public function reset()
+    {
+        $this->iterator = null;
+    }
+
+    /**
+     * Converts an entity numerical identifier ('sku' for products,
+     * 'code' for other entities) into string to allow import.
+     *
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function convertNumericIdentifierToString(array $item)
+    {
+        return $item;
     }
 
     /**
@@ -76,14 +97,6 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
             $this->iterator = new \ArrayIterator(array(iterator_to_array($this->iterator)));
         }
         $this->iterator->rewind();
-    }
-
-    /**
-     * Resets the state of the reader
-     */
-    public function reset()
-    {
-        $this->iterator = null;
     }
 
     /**
