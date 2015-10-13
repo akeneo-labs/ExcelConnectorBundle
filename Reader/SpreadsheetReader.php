@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
+use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
 
@@ -14,6 +15,12 @@ use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
  */
 class SpreadsheetReader extends FileIteratorReader
 {
+    /** @var AttributeRepositoryInterface */
+    protected $attributeRepository;
+
+    /** @var string */
+    protected $identifierCode;
+
     /**
      * @Assert\NotBlank(groups={"Execution"})
      * @AssertFile(
@@ -45,6 +52,13 @@ class SpreadsheetReader extends FileIteratorReader
      */
     protected $encoding = 'UTF8';
 
+    /**
+     * @param AttributeRepositoryInterface $attributeRepository
+     */
+    public function setAttributeRepository(AttributeRepositoryInterface $attributeRepository)
+    {
+        $this->attributeRepository = $attributeRepository;
+    }
 
     /**
      * Get uploaded file constraints
@@ -241,10 +255,22 @@ class SpreadsheetReader extends FileIteratorReader
     {
         $item = parent::convertNumericIdentifierToString($item);
 
-        if (isset($item['sku']) && is_int($item['sku'])) {
-            $item['sku'] = (string) $item['sku'];
+        if (isset($item[$this->getIdentifierCode()]) && is_int($item[$this->getIdentifierCode()])) {
+            $item[$this->getIdentifierCode()] = (string) $item[$this->getIdentifierCode()];
         }
 
         return $item;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIdentifierCode()
+    {
+        if (null === $this->identifierCode) {
+            $this->identifierCode = $this->attributeRepository->getIdentifierCode();
+        }
+
+        return $this->identifierCode;
     }
 }
