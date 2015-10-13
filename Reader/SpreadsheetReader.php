@@ -2,6 +2,7 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
+use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
 
@@ -14,6 +15,12 @@ use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
  */
 class SpreadsheetReader extends FileIteratorReader
 {
+    /** @var AttributeRepositoryInterface */
+    protected $attributeRepository;
+
+    /** @var string */
+    protected $identifierCode;
+
     /**
      * @Assert\NotBlank(groups={"Execution"})
      * @AssertFile(
@@ -45,6 +52,13 @@ class SpreadsheetReader extends FileIteratorReader
      */
     protected $encoding = 'UTF8';
 
+    /**
+     * @param AttributeRepositoryInterface $attributeRepository
+     */
+    public function setAttributeRepository(AttributeRepositoryInterface $attributeRepository)
+    {
+        $this->attributeRepository = $attributeRepository;
+    }
 
     /**
      * Get uploaded file constraints
@@ -69,7 +83,7 @@ class SpreadsheetReader extends FileIteratorReader
      *
      * @param string $delimiter
      *
-     * @return CsvReader
+     * @return SpreadsheetReader
      */
     public function setDelimiter($delimiter)
     {
@@ -93,7 +107,7 @@ class SpreadsheetReader extends FileIteratorReader
      *
      * @param string $enclosure
      *
-     * @return CsvReader
+     * @return SpreadsheetReader
      */
     public function setEnclosure($enclosure)
     {
@@ -117,7 +131,7 @@ class SpreadsheetReader extends FileIteratorReader
      *
      * @param string $escape
      *
-     * @return CsvReader
+     * @return SpreadsheetReader
      */
     public function setEscape($escape)
     {
@@ -128,7 +142,7 @@ class SpreadsheetReader extends FileIteratorReader
 
     /**
      * Get escape
-     * 
+     *
      * @return string $escape
      */
     public function getEscape()
@@ -138,7 +152,7 @@ class SpreadsheetReader extends FileIteratorReader
 
     /**
      * Returns the encoding
-     * 
+     *
      * @return string
      */
     public function getEncoding()
@@ -148,42 +162,16 @@ class SpreadsheetReader extends FileIteratorReader
 
     /**
      * Sets the encoding
-     * 
+     *
      * @param string $encoding
+     *
+     * @return SpreadsheetReader
      */
     public function setEncoding($encoding)
     {
         $this->encoding = $encoding;
 
         return $this;
-    }
-
-    /**
-     * Returns the extension of the read file
-     * 
-     * @return string
-     */
-    protected function getExtension()
-    {
-        return pathinfo($this->getFilePath(), PATHINFO_EXTENSION);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getIteratorOptions()
-    {
-        $options = parent::getIteratorOptions();
-        if ('csv' === $this->getExtension()) {
-            $options['parser_options'] = [
-                'delimiter' => $this->delimiter,
-                'escape'    => $this->escape,
-                'enclosure' => $this->enclosure,
-                'encoding'  => $this->encoding
-            ];
-        }
-
-        return $options;
     }
 
     /**
@@ -230,5 +218,59 @@ class SpreadsheetReader extends FileIteratorReader
                 )
             ),
         );
+    }
+
+    /**
+     * Returns the extension of the read file
+     *
+     * @return string
+     */
+    protected function getExtension()
+    {
+        return pathinfo($this->getFilePath(), PATHINFO_EXTENSION);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getIteratorOptions()
+    {
+        $options = parent::getIteratorOptions();
+        if ('csv' === $this->getExtension()) {
+            $options['parser_options'] = [
+                'delimiter' => $this->delimiter,
+                'escape'    => $this->escape,
+                'enclosure' => $this->enclosure,
+                'encoding'  => $this->encoding
+            ];
+        }
+
+        return $options;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function convertNumericIdentifierToString(array $item)
+    {
+        $item = parent::convertNumericIdentifierToString($item);
+
+        if (isset($item[$this->getIdentifierCode()]) && is_int($item[$this->getIdentifierCode()])) {
+            $item[$this->getIdentifierCode()] = (string) $item[$this->getIdentifierCode()];
+        }
+
+        return $item;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIdentifierCode()
+    {
+        if (null === $this->identifierCode) {
+            $this->identifierCode = $this->attributeRepository->getIdentifierCode();
+        }
+
+        return $this->identifierCode;
     }
 }
