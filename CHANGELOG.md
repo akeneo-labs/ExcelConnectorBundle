@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.4.1
+ - Allow init import and product import having numeric identifier
+
 ## 1.4.0
  - Made compatible with PIM CE 1.3.x
  - Updated the init file from fixtures:
