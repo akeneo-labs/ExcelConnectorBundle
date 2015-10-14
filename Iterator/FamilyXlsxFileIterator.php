@@ -62,6 +62,9 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
             }
             if ($index >= (int) $this->options['attribute_data_row']) {
                 $code = $row[$codeColumn];
+                if ($code === '') {
+                    continue;
+                }
                 $data['attributes'][] = $code;
                 if (isset($row[$useAsLabelColumn]) && ('1' === trim($row[$useAsLabelColumn]))) {
                     $data['attribute_as_label'] = $code;
