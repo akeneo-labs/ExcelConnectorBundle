@@ -17,7 +17,6 @@ malformed file.
 Getting started
 ---------------
 
--  `Installing the Bundle <Getting-started.rst#installing-the-bundle>`__
 -  `Initializing the PIM with a XLSX
    file <Getting-started.rst#initializing-the-pim-with-a-xlsx-file>`__
 
