@@ -1,33 +1,6 @@
 Getting started
 ===============
 
-Installing the bundle
----------------------
-
-From your application root:
-
-.. code:: console
-
-    $ php composer.phar require --prefer-dist akeneo-labs/excel-connector-bundle:1.5.*
-
-If you want to use the development version (only for test purpose, do not use it in production), replace "1.5.*" by "dev-master" in the previous command.
-
-Register the bundle by adding the following lines:
-
-.. code:: php
-
-    <?php /* app/AppKernel.php */
-
-        // ...
-        protected function getPimDependenciesBundles()
-        {
-            return [
-                // ...
-                new Akeneo\Bundle\SpreadsheetParserBundle\AkeneoSpreadsheetParserBundle(),
-                new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle()
-            ];
-        }
-
 Initializing the PIM with a XLSX file
 -------------------------------------
 
