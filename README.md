@@ -6,7 +6,7 @@ This bundle adds support of Excel XSLX files as a source for initialization and 
 
 ## Requirements
 
-| CustomEntityBundle   | Akeneo PIM Community Edition |
+| ExcelConnectorBundle | Akeneo PIM Community Edition |
 |:--------------------:|:----------------------------:|
 | v1.5.*               | v1.4.*                       |
 | v1.4.*               | v1.3.*                       |
