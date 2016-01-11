@@ -67,7 +67,7 @@ will have to define them separately.
 +---------------------------------------+-------------------------------------+
 | **asset\_categories.csv**             | Contains assets master category     |
 +---------------------------------------+-------------------------------------+
-| **asset_category_accesses.yml**       | Contains ACL for assets categories  |
+| **asset\_category\_accesses.yml**     | Contains ACL for assets categories  |
 +---------------------------------------+-------------------------------------+
 
 Customize init.xslx !
