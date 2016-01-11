@@ -65,6 +65,10 @@ will have to define them separately.
 +---------------------------------------+-------------------------------------+
 | **jobs\_accesses.yml**                | Contains ACL for jobs               |
 +---------------------------------------+-------------------------------------+
+| **asset\_categories.csv**             | Contains assets master category     |
++---------------------------------------+-------------------------------------+
+| **asset_category_accesses.yml**       | Contains ACL for assets categories  |
++---------------------------------------+-------------------------------------+
 
 Customize init.xslx !
 ~~~~~~~~~~~~~~~~~~~~~
