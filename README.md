@@ -1,6 +1,6 @@
 # Akeneo Excel Connector Bundle
 
-This bundle adds support of Excel XSLX files as a source for initialization and importation of catalog structure for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
+This bundle adds support of Excel XSLX files as a source for initialization catalog structure and import/export of products for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
 
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/badges/quality-score.png?s=9732bdac97b997021b1c925f923ecbf405a509d4)](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/)
 
@@ -55,8 +55,8 @@ that are available in the spreadsheet.
 
 ## Importation job
 
-This bundle allows you to import the [init.xslx](./Resources/fixtures/minimal/init.xlsx) file directly
-in the UI through Import > Import jobs.
+This bundle allows you to import products file directly in the UI through Import > Import jobs.
+Note the init.xlsx import is available in this UI. It should not be used as import (only as initialization file).
 
 ## Dependencies
 
