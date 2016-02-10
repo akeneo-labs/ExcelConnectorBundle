@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
-use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
+use Pim\Component\Catalog\Repository\AttributeRepositoryInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
 

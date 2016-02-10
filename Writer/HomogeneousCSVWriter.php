@@ -3,7 +3,7 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Writer;
 
 use Pim\Bundle\BaseConnectorBundle\Writer\File\FileWriter;
-use Pim\Bundle\BaseConnectorBundle\Writer\File\ArchivableWriterInterface;
+use Pim\Component\Connector\Writer\File\ArchivableWriterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

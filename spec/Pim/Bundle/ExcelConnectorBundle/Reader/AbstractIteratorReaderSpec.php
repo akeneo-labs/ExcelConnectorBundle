@@ -2,7 +2,7 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Reader;
 
-use Akeneo\Bundle\BatchBundle\Entity\StepExecution;
+use Akeneo\Component\Batch\Model\StepExecution;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Reader\AbstractIteratorReader;
 

@@ -3,29 +3,34 @@
     "type": "symfony-bundle",
     "description": "Akeneo PIM Excel connector bundle",
     "keywords": ["pim", "akeneo", "ecommerce", "e-commerce", "excel", "connector"],
-    "homepage": "http://akeneo.com",
+    "homepage": "http://www.akeneo.com",
     "license": "OSL-3.0",
     "authors": [
         {
-            "name": "Antoine Guigan",
-            "email": "antoine@akeneo.com",
-            "homepage": "http://akeneo.com"
+            "name": "Akeneo",
+            "homepage": "http://www.akeneo.com"
         }
     ],
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/akeneo/pim-community-dev.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/akeneo/platform.git"
+            "url": "https://github.com/akeneo/pim-community-dev.git",
+            "branch": "master"
         }
     ],
     "require": {
-        "akeneo/pim-community-dev": "1.4.*",
+
+        "akeneo/pim-community-dev": "1.5.x-dev",
+        "doctrine/migrations": "1.0.0-alpha3@alpha",
         "phpoffice/phpexcel": "1.8.*",
         "akeneo-labs/spreadsheet-parser-bundle": "1.1.*"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "2.1.*",
+        "squizlabs/php_codesniffer": "2.3.*",
+        "phpmd/phpmd": "2.3.*",
+        "fabpot/php-cs-fixer": "@stable",
+        "henrikbjorn/phpspec-code-coverage": "1.0.*"
     },
     "config": {
         "bin-dir": "bin"
@@ -33,11 +38,11 @@
     "autoload": {
         "psr-0": { "Pim\\Bundle\\ExcelConnectorBundle\\": "" }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "target-dir": "Pim/Bundle/ExcelConnectorBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.5.x-dev"
+            "dev-master": "1.6.x-dev"
         }
     }
 }
