@@ -1,4 +1,4 @@
-# Akeneo Excel Connector Bundle
+# ExcelConnectorBundle
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/akeneo-labs/ExcelConnectorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/akeneo-labs/ExcelConnectorBundle/?branch=master)
 [![Build Status](https://travis-ci.org/akeneo-labs/ExcelConnectorBundle.svg?branch=master)](https://travis-ci.org/akeneo-labs/ExcelConnectorBundle)
