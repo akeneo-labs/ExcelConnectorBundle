@@ -21,7 +21,7 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
 
     function it_iterates_through_values()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $this->beConstructedWith($values);
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
@@ -31,7 +31,7 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
 
     function it_sends_all_values_in_batch_mode()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $this->beConstructedWith($values, true);
         $this->read()->shouldReturn($values);
         $this->read()->shouldReturn(null);
@@ -39,7 +39,7 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
 
     function it_increments_the_summary_info(StepExecution $stepExecution)
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $this->beConstructedWith($values);
         $this->setStepExecution($stepExecution);
         $stepExecution->incrementSummaryInfo('read')->shouldBeCalledTimes(count($values));
@@ -50,7 +50,7 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
 
     function it_can_be_resetted()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $this->beConstructedWith($values);
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
@@ -71,8 +71,9 @@ class ArrayIteratorReader extends AbstractIteratorReader
 
     public function __construct(array $values, $batchMode = false)
     {
-        $this->values = $values;
         parent::__construct($batchMode);
+
+        $this->values = $values;
     }
 
     protected function createIterator()

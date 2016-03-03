@@ -21,7 +21,7 @@ class FileIteratorReaderSpec extends ObjectBehavior
 
     function it_calls_the_iterator_factory(FileIteratorFactory $iteratorFactory)
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $iteratorFactory->create('iterator_class', 'file_path', array('iterator_options'))
             ->willReturn(new ArrayIterator($values));
 
