@@ -2,7 +2,6 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Writer;
 
-use Akeneo\Component\Batch\Model\StepExecution;
 use Pim\Bundle\BaseConnectorBundle\Writer\File\FileWriter;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
