@@ -3,7 +3,7 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Writer;
 
 use Pim\Bundle\BaseConnectorBundle\Writer\File\FileWriter;
-use Pim\Bundle\BaseConnectorBundle\Writer\File\ArchivableWriterInterface;
+use Pim\Component\Connector\Writer\File\ArchivableWriterInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -29,28 +29,20 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
      */
     protected $enclosure = '"';
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     protected $withHeader = true;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $writtenFiles = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $headers;
 
-    /**
-     * @var resource
-     */
+    /** @var resource */
     private $file;
 
     /**
-     * Set the csv delimiter character
+     * Sets the csv delimiter character
      *
      * @param string $delimiter
      */
@@ -60,7 +52,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * Get the csv delimiter character
+     * Gets the csv delimiter character
      *
      * @return string
      */
@@ -70,7 +62,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * Set the csv enclosure character
+     * Sets the csv enclosure character
      *
      * @param string $enclosure
      */
@@ -80,7 +72,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * Get the csv enclosure character
+     * Gets the csv enclosure character
      *
      * @return string
      */
@@ -90,7 +82,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * Set whether or not to print a header row into the csv
+     * Sets whether or not to print a header row into the csv
      *
      * @param boolean $withHeader
      */
@@ -100,7 +92,7 @@ class HomogeneousCSVWriter extends FileWriter implements ArchivableWriterInterfa
     }
 
     /**
-     * Get whether or not to print a header row into the csv
+     * Gets whether or not to print a header row into the csv
      *
      * @return boolean
      */

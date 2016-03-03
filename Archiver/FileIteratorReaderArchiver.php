@@ -2,8 +2,8 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Archiver;
 
-use Akeneo\Bundle\BatchBundle\Entity\JobExecution;
-use Akeneo\Bundle\BatchBundle\Step\ItemStep;
+use Akeneo\Component\Batch\Model\JobExecution;
+use Akeneo\Component\Batch\Step\ItemStep;
 use League\Flysystem\Filesystem;
 use Pim\Bundle\BaseConnectorBundle\Archiver\AbstractFilesystemArchiver;
 use Pim\Bundle\ExcelConnectorBundle\Reader\FileIteratorReader;

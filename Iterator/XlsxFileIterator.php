@@ -13,9 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class XlsxFileIterator extends AbstractXlsxFileIterator
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $labels;
 
     /**

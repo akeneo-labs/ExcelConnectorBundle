@@ -2,12 +2,12 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
-use Pim\Bundle\CatalogBundle\Repository\AttributeRepositoryInterface;
+use Pim\Component\Catalog\Repository\AttributeRepositoryInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
 
 /**
- * XLSX file reader
+ * Spreadsheet file reader
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2014 Akeneo SAS (http://www.akeneo.com)
@@ -22,6 +22,8 @@ class SpreadsheetReader extends FileIteratorReader
     protected $identifierCode;
 
     /**
+     * @var string
+     *
      * @Assert\NotBlank(groups={"Execution"})
      * @AssertFile(
      *     groups={"Execution"},
@@ -31,23 +33,31 @@ class SpreadsheetReader extends FileIteratorReader
     protected $filePath;
 
     /**
+     * @var string
+     *
      * @Assert\NotBlank
      * @Assert\Choice(choices={",", ";", "|"}, message="The value must be one of , or ; or |")
      */
     protected $delimiter = ';';
 
     /**
+     * @var string
+     *
      * @Assert\NotBlank
      * @Assert\Choice(choices={"""", "'"}, message="The value must be one of "" or '")
      */
     protected $enclosure = '"';
 
     /**
+     * @var string
+     *
      * @Assert\NotBlank
      */
     protected $escape = '\\';
 
     /**
+     * @var string
+     *
      * @Assert\NotBlank
      */
     protected $encoding = 'UTF8';
@@ -61,8 +71,6 @@ class SpreadsheetReader extends FileIteratorReader
     }
 
     /**
-     * Get uploaded file constraints
-     *
      * @return array
      */
     public function getUploadedFileConstraints()
@@ -79,8 +87,6 @@ class SpreadsheetReader extends FileIteratorReader
 
 
     /**
-     * Set delimiter
-     *
      * @param string $delimiter
      *
      * @return SpreadsheetReader
@@ -93,8 +99,6 @@ class SpreadsheetReader extends FileIteratorReader
     }
 
     /**
-     * Get delimiter
-     *
      * @return string $delimiter
      */
     public function getDelimiter()
@@ -103,8 +107,6 @@ class SpreadsheetReader extends FileIteratorReader
     }
 
     /**
-     * Set enclosure
-     *
      * @param string $enclosure
      *
      * @return SpreadsheetReader
@@ -117,8 +119,6 @@ class SpreadsheetReader extends FileIteratorReader
     }
 
     /**
-     * Get enclosure
-     *
      * @return string $enclosure
      */
     public function getEnclosure()
@@ -127,8 +127,6 @@ class SpreadsheetReader extends FileIteratorReader
     }
 
     /**
-     * Set escape
-     *
      * @param string $escape
      *
      * @return SpreadsheetReader
@@ -141,8 +139,6 @@ class SpreadsheetReader extends FileIteratorReader
     }
 
     /**
-     * Get escape
-     *
      * @return string $escape
      */
     public function getEscape()
@@ -151,8 +147,6 @@ class SpreadsheetReader extends FileIteratorReader
     }
 
     /**
-     * Returns the encoding
-     *
      * @return string
      */
     public function getEncoding()
@@ -161,8 +155,6 @@ class SpreadsheetReader extends FileIteratorReader
     }
 
     /**
-     * Sets the encoding
-     *
      * @param string $encoding
      *
      * @return SpreadsheetReader

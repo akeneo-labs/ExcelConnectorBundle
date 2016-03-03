@@ -14,14 +14,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ExcelBuilderFactory
 {
-    /**
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     protected $container;
 
     /**
-     * Constructor
-     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)

@@ -13,19 +13,13 @@ use Symfony\Component\Serializer\Encoder\EncoderInterface;
  */
 class Excel2003XmlEncoder implements EncoderInterface
 {
-    /**
-     * @staticvar string The name of the format
-     */
+    /** @const string The name of the format */
     const FORMAT_NAME = 'excel_2003_xml';
 
-    /**
-     * @staticvar string XML template for one cell
-     */
+    /** @const string XML template for one cell */
     const CELL_TEMPLATE='<Cell><Data ss:Type="{{type}}">{{data}}</Data></Cell>';
 
-    /**
-     * @staticvar string XML template for one row
-     */
+    /** @const string XML template for one row */
     const ROW_TEMPLATE='<Row>{{cells}}</Row>';
 
     /**

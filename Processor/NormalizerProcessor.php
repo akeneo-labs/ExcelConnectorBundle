@@ -2,8 +2,8 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Processor;
 
-use Akeneo\Bundle\BatchBundle\Item\AbstractConfigurableStepElement;
-use Akeneo\Bundle\BatchBundle\Item\ItemProcessorInterface;
+use Akeneo\Component\Batch\Item\AbstractConfigurableStepElement;
+use Akeneo\Component\Batch\Item\ItemProcessorInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
@@ -15,24 +15,16 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class NormalizerProcessor extends AbstractConfigurableStepElement implements ItemProcessorInterface
 {
-    /**
-     * @var NormalizerInterface
-     */
+    /** @var NormalizerInterface */
     protected $normalizer;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $format;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $context;
 
     /**
-     * Constructor
-     *
      * @param NormalizerInterface $normalizer
      * @param string              $format
      * @param array               $context

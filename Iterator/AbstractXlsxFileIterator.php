@@ -2,7 +2,8 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Workbook;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetInterface;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetLoader;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,24 +17,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements ContainerAwareInterface
 {
-    /**
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     protected $container;
 
-    /**
-     * @var Iterator
-     */
+    /** @var Iterator */
     protected $worksheetIterator;
 
-    /**
-     * @var Iterator
-     */
+    /** @var Iterator */
     protected $valuesIterator;
 
-    /**
-     * @var Workbook
-     */
+    /** @var SpreadsheetInterface */
     private $xls;
 
     /**
@@ -91,7 +84,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * Returns the associated Excel object
      *
-     * @return \Akeneo\Component\SpreadsheetParser\SpreadsheetInterface
+     * @return SpreadsheetInterface
      */
     public function getExcelObject()
     {
@@ -197,7 +190,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
                 'parser_options'     => array()
             )
         );
-        $resolver->setOptional(array('include_worksheets'));
+        $resolver->setDefined(array('include_worksheets'));
     }
 
     /**
@@ -213,7 +206,7 @@ abstract class AbstractXlsxFileIterator extends AbstractFileIterator implements 
     /**
      * Returns the workbook reader
      *
-     * @return \Akeneo\Component\SpreadsheetParser\Xlsx\WorkbookLoader
+     * @return SpreadsheetLoader
      */
     protected function getWorkbookLoader()
     {

@@ -15,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class XlsxFileReader extends FileIteratorReader
 {
     /**
+     * @var string
+     *
      * @Assert\NotBlank(groups={"Execution"})
      * @AssertFile(
      *     groups={"Execution"},
