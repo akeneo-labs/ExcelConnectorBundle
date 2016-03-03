@@ -4,8 +4,6 @@ What is Akeneo Excel Connector Bundle?
 .. figure:: /Resources/doc/pictures/akeneo_excel.png
    :alt: Logo ExcelConnector
 
-   Logo ExcelConnector
-
 This bundle adds support of Excel XSLX files as a source for
 initialization and importation of catalog structure for `Akeneo
 PIM <https://github.com/akeneo/pim-community-standard>`__.
@@ -19,6 +17,10 @@ Getting started
 
 -  `Initializing the PIM with a XLSX
    file <Getting-started.rst#initializing-the-pim-with-a-xlsx-file>`__
+
+**Note:** The file init.xslx must be opened and edited with Excel. Usage
+of LibreOffice/OpenOffice disables validation of input and can lead to
+malformed file.
 
 Define the structure of your catalog
 ------------------------------------
@@ -39,11 +41,3 @@ Define system element (for integrators)
 -  `Choices <Choices-tab.rst>`__
 -  `Metric types <Metric-types.rst>`__
 -  `Metric units <Metric-units.rst>`__
-
-Troubleshooting
----------------
-
-The import fails when importing families
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Check that your channels names are correct in both family and channel tabs. You might have a typo in the channels tab and not in the family tab. You will have to remove the mispelled channel once you corrected this.
-
