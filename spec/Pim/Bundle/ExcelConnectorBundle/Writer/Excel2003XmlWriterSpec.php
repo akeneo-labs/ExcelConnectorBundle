@@ -11,7 +11,7 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
 {
     protected $tempFile;
 
-    public function let(EncoderInterface $encoder)
+    function let(EncoderInterface $encoder)
     {
         $this->tempFile = tempnam('/tmp', 'excel_2003_xml_writer_spec');
         $this->beConstructedWith(
@@ -28,7 +28,7 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         });
     }
 
-    public function letGo()
+    function letGo()
     {
         if ($this->tempFile && file_exists($this->tempFile)) {
             unlink($this->tempFile);
@@ -36,12 +36,12 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         }
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Writer\Excel2003XmlWriter');
     }
 
-    public function it_writes_homogeneous_items()
+    function it_writes_homogeneous_items()
     {
 
         $this->initialize();
@@ -57,7 +57,7 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         );
     }
 
-    public function it_writes_in_multiple_batches()
+    function it_writes_in_multiple_batches()
     {
         $this->initialize();
         $this->write([['column1' => 'value1', 'column2' => 'value2']]);
@@ -68,7 +68,7 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         );
     }
 
-    public function it_writes_heteregoneous_items()
+    function it_writes_heteregoneous_items()
     {
         $this->initialize();
         $this->write(
@@ -83,7 +83,7 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
         );
     }
 
-    public function it_writes_empty_files()
+    function it_writes_empty_files()
     {
         $this->initialize();
         $this->flush()->shouldWriteDataInFile(0, '');
@@ -108,5 +108,4 @@ class Excel2003XmlWriterSpec extends ObjectBehavior
 
         return $expected === file_get_contents($this->tempFile);
     }
-
 }

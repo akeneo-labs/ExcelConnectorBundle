@@ -9,17 +9,17 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class FileIteratorReaderSpec extends ObjectBehavior
 {
-    public function let(FileIteratorFactory $iteratorFactory)
+    function let(FileIteratorFactory $iteratorFactory)
     {
         $this->beConstructedWith($iteratorFactory, 'iterator_class', array('iterator_options'));
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Reader\FileIteratorReader');
     }
 
-    public function it_calls_the_iterator_factory(FileIteratorFactory $iteratorFactory)
+    function it_calls_the_iterator_factory(FileIteratorFactory $iteratorFactory)
     {
         $values = array('value1', 'value2', 'value3');
         $iteratorFactory->create('iterator_class', 'file_path', array('iterator_options'))
@@ -31,13 +31,13 @@ class FileIteratorReaderSpec extends ObjectBehavior
         }
     }
 
-    public function it_has_a_file_path_property()
+    function it_has_a_file_path_property()
     {
         $this->setFilePath('file_path');
         $this->getFilePath()->shouldReturn('file_path');
     }
 
-    public function it_has_an_uploadable_property()
+    function it_has_an_uploadable_property()
     {
         $this->shouldNotBeUploadAllowed();
         $this->setUploadAllowed(true);
@@ -46,7 +46,7 @@ class FileIteratorReaderSpec extends ObjectBehavior
         $this->shouldNotBeUploadAllowed();
     }
 
-    public function it_has_file_upload_capability(File $file)
+    function it_has_file_upload_capability(File $file)
     {
         $file->getRealPath()->willReturn('file_path');
         $this->setUploadedFile($file);

@@ -2,14 +2,16 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Builder;
 
-class ProductFamilyExcelBuilderSpec extends ExcelBuilderBehavior
+use PhpSpec\ObjectBehavior;
+
+class ProductFamilyExcelBuilderSpec extends ObjectBehavior
 {
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ProductFamilyExcelBuilder');
     }
 
-    public function it_creates_one_tab_per_family()
+    function it_creates_one_tab_per_family()
     {
         $this->add(['family' => 'FAMILY1', 'col1' => 'value1', 'col2' => 'value2']);
         $this->add(['family' => 'FAMILY1', 'col1' => 'value3', 'col2' => 'value4']);
@@ -22,5 +24,48 @@ class ProductFamilyExcelBuilderSpec extends ExcelBuilderBehavior
         $excelObject->shouldHaveCellRow('FAMILY2', 1, ['family', 'col1', 'col3']);
         $excelObject->shouldHaveCellRow('FAMILY2', 2, ['FAMILY2', 'value5', 'value6']);
         $excelObject->shouldHaveCellRow('FAMILY2', 3, ['FAMILY2', 'value7', 'value8']);
+    }
+
+    public function getMatchers()
+    {
+        return [
+            'haveCellValue' => [$this, 'hasCellValue'],
+            'haveCellRow' => [$this, 'hasCellRow']
+        ];
+    }
+
+    public function hasCellValue(\PHPExcel $excelObject, $worksheetName, $coordinate, $value)
+    {
+        $worksheet = $excelObject->getSheetByName($worksheetName);
+        if (!$worksheet) {
+            return false;
+        }
+
+        return $worksheet->getCell($coordinate)->getValue() === $value;
+    }
+
+    public function hasCellRow(\PHPExcel $excelObject, $worksheetName, $row, array $values)
+    {
+        $worksheet = $excelObject->getSheetByName($worksheetName);
+        if (!$worksheet) {
+            return false;
+        }
+
+        $rowIterator = $worksheet->getRowIterator($row);
+        if (!$rowIterator->valid()) {
+            return false;
+        }
+
+        $cellIterator = $rowIterator->current()->getCellIterator();
+        $cellIterator->setIterateOnlyExistingCells(false);
+
+        foreach ($cellIterator as $cell) {
+            $value = array_shift($values);
+            if ($value !== $cell->getValue()) {
+                return false;
+            }
+        }
+
+        return 0 === count($values);
     }
 }

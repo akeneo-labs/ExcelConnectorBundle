@@ -2,20 +2,30 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
 use Akeneo\Component\SpreadsheetParser\SpreadsheetInterface;
 use Akeneo\Component\SpreadsheetParser\SpreadsheetLoaderInterface;
+use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
+class AttributeXlsxFileIteratorSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
         SpreadsheetLoaderInterface $spreadsheetReader,
         SpreadsheetInterface $spreadsheet
     )  {
-        parent::let($container, $arrayHelper, $spreadsheetReader, $spreadsheet);
+        $spreadsheetReader->open('path')->willReturn($spreadsheet);
+        $arrayHelper->combineArrays(Argument::type('array'), Argument::type('array'))->will(
+            function ($args) {
+                return array_combine($args[0], $args[1]);
+            }
+        );
+        $container->get('pim_excel_connector.iterator.array_helper')->willReturn($arrayHelper);
+        $container->get('akeneo_spreadsheet_parser.spreadsheet_loader')->willReturn($spreadsheetReader);
+
         $this->beConstructedWith('path', [ 'include_worksheets' => ['/tab/']]);
         $spreadsheet->getWorksheets()->willReturn(['tab1', 'tab2', 'attribute_types']);
         $spreadsheet->getWorksheetIndex('attribute_types')->willReturn(2);
@@ -51,12 +61,12 @@ class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
         $this->setContainer($container);
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Iterator\AttributeXlsxFileIterator');
     }
 
-    public function it_reads_attributes()
+    function it_reads_attributes()
     {
         $values = [
             ['code' => 'attribute1', 'type' => 'pim_type1', 'key1' => 'value1', 'key2' => 'value2', 'key3' => 'value3'],
