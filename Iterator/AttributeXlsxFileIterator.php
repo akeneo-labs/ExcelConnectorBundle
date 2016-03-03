@@ -14,24 +14,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class AttributeXlsxFileIterator extends \FilterIterator implements ContainerAwareInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $attributeTypes;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options;
 
-    /**
-     * @var XlsxFileIterator
-     */
+    /** @var XlsxFileIterator */
     private $innerIterator;
 
     /**
-     * Constructor
-     *
      * @param string $filePath
      * @param array  $options
      */

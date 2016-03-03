@@ -8,7 +8,7 @@ use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Excel 97 XML writer
+ * Excel 2003 XML writer
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
@@ -16,54 +16,37 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Excel2003XmlWriter extends FileWriter
 {
-    /**
-     * @staticvar string
-     */
+    /** @const string */
     const COLUMN_XML = '<Column ss:Span="1" ss:Width="64"/>';
 
-    /**
-     * @var EncoderInterface
-     */
+    /** @var EncoderInterface */
     protected $encoder;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $format;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $headerTemplate;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $footerTemplate;
 
     /**
+     * @var string
      * @Assert\NotBlank(groups={"Execution"})
      */
     protected $filePath = '/tmp/export_%datetime%.xml';
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $labels;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $tempHandler;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $handler;
 
     /**
-     * Constructor
-     *
      * @param EncoderInterface $encoder
      * @param string           $format
      * @param string           $headerTemplate
@@ -172,6 +155,8 @@ class Excel2003XmlWriter extends FileWriter
 
     /**
      * Writes the Columns section of the XML file
+     *
+     * @return null
      */
     protected function writeColumns()
     {

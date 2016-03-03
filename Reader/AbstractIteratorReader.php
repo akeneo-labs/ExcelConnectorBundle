@@ -17,24 +17,16 @@ use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
 abstract class AbstractIteratorReader extends AbstractConfigurableStepElement implements ItemReaderInterface,
     StepExecutionAwareInterface
 {
-    /**
-     * @var \Iterator
-     */
+    /** @var \Iterator */
     protected $iterator;
 
-    /**
-     * @var StepExecution
-     */
+    /** @var StepExecution */
     protected $stepExecution;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     protected $batchMode;
 
     /**
-     * Constructor
-     *
      * @param boolean $batchMode
      */
     public function __construct($batchMode = false)
@@ -42,11 +34,17 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
         $this->batchMode = $batchMode;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setStepExecution(StepExecution $stepExecution)
     {
         $this->stepExecution = $stepExecution;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function read()
     {
         if (!isset($this->iterator)) {

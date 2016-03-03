@@ -17,33 +17,24 @@ use Pim\Bundle\ExcelConnectorBundle\Excel\Builder\ExcelBuilderFactory;
 class XlsxWriter extends FileWriter
 {
     /**
+     * @var string
      * @Assert\NotBlank(groups={"Execution"})
      */
     protected $filePath = '/tmp/export_%datetime%.xlsx';
 
-    /**
-     * @var ExcelBuilderFactory
-     */
+    /** @var ExcelBuilderFactory */
     protected $builderFactory;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $builderClass;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $builderOptions;
 
-    /**
-     * @var ExcelBuilderInterface
-     */
+    /** @var ExcelBuilderInterface */
     protected $builder;
 
     /**
-     * Constructor
-     *
      * @param ExcelBuilderFactory $builderFactory
      * @param string              $builderClass
      * @param array               $builderOptions

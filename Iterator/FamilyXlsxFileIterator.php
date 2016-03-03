@@ -5,7 +5,7 @@ namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Channel Xls File Iterator
+ * Family Xls File Iterator
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
 {
     /**
-     *  {@inheritdoc}
+     * {@inheritdoc}
      */
     protected function createValuesIterator()
     {
@@ -87,6 +87,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     protected function setDefaultOptions(OptionsResolver $resolver)
     {
         parent::setDefaultOptions($resolver);
+
         $resolver->setRequired(
             array(
                 'channel_label_row',

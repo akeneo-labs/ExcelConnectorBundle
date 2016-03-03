@@ -13,19 +13,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 abstract class AbstractFileIterator implements \Iterator
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $filePath;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options;
 
     /**
-     * Constructor
-     *
      * @param string $filePath
      * @param array  $options
      */
