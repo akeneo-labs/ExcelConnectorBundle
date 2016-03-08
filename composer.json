@@ -19,9 +19,7 @@
         }
     ],
     "require": {
-
-        "akeneo/pim-community-dev": "1.5.x-dev",
-        "doctrine/migrations": "1.0.0-alpha3@alpha",
+        "akeneo/pim-community-dev": "1.5.*",
         "phpoffice/phpexcel": "1.8.*",
         "akeneo-labs/spreadsheet-parser-bundle": "1.1.*"
     },
@@ -30,7 +28,8 @@
         "squizlabs/php_codesniffer": "2.3.*",
         "phpmd/phpmd": "2.3.*",
         "fabpot/php-cs-fixer": "@stable",
-        "henrikbjorn/phpspec-code-coverage": "1.0.*"
+        "henrikbjorn/phpspec-code-coverage": "1.0.*",
+        "doctrine/migrations": "1.0.0-alpha3@alpha"
     },
     "config": {
         "bin-dir": "bin"
