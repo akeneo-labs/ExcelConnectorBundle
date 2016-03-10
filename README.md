@@ -23,7 +23,7 @@ This bundle adds support of Excel XSLX files as a source for initializing catalo
 From your application root:
 
 ```bash
-    $ php composer.phar require --prefer-dist akeneo-labs/excel-connector-bundle:1.6.*
+    php composer.phar require --prefer-dist akeneo-labs/excel-connector-bundle:1.6.*
 ```
 
 Enable the bundle in the `app/AppKernel.php` file in the `registerBundles()` method:
