@@ -36,12 +36,11 @@ Enable the bundle in the `app/AppKernel.php` file in the `registerBundles()` met
     ]
 ```
 
-Then clean the cache and reinstall the assets:
+Now let's clean your cache and dump your assets:
 
 ```bash
     php app/console cache:clear --env=prod
-
-    php app/console pim:install:assets --env=prod
+    php app/console pim:installer:assets --env=prod
 ```
 
 ## Documentation
