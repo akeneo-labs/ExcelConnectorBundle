@@ -66,6 +66,8 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
 
     /**
      * Resets the state of the reader
+     *
+     * @deprecated will be remove in 1.7. Use initialize method instead.
      */
     public function reset()
     {
