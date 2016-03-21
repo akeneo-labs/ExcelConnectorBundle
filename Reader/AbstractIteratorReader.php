@@ -75,6 +75,17 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
     }
 
     /**
+     * Rewinds the iterator if it has already been initialized.
+     * It allows to use the same service in two successive steps
+     *
+     * {@inheritdoc}
+     */
+    public function initialize()
+    {
+        $this->iterator = null;
+    }
+
+    /**
      * Converts an entity numerical identifier ('sku' for products,
      * 'code' for other entities) into string to allow import.
      *
