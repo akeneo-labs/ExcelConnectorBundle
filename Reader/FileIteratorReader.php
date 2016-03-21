@@ -102,7 +102,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     public function setUploadedFile(File $uploadedFile)
     {
         $this->filePath = $uploadedFile->getRealPath();
-        $this->reset();
+        $this->initialize();
 
         return $this;
     }
@@ -115,7 +115,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     public function setFilePath($filePath)
     {
         $this->filePath = $filePath;
-        $this->reset();
+        $this->initialize();
 
         return $this;
     }

@@ -55,7 +55,7 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
         }
-        $this->reset();
+        $this->initialize();
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
         }
