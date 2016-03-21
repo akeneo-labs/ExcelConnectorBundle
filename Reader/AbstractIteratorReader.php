@@ -75,8 +75,7 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
     }
 
     /**
-     * Rewinds the iterator if it has already been initialized.
-     * It allows to use the same service in two successive steps
+     * Initializes the iterator allowing to use the same service in two successive steps
      *
      * {@inheritdoc}
      */
