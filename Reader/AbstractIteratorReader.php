@@ -2,10 +2,10 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
-use Akeneo\Bundle\BatchBundle\Entity\StepExecution;
-use Akeneo\Bundle\BatchBundle\Item\AbstractConfigurableStepElement;
-use Akeneo\Bundle\BatchBundle\Item\ItemReaderInterface;
-use Akeneo\Bundle\BatchBundle\Step\StepExecutionAwareInterface;
+use Akeneo\Component\Batch\Model\StepExecution;
+use Akeneo\Component\Batch\Item\AbstractConfigurableStepElement;
+use Akeneo\Component\Batch\Item\ItemReaderInterface;
+use Akeneo\Component\Batch\Step\StepExecutionAwareInterface;
 
 /**
  * Abstract iterator based reader
@@ -17,24 +17,16 @@ use Akeneo\Bundle\BatchBundle\Step\StepExecutionAwareInterface;
 abstract class AbstractIteratorReader extends AbstractConfigurableStepElement implements ItemReaderInterface,
     StepExecutionAwareInterface
 {
-    /**
-     * @var \Iterator
-     */
+    /** @var \Iterator */
     protected $iterator;
 
-    /**
-     * @var StepExecution
-     */
+    /** @var StepExecution */
     protected $stepExecution;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     protected $batchMode;
 
     /**
-     * Constructor
-     *
      * @param boolean $batchMode
      */
     public function __construct($batchMode = false)
@@ -42,11 +34,17 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
         $this->batchMode = $batchMode;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setStepExecution(StepExecution $stepExecution)
     {
         $this->stepExecution = $stepExecution;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function read()
     {
         if (!isset($this->iterator)) {
@@ -68,6 +66,8 @@ abstract class AbstractIteratorReader extends AbstractConfigurableStepElement im
 
     /**
      * Resets the state of the reader
+     *
+     * @deprecated will be remove in 1.7. Use initialize method instead.
      */
     public function reset()
     {

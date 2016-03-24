@@ -2,26 +2,26 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Reader;
 
-use Akeneo\Bundle\BatchBundle\Entity\StepExecution;
+use Akeneo\Component\Batch\Model\StepExecution;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Reader\AbstractIteratorReader;
 
 class AbstractIteratorReaderSpec extends ObjectBehavior
 {
-    public function let()
+    function let()
     {
         $this->beAnInstanceOf('spec\Pim\Bundle\ExcelConnectorBundle\Reader\ArrayIteratorReader');
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->beConstructedWith(array());
         $this->shouldHaveType('spec\Pim\Bundle\ExcelConnectorBundle\Reader\ArrayIteratorReader');
     }
 
-    public function it_iterates_through_values()
+    function it_iterates_through_values()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $this->beConstructedWith($values);
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
@@ -29,17 +29,17 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
         $this->read()->shouldReturn(null);
     }
 
-    public function it_sends_all_values_in_batch_mode()
+    function it_sends_all_values_in_batch_mode()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $this->beConstructedWith($values, true);
         $this->read()->shouldReturn($values);
         $this->read()->shouldReturn(null);
     }
 
-    public function it_increments_the_summary_info(StepExecution $stepExecution)
+    function it_increments_the_summary_info(StepExecution $stepExecution)
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $this->beConstructedWith($values);
         $this->setStepExecution($stepExecution);
         $stepExecution->incrementSummaryInfo('read')->shouldBeCalledTimes(count($values));
@@ -48,14 +48,14 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
         }
     }
 
-    public function it_can_be_resetted()
+    function it_can_be_resetted()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = array(['value1'], ['value2'], ['value3']);
         $this->beConstructedWith($values);
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
         }
-        $this->reset();
+        $this->initialize();
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
         }
@@ -71,8 +71,9 @@ class ArrayIteratorReader extends AbstractIteratorReader
 
     public function __construct(array $values, $batchMode = false)
     {
-        $this->values = $values;
         parent::__construct($batchMode);
+
+        $this->values = $values;
     }
 
     protected function createIterator()

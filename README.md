@@ -1,63 +1,71 @@
-# Akeneo Excel Connector Bundle
+# ExcelConnectorBundle
 
-This bundle adds support of Excel XSLX files as a source for initialization and importation of catalog structure for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/akeneo-labs/ExcelConnectorBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/akeneo-labs/ExcelConnectorBundle/?branch=master)
+[![Build Status](https://travis-ci.org/akeneo-labs/ExcelConnectorBundle.svg?branch=master)](https://travis-ci.org/akeneo-labs/ExcelConnectorBundle)
 
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/badges/quality-score.png?s=9732bdac97b997021b1c925f923ecbf405a509d4)](https://scrutinizer-ci.com/g/akeneo/ExcelConnectorBundle/)
+![alt text](./Resources/doc/pictures/akeneo_excel.png "")
+
+This bundle adds support of Excel XSLX files as a source for initializing catalog structure and import/export of products for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
 
 ## Requirements
 
-| CustomEntityBundle   | Akeneo PIM Community Edition |
+| ExcelConnectorBundle | Akeneo PIM Community Edition |
 |:--------------------:|:----------------------------:|
+| v1.6.*               | v1.5.*                       |
 | v1.5.*               | v1.4.*                       |
 | v1.4.*               | v1.3.*                       |
 | v1.3.*               | v1.2.*                       |
-| v1.1.\*, v1.2.\*     | v1.1.\*                      |
+| v1.1.\*, v1.2.\*     | v1.1.*                       |
 | v1.0.*               | v1.0.*                       |
 
 ## Installation
 
 From your application root:
 
-    $ php composer.phar require --prefer-dist akeneo-labs/excel-connector-bundle:1.5.*
+```bash
+    php composer.phar require --prefer-dist akeneo-labs/excel-connector-bundle:1.6.*
+```
 
-If you want to use the development version (only for test purpose, do not use it in production), replace "1.5.*" by "dev-master" in the previous command.
+Enable the bundle in the `app/AppKernel.php` file in the `registerBundles()` method:
 
-Register the bundle by adding the following lines:
+```php
+    $bundles = [
+        // ...
+        new Akeneo\Bundle\SpreadsheetParserBundle\AkeneoSpreadsheetParserBundle(),
+        new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle(),
+    ]
+```
 
-    /* app/AppKernel.php */
+Now let's clean your cache and dump your assets:
 
-    // ...
-    protected function getPimDependenciesBundles()
-    {
-        return [
-            // ...
-            new Akeneo\Bundle\SpreadsheetParserBundle\AkeneoSpreadsheetParserBundle(),
-            new Pim\Bundle\ExcelConnectorBundle\PimExcelConnectorBundle()
-        ];
-    }
-
-Then clean the cache and reinstall the assets:
-
+```bash
     php app/console cache:clear --env=prod
-    
-    php app/console pim:install:assets --env=prod
+    php app/console pim:installer:assets --env=prod
+```
 
 ## Documentation
 
-See [Resources/doc folder](./Resources/doc/Home.rst) for more details on how to set your catalog structure
+### Getting started
+
+See [Resources/doc/Getting started](./Resources/doc/Getting-started.rst) for more details on how to set your catalog structure
 using the [init.xslx](./Resources/fixtures/minimal/init.xlsx) file.
 
-## Supported file
+See [Resources/doc folder](./Resources/doc/Home.rst) for more details on how to set your catalog structur
+
+### Supported file
 
 Input file must follow [init.xslx](./Resources/fixtures/minimal/init.xlsx) structure.
-Note that the file must be opened with Excel. LibreOffice/OpenOffice are not in compliance with validations data 
+Note that the file must be opened with Excel. LibreOffice/OpenOffice are not in compliance with validations data
 that are available in the spreadsheet.
 
-## Importation job
+### Importation job
 
-This bundle allows you to import the [init.xslx](./Resources/fixtures/minimal/init.xlsx) file directly
-in the UI through Import > Import jobs.
+This bundle allows you to import products files directly in the UI through Import > Import jobs.
+Please note that the init.xlsx import is also available via the UI. However, it should not be used as an import system for entities available within this file (families, categories, etc.) once the catalog structure has been set.
 
-## Dependencies
 
-This bundles uses [phpoffice/phpexcel](https://github.com/PHPOffice/PHPExcel) and [akeneo-labs/spreadsheet-parser-bundle](https://github.com/akeneo-labs/spreadsheet-parser).
+## Troubleshooting
+
+###The import fails when importing families
+
+Check that your channels names are correct in both family and channel tabs. You might have a typo in the channels tab and not in the family tab. You will have to remove the mispelled channel once you corrected this.

@@ -17,19 +17,13 @@ use Pim\Bundle\CatalogBundle\Validator\Constraints\File as AssertFile;
  */
 class FileIteratorReader extends AbstractIteratorReader implements UploadedFileAwareInterface
 {
-    /**
-     * @var FileIteratorFactory
-     */
+    /** @var FileIteratorFactory */
     protected $iteratorFactory;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $iteratorClass;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $iteratorOptions;
 
     /**
@@ -49,8 +43,6 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     protected $uploadAllowed = false;
 
     /**
-     * Constructor
-     *
      * @param FileIteratorFactory $iteratorFactory
      * @param string              $iteratorClass
      * @param array               $iteratorOptions
@@ -103,8 +95,6 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     }
 
     /**
-     * Set uploaded file
-     *
      * @param File $uploadedFile
      *
      * @return FileIteratorReader
@@ -112,14 +102,12 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     public function setUploadedFile(File $uploadedFile)
     {
         $this->filePath = $uploadedFile->getRealPath();
-        $this->reset();
+        $this->initialize();
 
         return $this;
     }
 
     /**
-     * Set file path
-     *
      * @param string $filePath
      *
      * @return FileIteratorReader
@@ -127,14 +115,12 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     public function setFilePath($filePath)
     {
         $this->filePath = $filePath;
-        $this->reset();
+        $this->initialize();
 
         return $this;
     }
 
     /**
-     * Set the uploadAllowed property
-     *
      * @param boolean $uploadAllowed
      *
      * @return FileIteratorReader
@@ -147,8 +133,6 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     }
 
     /**
-     * Get the uploadAllowed property
-     *
      * @return boolean $uploadAllowed
      */
     public function isUploadAllowed()
@@ -157,8 +141,6 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     }
 
     /**
-     * Get file path
-     *
      * @return string $filePath
      */
     public function getFilePath()
@@ -175,8 +157,6 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
     }
 
     /**
-     * Returns options of the iterator
-     *
      * @return array
      */
     protected function getIteratorOptions()

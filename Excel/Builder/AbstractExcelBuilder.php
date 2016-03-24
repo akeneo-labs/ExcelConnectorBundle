@@ -13,42 +13,30 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 abstract class AbstractExcelBuilder implements ExcelBuilderInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $rowIndexes;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $labels;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $options;
 
-    /**
-     * @var \PHPExcel
-     */
+    /** @var \PHPExcel */
     protected $xls;
 
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     protected $clean = false;
 
     /**
-     * Constructor
-     *
      * @param array $options
      */
     public function __construct(array $options = array())
     {
-        $resolver = new OptionsResolver;
+        $resolver = new OptionsResolver();
         $this->setDefaultOptions($resolver);
         $this->options = $resolver->resolve($options);
-        $this->xls = new \PHPExcel;
+        $this->xls = new \PHPExcel();
     }
 
     /**
@@ -105,7 +93,7 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
      * @param type  $name
      * @param array $data
      *
-     * @return array \PHPExcelWorksheet
+     * @return \PHPExcelWorksheet
      */
     protected function createWorksheet($name, array $data)
     {

@@ -4,18 +4,28 @@ namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 use Akeneo\Component\SpreadsheetParser\SpreadsheetInterface;
 use Akeneo\Component\SpreadsheetParser\SpreadsheetLoaderInterface;
+use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
+use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
+class FamilyXlsxFileIteratorSpec extends ObjectBehavior
 {
-    public function let(
+    function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
         SpreadsheetLoaderInterface $spreadsheetReader,
         SpreadsheetInterface $spreadsheet
     ) {
-        parent::let($container, $arrayHelper, $spreadsheetReader, $spreadsheet);
+        $spreadsheetReader->open('path')->willReturn($spreadsheet);
+        $arrayHelper->combineArrays(Argument::type('array'), Argument::type('array'))->will(
+            function ($args) {
+                return array_combine($args[0], $args[1]);
+            }
+        );
+        $container->get('pim_excel_connector.iterator.array_helper')->willReturn($arrayHelper);
+        $container->get('akeneo_spreadsheet_parser.spreadsheet_loader')->willReturn($spreadsheetReader);
+
         $spreadsheet->getWorksheets()->willReturn(['bogus', 'family1', 'family2']);
         $spreadsheet->createRowIterator(1, [])->willReturn(
             new \ArrayIterator(
@@ -63,12 +73,12 @@ class FamilyXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
         $this->setContainer($container);
     }
 
-    public function it_is_initializable()
+    function it_is_initializable()
     {
         $this->shouldHaveType('Pim\Bundle\ExcelConnectorBundle\Iterator\FamilyXlsxFileIterator');
     }
 
-    public function it_reads_families()
+    function it_reads_families()
     {
         $this->rewind();
         $values = [
