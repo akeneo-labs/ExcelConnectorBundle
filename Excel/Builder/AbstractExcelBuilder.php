@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Builder;
 
+use PHPExcel;
+use PHPExcel_Worksheet;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -22,7 +24,7 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     /** @var array */
     protected $options;
 
-    /** @var \PHPExcel */
+    /** @var PHPExcel */
     protected $xls;
 
     /** @var boolean */
@@ -36,7 +38,7 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
         $resolver = new OptionsResolver();
         $this->setDefaultOptions($resolver);
         $this->options = $resolver->resolve($options);
-        $this->xls = new \PHPExcel();
+        $this->xls = new PHPExcel();
     }
 
     /**
@@ -90,10 +92,10 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     /**
      * Creates a worksheet with the given name
      *
-     * @param type  $name
-     * @param array $data
+     * @param string $name
+     * @param array  $data
      *
-     * @return \PHPExcelWorksheet
+     * @return PHPExcel_Worksheet
      */
     protected function createWorksheet($name, array $data)
     {
@@ -118,10 +120,10 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     /**
      * Writes labels for the submitted data
      *
-     * @param \PHPExcel_Worksheet $worksheet
+     * @param PHPExcel_Worksheet $worksheet
      * @param array               $data
      */
-    protected function writeLabels(\PHPExcel_Worksheet $worksheet, array $data)
+    protected function writeLabels(PHPExcel_Worksheet $worksheet, array $data)
     {
         $worksheetName = $worksheet->getTitle();
         $missing = array_diff(array_keys($data), $this->labels[$worksheetName]);
@@ -136,10 +138,10 @@ abstract class AbstractExcelBuilder implements ExcelBuilderInterface
     /**
      * Writes a row of values
      *
-     * @param \PHPExcel_Worksheet $worksheet
+     * @param PHPExcel_Worksheet $worksheet
      * @param array               $data      An array of values with column indexes as keys
      */
-    protected function writeValues(\PHPExcel_Worksheet $worksheet, array $data)
+    protected function writeValues(PHPExcel_Worksheet $worksheet, array $data)
     {
         $worksheetName = $worksheet->getTitle();
         $row = $this->rowIndexes[$worksheetName];

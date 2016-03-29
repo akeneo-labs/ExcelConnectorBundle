@@ -2,6 +2,8 @@
 
 namespace Pim\Bundle\ExcelConnectorBundle\Excel\Builder;
 
+use PHPExcel_Shared_String;
+
 /**
  * Excel builder for products, with one tab per family
  *
@@ -16,6 +18,10 @@ class ProductFamilyExcelBuilder extends AbstractExcelBuilder
      */
     protected function getWorksheetName(array $data)
     {
-        return $data['family'];
+        $worksheetName = $data['family'];
+        if (PHPExcel_Shared_String::CountCharacters($worksheetName) > 31) {
+            $worksheetName = PHPExcel_Shared_String::Substring($worksheetName, 0, 31);
+        }
+        return $worksheetName;
     }
 }
