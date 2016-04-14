@@ -2,10 +2,10 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Iterator;
 
+use Akeneo\Component\SpreadsheetParser\SpreadsheetInterface;
+use Akeneo\Component\SpreadsheetParser\SpreadsheetLoaderInterface;
 use PhpSpec\ObjectBehavior;
 use Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\Spreadsheet;
-use Pim\Bundle\ExcelConnectorBundle\Excel\Reader\SpreadsheetLoader;
 use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -21,8 +21,8 @@ class XlsxFileIteratorBehavior extends ObjectBehavior
     public function let(
         ContainerInterface $container,
         ArrayHelper $arrayHelper,
-        SpreadsheetLoader $spreadsheetReader,
-        Spreadsheet $spreadsheet
+        SpreadsheetLoaderInterface $spreadsheetReader,
+        SpreadsheetInterface $spreadsheet
     ) {
         $spreadsheetReader->open('path')->willReturn($spreadsheet);
         $arrayHelper->combineArrays(Argument::type('array'), Argument::type('array'))->will(

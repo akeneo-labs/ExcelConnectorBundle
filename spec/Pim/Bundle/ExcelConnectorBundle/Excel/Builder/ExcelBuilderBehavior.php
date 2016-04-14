@@ -12,12 +12,11 @@ use PhpSpec\ObjectBehavior;
  */
 class ExcelBuilderBehavior extends ObjectBehavior
 {
-
     public function getMatchers()
     {
         return [
             'haveCellValue' => [$this, 'hasCellValue'],
-            'haveCellRow' => [$this, 'hasCellRow']
+            'haveCellRow'   => [$this, 'hasCellRow']
         ];
     }
 
