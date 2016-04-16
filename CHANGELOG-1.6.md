@@ -1,5 +1,9 @@
 # CHANGELOG 1.6
 
+## 1.6.2
+### Improvement
+- EX-24: allow import numeric values for text and textarea attributes
+
 ## 1.6.1
 ### Bug fix
  - EX-22: Fix associations in product import
