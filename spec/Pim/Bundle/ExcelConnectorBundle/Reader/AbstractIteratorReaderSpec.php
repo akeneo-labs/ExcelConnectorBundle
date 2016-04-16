@@ -15,7 +15,7 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->beConstructedWith(array());
+        $this->beConstructedWith([]);
         $this->shouldHaveType('spec\Pim\Bundle\ExcelConnectorBundle\Reader\ArrayIteratorReader');
     }
 
@@ -43,7 +43,7 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
         $this->beConstructedWith($values);
         $this->setStepExecution($stepExecution);
         $stepExecution->incrementSummaryInfo('read')->shouldBeCalledTimes(count($values));
-        for ($i=0; $i < count($values); $i++) {
+        for ($i = 0; $i < count($values); $i++) {
             $this->read();
         }
     }
@@ -83,6 +83,6 @@ class ArrayIteratorReader extends AbstractIteratorReader
 
     public function getConfigurationFields()
     {
-        return array();
+        return [];
     }
 }

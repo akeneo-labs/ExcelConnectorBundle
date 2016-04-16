@@ -21,7 +21,12 @@
     "require": {
         "akeneo/pim-community-dev": "1.5.*",
         "phpoffice/phpexcel": "1.8.*",
-        "akeneo-labs/spreadsheet-parser-bundle": "1.1.*"
+        "akeneo-labs/spreadsheet-parser-bundle": "1.1.*",
+        "doctrine/migrations": "1.0.0-alpha3@alpha"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "@stable",
+        "fabpot/php-cs-fixer": "@stable"
     },
     "require-dev": {
         "phpspec/phpspec": "2.1.*",
