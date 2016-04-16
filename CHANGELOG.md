@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.5.x
+## 1.5.3
 
 ### Improvement
 - EX-24: allow import numeric values for text and textarea attributes
