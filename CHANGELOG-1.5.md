@@ -5,6 +5,7 @@
 ### Improvement
 - EX-24: allow import numeric values for text and textarea attributes
 
+
 ## 1.5.2
 
 ### Bug fix
@@ -13,6 +14,7 @@
 ### Improvement
  - The product XLSX import don't rely anymore to the deprecated import services
 
+
 ## 1.5.1 (2015-10-13)
 
 ### Bug fix
@@ -20,6 +22,7 @@
 
 ### BC break
  - Inject `pim_catalog.repository.attribute` inside `pim_excel_connector.reader.spreadsheet` with `setAttributeRepository` method
+
 
 ## 1.5.0 (2015-10-07)
  - Migrate bundle to AkeneoLabs
