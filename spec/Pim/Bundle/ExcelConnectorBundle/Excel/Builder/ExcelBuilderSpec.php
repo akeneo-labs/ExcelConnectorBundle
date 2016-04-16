@@ -2,6 +2,8 @@
 
 namespace spec\Pim\Bundle\ExcelConnectorBundle\Excel\Builder;
 
+require_once __DIR__ . '/ExcelBuilderBehavior.php';
+
 class ExcelBuilderSpec extends ExcelBuilderBehavior
 {
     public function it_is_initializable()

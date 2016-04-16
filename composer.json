@@ -25,7 +25,12 @@
     "require": {
         "akeneo/pim-community-dev": "1.4.*",
         "phpoffice/phpexcel": "1.8.*",
-        "akeneo-labs/spreadsheet-parser-bundle": "1.1.*"
+        "akeneo-labs/spreadsheet-parser-bundle": "1.1.*",
+        "doctrine/migrations": "1.0.0-alpha3@alpha"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "@stable",
+        "fabpot/php-cs-fixer": "@stable"
     },
     "config": {
         "bin-dir": "bin"
@@ -33,7 +38,7 @@
     "autoload": {
         "psr-0": { "Pim\\Bundle\\ExcelConnectorBundle\\": "" }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "target-dir": "Pim/Bundle/ExcelConnectorBundle",
     "extra": {
         "branch-alias": {

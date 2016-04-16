@@ -7,6 +7,8 @@ use Akeneo\Component\SpreadsheetParser\SpreadsheetInterface;
 use Akeneo\Component\SpreadsheetParser\SpreadsheetLoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+require_once __DIR__ . '/XlsxFileIteratorBehavior.php';
+
 class AttributeXlsxFileIteratorSpec extends XlsxFileIteratorBehavior
 {
     public function let(

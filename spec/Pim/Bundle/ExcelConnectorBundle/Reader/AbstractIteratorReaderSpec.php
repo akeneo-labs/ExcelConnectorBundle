@@ -15,13 +15,16 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->beConstructedWith(array());
+        $this->beConstructedWith([]);
         $this->shouldHaveType('spec\Pim\Bundle\ExcelConnectorBundle\Reader\ArrayIteratorReader');
     }
 
     public function it_iterates_through_values()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = [
+            ['value11', 'value12', 'value13'],
+            ['value21', 'value22', 'value23'],
+        ];
         $this->beConstructedWith($values);
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
@@ -31,7 +34,10 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
 
     public function it_sends_all_values_in_batch_mode()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = [
+            ['value11', 'value12', 'value13'],
+            ['value21', 'value22', 'value23'],
+        ];
         $this->beConstructedWith($values, true);
         $this->read()->shouldReturn($values);
         $this->read()->shouldReturn(null);
@@ -39,18 +45,24 @@ class AbstractIteratorReaderSpec extends ObjectBehavior
 
     public function it_increments_the_summary_info(StepExecution $stepExecution)
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = [
+            ['value11', 'value12', 'value13'],
+            ['value21', 'value22', 'value23'],
+        ];
         $this->beConstructedWith($values);
         $this->setStepExecution($stepExecution);
         $stepExecution->incrementSummaryInfo('read')->shouldBeCalledTimes(count($values));
-        for ($i=0; $i < count($values); $i++) {
+        for ($i = 0; $i < count($values); $i++) {
             $this->read();
         }
     }
 
     public function it_can_be_resetted()
     {
-        $values = array('value1', 'value2', 'value3');
+        $values = [
+            ['value11', 'value12', 'value13'],
+            ['value21', 'value22', 'value23'],
+        ];
         $this->beConstructedWith($values);
         foreach ($values as $value) {
             $this->read()->shouldReturn($value);
@@ -82,6 +94,6 @@ class ArrayIteratorReader extends AbstractIteratorReader
 
     public function getConfigurationFields()
     {
-        return array();
+        return [];
     }
 }
