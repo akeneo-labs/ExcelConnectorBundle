@@ -38,7 +38,7 @@ class FileIteratorReader extends AbstractIteratorReader implements UploadedFileA
      * @var boolean
      *
      * @Assert\Type(type="bool")
-     * @Assert\True(groups={"UploadExecution"})
+     * @Assert\IsTrue(groups={"UploadExecution"})
      */
     protected $uploadAllowed = false;
 
