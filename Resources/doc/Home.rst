@@ -5,22 +5,18 @@ What is Akeneo Excel Connector Bundle?
    :alt: Logo ExcelConnector
 
 This bundle adds support of Excel XSLX files as a source for
-initialization and importation of catalog structure for `Akeneo
-PIM <https://github.com/akeneo/pim-community-standard>`__.
+initialization of catalog structure for `Akeneo PIM <https://github.com/akeneo/pim-community-standard>`__.
 
-**Note:** The file init.xslx must be opened and edited with Excel. Usage
-of LibreOffice/OpenOffice disables validation of input and can lead to
-malformed file.
+**Note:** The file init.xslx must be opened and edited with Excel.
+Usage of LibreOffice/OpenOffice disables validation of input and can lead to malformed file.
 
 Getting started
 ---------------
 
--  `Initializing the PIM with a XLSX
-   file <Getting-started.rst#initializing-the-pim-with-a-xlsx-file>`__
+-  `Initializing the PIM with a XLSX file <Getting-started.rst#initializing-the-pim-with-a-xlsx-file>`__
 
-**Note:** The file init.xslx must be opened and edited with Excel. Usage
-of LibreOffice/OpenOffice disables validation of input and can lead to
-malformed file.
+**Note:** The file init.xslx must be opened and edited with Excel.
+Usage of LibreOffice/OpenOffice disables validation of input and can lead to malformed file.
 
 Define the structure of your catalog
 ------------------------------------

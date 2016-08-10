@@ -5,7 +5,7 @@
 
 ![alt text](./Resources/doc/pictures/akeneo_excel.png "")
 
-This bundle adds support of Excel XSLX files as a source for initializing catalog structure and import/export of products for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
+This bundle adds support of Excel XSLX files as a source for initializing catalog structure for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
 
 ## Requirements
 
@@ -51,22 +51,24 @@ Now let's clean your cache and dump your assets:
 See [Resources/doc/Getting started](./Resources/doc/Getting-started.rst) for more details on how to set your catalog structure
 using the [init.xslx](./Resources/fixtures/minimal/init.xlsx) file.
 
-See [Resources/doc folder](./Resources/doc/Home.rst) for more details on how to set your catalog structur
+See [Resources/doc folder](./Resources/doc/Home.rst) for more details on how to set your catalog structure.
 
 ### Supported file
 
 Input file must follow [init.xslx](./Resources/fixtures/minimal/init.xlsx) structure.
-Note that the file must be opened with Excel. LibreOffice/OpenOffice are not in compliance with validations data
-that are available in the spreadsheet.
+Note that the file must be opened with Excel.
+LibreOffice/OpenOffice are not in compliance with validations data that are available in the spreadsheet.
 
 ### Importation job
 
 This bundle allows you to import products files directly in the UI through Import > Import jobs.
-Please note that the init.xlsx import is also available via the UI. However, it should not be used as an import system for entities available within this file (families, categories, etc.) once the catalog structure has been set.
-
+Please note that the init.xlsx import is also available via the UI.
+However, it should not be used as an import system for entities available within this file (families, categories, etc.) once the catalog structure has been set.
 
 ## Troubleshooting
 
 ###The import fails when importing families
 
-Check that your channels names are correct in both family and channel tabs. You might have a typo in the channels tab and not in the family tab. You will have to remove the mispelled channel once you corrected this.
+Check that your channels names are correct in both family and channel tabs.
+You might have a typo in the channels tab and not in the family tab.
+You will have to remove the mispelled channel once you corrected this.
