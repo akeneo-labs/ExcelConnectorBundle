@@ -8,15 +8,13 @@ This bundle adds support of Excel XSLX files as a source for
 initialization of catalog structure for `Akeneo PIM <https://github.com/akeneo/pim-community-standard>`__.
 
 **Note:** The file init.xslx must be opened and edited with Excel.
+Since version 1.7, this extension is not comatible with Excel 2003 xls files.
 Usage of LibreOffice/OpenOffice disables validation of input and can lead to malformed file.
 
 Getting started
 ---------------
 
 -  `Initializing the PIM with a XLSX file <Getting-started.rst#initializing-the-pim-with-a-xlsx-file>`__
-
-**Note:** The file init.xslx must be opened and edited with Excel.
-Usage of LibreOffice/OpenOffice disables validation of input and can lead to malformed file.
 
 Define the structure of your catalog
 ------------------------------------

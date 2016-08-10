@@ -1,8 +1,7 @@
 Attribute options tab
 =====================
 
-Attributes options are the possibilities of choices for simple and multi
-select attributes.
+Attributes options are the possibilities of choices for simple and multi select attributes.
 
 Attribute code
 --------------
@@ -12,9 +11,9 @@ Specify here the attribute code for which you want to append the option.
 Option code
 -----------
 
-Specify here a code for your attribute option. Attribute option codes
-must be only composed of letters, numbers, spaces and underscores. No
-other character will be accepted.
+Specify here a code for your attribute option.
+Attribute option codes must be only composed of letters, numbers, spaces and underscores.
+No other character will be accepted.
 
 Examples: ``blue``, ``XL``, ``silk``.
 
