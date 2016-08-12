@@ -1,16 +1,8 @@
 parameters:
-    pim_excel_connector.iterator.file.factory.class:        Pim\Bundle\ExcelConnectorBundle\Iterator\FileIteratorFactory
-    pim_excel_connector.iterator.file.xlsx.class:           Pim\Bundle\ExcelConnectorBundle\Iterator\XlsxFileIterator
     pim_excel_connector.iterator.file.xlsx.attribute.class: Pim\Bundle\ExcelConnectorBundle\Iterator\AttributeXlsxFileIterator
     pim_excel_connector.iterator.file.xlsx.family.class:    Pim\Bundle\ExcelConnectorBundle\Iterator\FamilyXlsxFileIterator
-    pim_excel_connector.iterator.file.spreadsheet.class:    Pim\Bundle\ExcelConnectorBundle\Iterator\SpreadsheetIterator
     pim_excel_connector.iterator.array_helper.class:        Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper
 
 services:
-    pim_excel_connector.iterator.file.factory:
-        class: %pim_excel_connector.iterator.file.factory.class%
-        arguments:
-            - '@service_container'
-
     pim_excel_connector.iterator.array_helper:
         class: %pim_excel_connector.iterator.array_helper.class%
