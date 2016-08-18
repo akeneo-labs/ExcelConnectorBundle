@@ -8,7 +8,7 @@ use Pim\Component\Connector\Reader\File\FileIterator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * XSLX file iterator
+ * XSLX initialization file iterator
  *
  * @author    JM Leroux <jean-marie.leroux@akeneo.com>
  * @author    Antoine Guigan <antoine@akeneo.com>
@@ -23,7 +23,11 @@ class InitFileIterator extends FileIterator
     /** @var array */
     protected $options;
 
-    public function __construct($type, $filePath, array $options = []) {
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($type, $filePath, array $options = [])
+    {
         parent::__construct($type, $filePath, $options);
 
         $resolver = new OptionsResolver();
@@ -44,12 +48,17 @@ class InitFileIterator extends FileIterator
             return null;
         }
 
-        if ($this->options['skip_empty']) {
-            foreach (array_keys($data) as $key) {
-                if (!$data[$key]) {
-                    unset($data[$key]);
-                }
-            }
+        $data = $this->trimRight($data);
+
+        return $data;
+    }
+
+    protected function trimRight($data)
+    {
+        $lastElement = end($data);
+        while (false !== $lastElement && empty($lastElement)) {
+            array_pop($data);
+            $lastElement = end($data);
         }
 
         return $data;
@@ -60,7 +69,8 @@ class InitFileIterator extends FileIterator
      */
     public function key()
     {
-        return sprintf('%s/%s', $this->worksheetIterator->current(), $this->rows->key());
+        $worksheetName = $this->worksheetIterator->current()->getName();
+        return sprintf('%s/%s', $worksheetName, $this->rows->key());
     }
 
     /**
@@ -182,7 +192,7 @@ class InitFileIterator extends FileIterator
             $this->rows->next();
         }
         $this->headers = $this->rows->current();
-        while ($this->rows->valid() && ((int) $this->options['data_row'] -1  > $this->rows->key())) {
+        while ($this->rows->valid() && ((int) $this->options['data_row']  > $this->rows->key())) {
             $this->rows->next();
         }
     }
@@ -200,6 +210,9 @@ class InitFileIterator extends FileIterator
             ]
         );
 
-        $resolver->setDefined('include_worksheets');
+        $resolver->setDefined([
+            'include_worksheets',
+            'exclude_worksheets',
+        ]);
     }
 }

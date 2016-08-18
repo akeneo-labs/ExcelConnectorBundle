@@ -5,20 +5,23 @@ namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Family Xls File Iterator
+ * Family init file iterator
  *
+ * @author    JM leroux <jean-marie.leroux@akeneo.com>
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
+class InitFamilyFileIterator extends InitFileIterator
 {
     /**
      * {@inheritdoc}
      */
     protected function createValuesIterator()
     {
-        return new \ArrayIterator(array($this->getChannelData()));
+        $familyData = $this->getChannelData();
+        $this->headers = array_keys($familyData);
+        $this->rows = new \ArrayIterator([$familyData]);
     }
 
     /**
@@ -26,17 +29,21 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
      */
     protected function getChannelData()
     {
-        $xls = $this->getExcelObject();
-        $data = [ 'attributes' => [] ];
-        $attributeLabels = [];
+        $this->rows = $this->reader->getSheetIterator()->current()->getRowIterator();
+
+        $data = ['attributes' => []];
         $channelLabels = [];
         $labelLocales = [];
         $codeColumn = null;
         $useAsLabelColumn = null;
         $channelColumn = null;
-        $rowIterator = $xls->createRowIterator($this->worksheetIterator->key(), $this->options['parser_options']);
+
+        $arrayHelper = new ArrayHelper();
+
+        $rowIterator = $this->rows;
 
         foreach ($rowIterator as $index => $row) {
+            $row = $this->trimRight($row);
             if ($index == $this->options['code_row']) {
                 $data['code'] = $row[$this->options['code_column']];
             }
@@ -55,7 +62,7 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                 $labelLocales = array_slice($row, $this->options['labels_column']);
             }
             if ($index == $this->options['labels_data_row']) {
-                $data['labels'] = $this->getArrayHelper()->combineArrays(
+                $data['labels'] = $arrayHelper->combineArrays(
                     $labelLocales,
                     array_slice($row, $this->options['labels_column'])
                 );
@@ -70,13 +77,15 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                     $data['attribute_as_label'] = $code;
                 }
                 $channelValues = array_slice($row, $channelColumn);
-                foreach ($channelLabels as $index => $channel) {
-                    if (isset($channelValues[$index]) && '1' === trim($channelValues[$index])) {
+                foreach ($channelLabels as $channelIndex => $channel) {
+                    if (isset($channelValues[$channelIndex]) && '1' === trim($channelValues[$channelIndex])) {
                         $data['requirements'][$channel][] = $code;
                     }
                 }
             }
         }
+
+        $data['attributes'] = implode(',', $data['attributes']);
 
         return $data;
     }
@@ -84,12 +93,12 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
     /**
      * {@inheritdoc}
      */
-    protected function setDefaultOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver)
     {
-        parent::setDefaultOptions($resolver);
+        parent::configureOptions($resolver);
 
         $resolver->setRequired(
-            array(
+            [
                 'channel_label_row',
                 'attribute_label_row',
                 'attribute_data_row',
@@ -98,8 +107,8 @@ class FamilyXlsxFileIterator extends AbstractXlsxFileIterator
                 'labels_column',
                 'labels_label_row',
                 'labels_data_row',
-                'labels_column'
-            )
+                'labels_column',
+            ]
         );
     }
 }

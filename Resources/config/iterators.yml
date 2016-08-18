@@ -1,6 +1,6 @@
 parameters:
     pim_excel_connector.iterator.file.xlsx.attribute.class: Pim\Bundle\ExcelConnectorBundle\Iterator\AttributeXlsxFileIterator
-    pim_excel_connector.iterator.file.xlsx.family.class:    Pim\Bundle\ExcelConnectorBundle\Iterator\FamilyXlsxFileIterator
+    pim_excel_connector.iterator.file.xlsx.family.class:    Pim\Bundle\ExcelConnectorBundle\Iterator\InitFamilyFileIterator
     pim_excel_connector.iterator.array_helper.class:        Pim\Bundle\ExcelConnectorBundle\Iterator\ArrayHelper
 
 services:
