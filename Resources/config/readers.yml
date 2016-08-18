@@ -84,8 +84,8 @@ services:
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_attribute_iterator_factory'
             - '@pim_excel_connector.array_converter.flat_to_standard.attribute'
-            - label_row: 5
-              data_row: 6
+            - label_row: 6
+              data_row: 7
               include_worksheets: [ '/^family/', '/^attributes/' ]
               attribute_types_mapper: '@pim_excel_connector.mapper.attribute_types'
 
