@@ -3,8 +3,9 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Reader;
 
 use Pim\Bundle\ExcelConnectorBundle\Iterator\InitAttributesFileIterator;
+use Pim\Component\Connector\Reader\File\Xlsx\Reader;
 
-class AttributeXlsxReader extends InitReader
+class AttributeXlsxReader extends Reader
 {
     /** @var InitAttributesFileIterator */
     protected $fileIterator;

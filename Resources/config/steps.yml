@@ -20,6 +20,7 @@ services:
             - '@pim_excel_connector.reader.xls_init.category'
             - '@pim_connector.processor.denormalization.category'
             - '@pim_connector.writer.database.category'
+            - 1
 
     pim_excel_connector.step.init.channels:
         class: '%pim_connector.step.item_step.class%'
@@ -60,6 +61,7 @@ services:
             - '@pim_excel_connector.reader.xls_init.attribute'
             - '@pim_connector.processor.denormalization.attribute'
             - '@pim_connector.writer.database.attribute'
+            - 1
 
     pim_excel_connector.step.init.attribute_options:
         class: '%pim_connector.step.item_step.class%'

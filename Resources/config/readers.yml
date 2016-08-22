@@ -1,5 +1,4 @@
 parameters:
-    pim_excel_connector.reader.file.init.class: Pim\Bundle\ExcelConnectorBundle\Reader\InitReader
     pim_excel_connector.reader.file.attribute.class: Pim\Bundle\ExcelConnectorBundle\Reader\AttributeXlsxReader
     pim_excel_connector.reader.file.file_iterator.class: Pim\Bundle\ExcelConnectorBundle\Iterator\InitFileIterator
     pim_excel_connector.reader.file.attributes_iterator.class: Pim\Bundle\ExcelConnectorBundle\Iterator\InitAttributesFileIterator
@@ -25,58 +24,51 @@ services:
             - 'xlsx'
 
     pim_excel_connector.reader.xls_init.attribute_group:
-        class: '%pim_excel_connector.reader.file.init.class%'
+        class: '%pim_connector.reader.file.xlsx.class%'
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_iterator_factory'
             - '@pim_connector.array_converter.flat_to_standard.attribute_group'
-            - label_row: 3
-              data_row: 4
+            - header_key: code
               include_worksheets: [ '/^attribute_groups/' ]
 
     pim_excel_connector.reader.xls_init.channel:
-        class: '%pim_excel_connector.reader.file.init.class%'
+        class: '%pim_connector.reader.file.xlsx.class%'
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_iterator_factory'
             - '@pim_connector.array_converter.flat_to_standard.channel'
-            - label_row: 3
-              data_row: 4
+            - header_key: code
               include_worksheets: [ '/^channels/' ]
 
     pim_excel_connector.reader.xls_init.category:
-        class: '%pim_excel_connector.reader.file.init.class%'
+        class: '%pim_connector.reader.file.xlsx.class%'
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_iterator_factory'
             - '@pim_connector.array_converter.flat_to_standard.category'
-            - label_row: 3
-              data_row: 4
+            - header_key: code
               include_worksheets: [ '/^categories/' ]
-            - true
 
     pim_excel_connector.reader.xls_init.option:
-        class: '%pim_excel_connector.reader.file.init.class%'
+        class: '%pim_connector.reader.file.xlsx.class%'
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_iterator_factory'
             - '@pim_connector.array_converter.flat_to_standard.attribute_option'
-            - label_row: 3
-              data_row: 4
+            - header_key: code
               include_worksheets: [ '/^options/' ]
 
     pim_excel_connector.reader.xls_init.group_type:
-        class: '%pim_excel_connector.reader.file.init.class%'
+        class: '%pim_connector.reader.file.xlsx.class%'
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_iterator_factory'
             - '@pim_connector.array_converter.flat_to_standard.group_type'
-            - label_row: 3
-              data_row: 4
+            - header_key: code
               include_worksheets: [ '/^group_types/' ]
 
     pim_excel_connector.reader.xls_init.association_type:
-        class: '%pim_excel_connector.reader.file.init.class%'
+        class: '%pim_connector.reader.file.xlsx.class%'
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_iterator_factory'
             - '@pim_connector.array_converter.flat_to_standard.association_type'
-            - label_row: 3
-              data_row: 4
+            - header_key: code
               include_worksheets: [ '/^association_types/' ]
 
     pim_excel_connector.reader.xls_init.attribute:
@@ -84,32 +76,29 @@ services:
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_attribute_iterator_factory'
             - '@pim_excel_connector.array_converter.flat_to_standard.attribute'
-            - label_row: 6
-              data_row: 7
+            - header_key: code
               include_worksheets: [ '/^family/', '/^attributes/' ]
               attribute_types_mapper: '@pim_excel_connector.mapper.attribute_types'
 
     pim_excel_connector.reader.xls_init.attribute_option:
-        class: '%pim_excel_connector.reader.file.init.class%'
+        class: '%pim_connector.reader.file.xlsx.class%'
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_iterator_factory'
             - '@pim_connector.array_converter.flat_to_standard.attribute_option'
-            - label_row: 3
-              data_row: 4
+            - header_key: 'attribute'
               include_worksheets: [ '/^options/' ]
 
     pim_excel_connector.reader.xls_init.family:
-        class: '%pim_excel_connector.reader.file.init.class%'
+        class: '%pim_connector.reader.file.xlsx.class%'
         arguments:
             - '@pim_excel_connector.reader.file.xlsx_family_iterator_factory'
             - '@pim_connector.array_converter.flat_to_standard.family'
-            - channel_label_row:   5
+            - family_data_row:    2
+              family_code_column: 1
+              family_labels_locales_row: 1
+              family_labels_first_column: 4
+              channel_label_row:   5
               attribute_label_row: 6
               attribute_data_row: 7
-              code_row:    2
-              code_column: 1
-              labels_label_row: 1
-              labels_data_row: 2
-              labels_column: 4
               include_worksheets: [ '/^family/' ]
 

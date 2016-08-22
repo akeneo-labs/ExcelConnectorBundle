@@ -23,6 +23,9 @@ class InitFileIterator extends FileIterator
     /** @var array */
     protected $options;
 
+    /** @var bool */
+    protected $nextWorksheet = false;
+
     /**
      * {@inheritdoc}
      */
@@ -70,6 +73,7 @@ class InitFileIterator extends FileIterator
     public function key()
     {
         $worksheetName = $this->worksheetIterator->current()->getName();
+
         return sprintf('%s/%s', $worksheetName, $this->rows->key());
     }
 
@@ -89,6 +93,7 @@ class InitFileIterator extends FileIterator
         $this->rows->next();
         if (!$this->rows->valid()) {
             $this->worksheetIterator->next();
+            $this->nextWorksheet = true;
             if ($this->worksheetIterator->valid()) {
                 $this->initializeValuesIterator();
             }
@@ -183,18 +188,24 @@ class InitFileIterator extends FileIterator
         return false;
     }
 
+    /**
+     * Create the values iterator according to the 'header_key' option
+     * Set the headers
+     * Leave reader cursor on the headers, like in the PIM
+     */
     protected function createValuesIterator()
     {
         $sheet = $this->worksheetIterator->current();
         $this->rows = $sheet->getRowIterator();
         $this->rows->rewind();
-        while ($this->rows->valid() && ((int) $this->options['label_row'] > $this->rows->key())) {
+        while ($this->rows->valid() && ($this->options['header_key'] !== trim($this->rows->current()[0]))) {
             $this->rows->next();
         }
-        $this->headers = $this->rows->current();
-        while ($this->rows->valid() && ((int) $this->options['data_row']  > $this->rows->key())) {
+        $this->headers = $this->trimRight($this->rows->current());
+        if ($this->nextWorksheet) {
             $this->rows->next();
         }
+        $this->nextWorksheet = false;
     }
 
     /**
@@ -202,13 +213,13 @@ class InitFileIterator extends FileIterator
      */
     protected function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            [
-                'skip_empty' => false,
-                'label_row'  => 1,
-                'data_row'   => 2,
-            ]
-        );
+        $resolver->setDefaults([
+            'skip_empty' => false,
+        ]);
+
+        $resolver->setRequired([
+            'header_key',
+        ]);
 
         $resolver->setDefined([
             'include_worksheets',

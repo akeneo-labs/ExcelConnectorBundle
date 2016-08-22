@@ -1,6 +1,6 @@
 parameters:
     pim_excel_connector.job_name.init_xlsx: 'xlsx_init'
-
+    pim_installer.fixture_loader.job_loader.config_file:           'PimExcelConnectorBundle/Resources/config/fixtures_jobs.yml'
 services:
     pim_excel_connector.job.excel_init_import:
         class: '%pim_connector.job.simple_job.class%'
@@ -9,19 +9,19 @@ services:
             - '@event_dispatcher'
             - '@akeneo_batch.job_repository'
             -
-#                - '@pim_excel_connector.step.init.attribute_groups'
-#                - '@pim_excel_connector.step.init.group_types'
-#                - '@pim_excel_connector.step.init.association_types'
-#                - '@pim_excel_connector.step.init.categories'
-#                - '@pim_excel_connector.step.init.channels'
+                - '@pim_excel_connector.step.init.attribute_groups'
+                - '@pim_excel_connector.step.init.group_types'
+                - '@pim_excel_connector.step.init.association_types'
+                - '@pim_excel_connector.step.init.categories'
+                - '@pim_excel_connector.step.init.channels'
 #                - '@pim_excel_connector.step.init.attributes'
 #                - '@pim_excel_connector.step.init.attribute_options'
-                - '@pim_excel_connector.step.init.families'
+#                - '@pim_excel_connector.step.init.families'
         tags:
             -
                 name: akeneo_batch.job
                 connector: '%pim_connector.connector_name.csv%'
-                type: '%pim_connector.job.import_type%'
+                type: '%pim_installer.job.fixture_type%'
 
     pim_excel_connector.job.job_parameters.default_values_provider.simple_xlsx_import:
         class: '%pim_connector.job.job_parameters.default_values_provider.simple_xlsx_import.class%'

@@ -30,6 +30,7 @@ class InitFamilyFileIterator extends InitFileIterator
     protected function getChannelData()
     {
         $this->rows = $this->reader->getSheetIterator()->current()->getRowIterator();
+        $this->rows->rewind();
 
         $data = ['attributes' => []];
         $channelLabels = [];
@@ -44,8 +45,18 @@ class InitFamilyFileIterator extends InitFileIterator
 
         foreach ($rowIterator as $index => $row) {
             $row = $this->trimRight($row);
-            if ($index == $this->options['code_row']) {
-                $data['code'] = $row[$this->options['code_column']];
+            if ($index == $this->options['channel_label_row']) {
+                $channelLabels = $row;
+            }
+            if ($index == $this->options['family_labels_locales_row']) {
+                $labelLocales = array_slice($row, $this->options['family_labels_first_column']);
+            }
+            if ($index == $this->options['family_data_row']) {
+                $data['code'] = $row[$this->options['family_code_column']];
+                $data['labels'] = $arrayHelper->combineArrays(
+                    $labelLocales,
+                    array_slice($row, $this->options['family_labels_first_column'])
+                );
             }
             if ($index == $this->options['attribute_label_row']) {
                 $attributeLabels = $row;
@@ -55,18 +66,7 @@ class InitFamilyFileIterator extends InitFileIterator
                 $codeColumn = array_search('code', $attributeLabels);
                 $useAsLabelColumn = array_search('use_as_label', $attributeLabels);
             }
-            if ($index == $this->options['channel_label_row']) {
-                $channelLabels = $row;
-            }
-            if ($index == $this->options['labels_label_row']) {
-                $labelLocales = array_slice($row, $this->options['labels_column']);
-            }
-            if ($index == $this->options['labels_data_row']) {
-                $data['labels'] = $arrayHelper->combineArrays(
-                    $labelLocales,
-                    array_slice($row, $this->options['labels_column'])
-                );
-            }
+
             if ($index >= (int) $this->options['attribute_data_row']) {
                 $code = $row[$codeColumn];
                 if ($code === '') {
@@ -97,18 +97,18 @@ class InitFamilyFileIterator extends InitFileIterator
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(
-            [
-                'channel_label_row',
-                'attribute_label_row',
-                'attribute_data_row',
-                'code_row',
-                'code_column',
-                'labels_column',
-                'labels_label_row',
-                'labels_data_row',
-                'labels_column',
-            ]
-        );
+        $resolver->remove([
+            'header_key',
+        ]);
+
+        $resolver->setRequired([
+            'family_data_row',
+            'family_code_column',
+            'family_labels_locales_row',
+            'family_labels_first_column',
+            'channel_label_row',
+            'attribute_label_row',
+            'attribute_data_row',
+        ]);
     }
 }
