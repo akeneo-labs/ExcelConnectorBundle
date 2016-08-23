@@ -1,0 +1,6 @@
+parameters:
+    pim_excel_connector.mapper.attribute_types.class: Pim\Bundle\ExcelConnectorBundle\Mapper\AttributeTypeMapper
+
+services:
+    pim_excel_connector.mapper.attribute_types:
+        class: '%pim_excel_connector.mapper.attribute_types.class%'

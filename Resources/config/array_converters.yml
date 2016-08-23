@@ -1,12 +1,7 @@
 parameters:
-    pim_excel_connector.array_converter.flat.product.value_converter.text.class: Pim\Bundle\ExcelConnectorBundle\ArrayConverter\Flat\Product\ValueConverter\TextConverter
+    pim_excel_connector.array_converter.flat_to_standard.attribute.class: Pim\Bundle\ExcelConnectorBundle\ArrayConverter\Flat\Attribute
 
 services:
-    # product value converters
-    pim_excel_connector.array_converter.flat.product.value_converter.text:
-        class: '%pim_excel_connector.array_converter.flat.product.value_converter.text.class%'
-        parent: pim_connector.array_converter.flat.product.value_converter.abstract
-        arguments:
-            - ['pim_catalog_identifier', 'pim_catalog_text', 'pim_catalog_textarea']
-        tags:
-            - { name: 'pim_connector.array_converter.flat.product.value_converter', priority: 110 }
+    pim_excel_connector.array_converter.flat_to_standard.attribute:
+        class: '%pim_excel_connector.array_converter.flat_to_standard.attribute.class%'
+        parent: 'pim_connector.array_converter.flat_to_standard.attribute'
