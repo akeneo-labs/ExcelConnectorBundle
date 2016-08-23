@@ -32,7 +32,6 @@ class InitFileIterator extends FileIterator
     public function __construct($type, $filePath, array $options = [])
     {
         parent::__construct($type, $filePath, $options);
-
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
         $this->options = $resolver->resolve($options);
@@ -44,7 +43,6 @@ class InitFileIterator extends FileIterator
     public function current()
     {
         $data = $this->rows->current();
-
         if (!$this->valid() || null === $data || empty($data)) {
             $this->rewind();
 
@@ -52,17 +50,6 @@ class InitFileIterator extends FileIterator
         }
 
         $data = $this->trimRight($data);
-
-        return $data;
-    }
-
-    protected function trimRight($data)
-    {
-        $lastElement = end($data);
-        while (false !== $lastElement && empty($lastElement)) {
-            array_pop($data);
-            $lastElement = end($data);
-        }
 
         return $data;
     }
@@ -115,6 +102,17 @@ class InitFileIterator extends FileIterator
         if ($this->worksheetIterator->valid()) {
             $this->initializeValuesIterator();
         }
+    }
+
+    protected function trimRight($data)
+    {
+        $lastElement = end($data);
+        while (false !== $lastElement && empty($lastElement)) {
+            array_pop($data);
+            $lastElement = end($data);
+        }
+
+        return $data;
     }
 
     /**

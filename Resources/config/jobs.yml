@@ -14,9 +14,9 @@ services:
                 - '@pim_excel_connector.step.init.association_types'
                 - '@pim_excel_connector.step.init.categories'
                 - '@pim_excel_connector.step.init.channels'
-#                - '@pim_excel_connector.step.init.attributes'
-#                - '@pim_excel_connector.step.init.attribute_options'
-#                - '@pim_excel_connector.step.init.families'
+                - '@pim_excel_connector.step.init.attributes'
+                - '@pim_excel_connector.step.init.attribute_options'
+                - '@pim_excel_connector.step.init.families'
         tags:
             -
                 name: akeneo_batch.job

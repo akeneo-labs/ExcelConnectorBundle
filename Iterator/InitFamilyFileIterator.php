@@ -21,7 +21,8 @@ class InitFamilyFileIterator extends InitFileIterator
     {
         $familyData = $this->getChannelData();
         $this->headers = array_keys($familyData);
-        $this->rows = new \ArrayIterator([$familyData]);
+        $this->rows = new \ArrayIterator(['dummy_line', $familyData]);
+        $this->rows->rewind();
     }
 
     /**

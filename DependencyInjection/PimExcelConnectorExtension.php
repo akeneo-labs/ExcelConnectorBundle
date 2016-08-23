@@ -26,7 +26,6 @@ class PimExcelConnectorExtension extends Extension
         $loader->load('jobs.yml');
         $loader->load('steps.yml');
         $loader->load('readers.yml');
-        $loader->load('processors.yml');
         $loader->load('mappers.yml');
         $loader->load('array_converters.yml');
     }
