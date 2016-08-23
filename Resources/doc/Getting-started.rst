@@ -7,8 +7,7 @@ Initializing the PIM with a XLSX file
 Create an InstallerBundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can create your own InstallerBundle by following the instructions
-from the documentation :
+You can create your own InstallerBundle by following the instructions from the documentation :
 http://docs.akeneo.com/1.4/cookbook/setup_data/customize_installer.html
 
 Copy the fixtures

@@ -19,9 +19,7 @@
         }
     ],
     "require": {
-        "akeneo/pim-community-dev": "1.6.x-dev@dev",
-        "phpoffice/phpexcel": "1.8.*",
-        "akeneo-labs/spreadsheet-parser-bundle": "1.1.*"
+        "akeneo/pim-community-dev": "1.6.*@dev"
     },
     "require-dev": {
         "phpspec/phpspec": "3.0.0",

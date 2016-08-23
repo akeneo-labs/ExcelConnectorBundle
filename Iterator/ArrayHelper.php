@@ -3,7 +3,7 @@
 namespace Pim\Bundle\ExcelConnectorBundle\Iterator;
 
 /**
- * Helper methods for Excel files
+ * Helper methods for arrays
  *
  * @author    Antoine Guigan <antoine@akeneo.com>
  * @copyright 2013 Akeneo SAS (http://www.akeneo.com)
