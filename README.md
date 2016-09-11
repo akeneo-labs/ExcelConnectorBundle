@@ -5,6 +5,8 @@
 
 ![alt text](./Resources/doc/pictures/akeneo_excel.png "")
 
+**DEPRECATED**: this bundle is not compatible with the latest Akeneo PIM. Starting from 1.7 PIM version, you should use [ExcelInitBundle](https://github.com/akeneo/ExcelInitBundle) instead.
+
 This bundle adds support of Excel XSLX files as a source for initializing catalog structure and import/export of products for [Akeneo PIM](https://github.com/akeneo/pim-community-standard).
 
 ## Requirements
