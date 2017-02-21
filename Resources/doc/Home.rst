@@ -12,6 +12,8 @@ PIM <https://github.com/akeneo/pim-community-standard>`__.
 of LibreOffice/OpenOffice disables validation of input and can lead to
 malformed file.
 
+**DEPRECATED:** this bundle is not compatible with the latest Akeneo PIM. Starting from 1.6 PIM version, you should use ExcelInitBundle instead.
+
 Getting started
 ---------------
 
