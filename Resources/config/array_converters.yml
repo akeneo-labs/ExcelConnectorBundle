@@ -5,7 +5,7 @@ services:
     # product value converters
     pim_excel_connector.array_converter.flat.product.value_converter.text:
         class: '%pim_excel_connector.array_converter.flat.product.value_converter.text.class%'
-        parent: pim_connector.array_converter.flat.product.value_converter.abstract
+        parent: pim_connector.array_converter.flat_to_standard.product.value_converter.abstract
         arguments:
             - ['pim_catalog_identifier', 'pim_catalog_text', 'pim_catalog_textarea']
         tags:
